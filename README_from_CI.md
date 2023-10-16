@@ -33,7 +33,7 @@ So Laura and Donal have asked me to provide them with a simple command line prog
 - maintain a list of the stock of grafted plants destined for sale in the nursery, grouped according to age/size and cultivar
 - show the number of root-stock plants available every year for grafting
 - plan the numbers of each cultivar to be used as scions on the root stocks, warning the couple when potted root stocks are insufficient
-- they currently grow six different cultivars for sale (but might expand their range if they can find good cultivars free of plant breeders' rights)
+- they currently grow six different cultivars for sale (but might expand their range in the future if they can find attractive cultivars free of plant breeders' rights fees)
 - record throughout the year losses incurred by cultivar and age (for any number of reasons) and any gains (usually by purchase from a third party)
 - show the flexibility to allow the couple to hold back particularly slow-growing specimens for another year and to reclassify plants that have grown particularly well in a particular year so that they effectively skip a year. Since they do this sort of work whenever they get time throughout the year, they should be able to do this intermittently at any time of the year.
 
