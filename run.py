@@ -2,6 +2,34 @@ import gspread
 from google.oauth2.service_account import Credentials
 import sys
 
+startup_instructions = "You must enter an argument after the program script name to use this program.\
+    \nSimply entering 'run.py' on the command line is not enough.\
+    \nYou must enter a command in the form 'run.py nnnn' (where 'nnnn' is the name of one of the functions that the program contains).\
+    \nFor a full list of the program's functions and instructions on how to call them, enter 'run.py help' on the command line.\
+    \nAlways be careful to use only lower case letters."
+
+help_text = "\nc#############################################################################################################################################################\
+    \n\nTo run this program you need to call the script file containing its code ('run.py') followed by a space and the name of the operation you want to execute.\
+    \nPlease enter one of the operations available using exactly the spelling shown below, and remembering that the names are case sensitive.\
+    \nFor example, if you want to plan your cutting production for the year, carefully type 'run.py plan_cuttings' on the command line.\
+    \n\nThe following is a list of the operations that this program can help you execute:\
+    \n\n    help:          Produces this information message. It shows you how to use this program.\
+    \n\n    plan_cuttings: This operation asks you to enter the number of cuttings you wish to produced of your currently preferred rootstock.\
+    \n\n    plan_grafting: This operation first asks you to choose the cultivar for which you wish to produce grafts.\
+    \n                   It then asks you to enter the number of grafts you wish to produce, giving you the information on how many root stocks are currently available.\
+    \n\n    record_loss:   This operation asks you to choose the cultivar and age of the plants for which you want to record a loss.\
+    \n                   It then asks you how many plants of that cultivar and age you have lost.\
+    \n\n    record_gain:   This operation asks you to choose the cultivar and age of the plants for which you want to record an acquisition or other gain.\
+    \n                   It then asks you how many plants of that cultivar and age you have gained or acquired.\
+    \n\n    hold_back:     This operation asks you to choose the cultivar whose age distribution numbers you wish to adjust and the affected age.\
+    \n                   It then asks you how many plants of that cultivar and age you wish to hold back for one year. It is identical to recording a loss for\
+    \n                   the cultivar and age you have chosen and then recording a gain for the plants of that cultivar one year younger.\
+    \n\n    bring_forward: This operation asks you to choose the cultivar whose age distribution numbers you wish to adjust and the affected age.\
+    \n                   It then asks you how many plants of that cultivar and age you wish to bring forward by one year. It is identical to recording a loss for\
+    \n                   the cultivar and age you have chosen and then recording a gain for the plants of that cultivar one year older.\
+    \n\n#############################################################################################################################################################\
+    \n"
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -18,7 +46,7 @@ data = stocks.get_all_values()
 print(data)
 
 def Startup_instructions():
-    print("You must enter an argument after the program script name to use this program. Entering 'run.py' on the command line is not enough. you must enter 'run.py nnnn' (where nnnn is one of the functions that the program contains). For a full list of the program's functions and how to call them, enter 'run.py help' on the command line. Always be careful to use only lower case letters")
+    print(startup_instructions)
 
 def Create_year():
     print("Year created")
@@ -42,7 +70,7 @@ def Record_acquisition():
     print("Acquisition_recorded")
 
 def Help():
-    print("Help called")
+    print(help_text)
 
 def Startup_error_msg():
     print("Startup error message called")
