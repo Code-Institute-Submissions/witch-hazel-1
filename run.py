@@ -79,6 +79,16 @@ def Create_year():
         print(f"Year {new_rootstock_year} created. {num_cuttings} cuttings planned for this year.")
         if num_cuttings == 0:
             print("You've chosen to plan your cutting campaign later!")
+
+        graft_starting_values = [
+            [2023, 'planned', 0, 0, 0, 0, 0, 0],
+            [2023, 'grafted', 0, 0, 0, 0, 0, 0],
+            [2023, 'stock', 0, 0, 0, 0, 0, 0],
+            ]
+
+        grafts_year_zero.insert_rows(graft_starting_values, 2)
+
+
     else:
         print(f"The year {new_rootstock_year} has not been created. The current year is still {rootstock_year}")
 
