@@ -113,7 +113,24 @@ def Create_year():
         print(f"The year {new_rootstock_year} has not been created. The current year is still {rootstock_year}")
 
 def Plan_cutting_campaign():
-    print("Cuttings campaign planning completed")
+    planned_cuttings = rootstock.acell('b1').value
+    last_year_cuttings = rootstock.acell('c2').value
+    if int(planned_cuttings) > 0:
+        if input(f"So far you have planned to take {planned_cuttings} cuttings! Would you like replace that number with a new one?\
+        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
+            planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year. The present planned figure for this year is {planned_cuttings}. Please enter a new figure for planned cuttings for this year: "))
+            rootstock.update_acell('b1', planned_cuttings)
+            print("Cuttings campaign planning session completed")
+        else:
+            Print("Plan cuttings action cancelled.")
+    else:
+        if input(f"Would you like to plan the number of cuttings you intend to take this season? \
+        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
+            planned_cuttings = int(input(f"Please enter the number of cuttings you want to take this year: "))
+            rootstock.update_acell('b1', planned_cuttings)
+            print("Cuttings campaign planning session completed")
+        else:
+            Print("Plan cuttings action cancelled.")
 
 def Record_cuttings():
     print("Cuttings completed")

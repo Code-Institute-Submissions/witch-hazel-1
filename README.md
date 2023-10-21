@@ -74,11 +74,11 @@ The plants worksheet is a little simpler. It shows the current stocks of each cu
 ## The program's workflow:
 
 ### Seasonal tasks in order
-When the owners want to begin planning their campaign of taking H. Virginiana cuttings in the autumn of each year, they create a new year; ordinarily the following year.  You might think of it as buying a calendar for 2024 in the autumn of 2023. They do so by running the program with the argument ``new_year`` (i.e., by typing ``run.py new_year`` and pressing enter), which adds the required new lines for the new current on each worksheet, copying the data on graft stocks for the old current year to date from the ``grafts-year-zero`` worksheet to the ``plants`` worksheet.
+When the owners want to begin planning their campaign of taking H. Virginiana cuttings in the autumn of each year, they create a new year; ordinarily the following year.  You might think of it as buying a calendar for 2024 in the autumn of 2023. They do so by running the program with the argument ``new_year`` (i.e., by typing ``run.py new_year`` and pressing enter), which adds the required new lines for the new current year on each worksheet, copying the data on graft stocks for the old current year to date from the ``grafts-year-zero`` worksheet to the ``plants`` worksheet.
 
 They can then choose either to enter the figure for cuttings that they anticipate taking this year or to leave that job for later.
 
-Then, whether or not they have entered a figure for planned cuttings, they can run the program at any time with the ``plan_cuttings`` argument to revise that figure. If they have already recorded a figure for cuttings actually made, they are given a warning to tell them that the cutting campaign has already started and asked to confirm whether they want to add to the planned figure or simply to replace it with a new total.
+Then, whether or not they have entered a figure for planned cuttings, they can run the program at any time with the ``plan_cuttings`` argument to revise that figure. If they have already recorded a figure for cuttings actually made, they are given a warning to tell them that the cutting campaign has already started and asked to confirm whether they want to replace the planned figure with a new total.
 
 When they run the program with the ``take_cuttings`` argument they are asked to enter a number of cuttings actually taken. They are given the already existing figure for cuttings taken and warned not to enter a number for cuttings unless that number has already been physically taken and inserted in the cuttings bed.
 
