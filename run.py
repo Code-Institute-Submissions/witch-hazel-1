@@ -54,8 +54,24 @@ cuttings_taken = int(rootstock.acell('c1').value)
 rootstocks_potted = int(rootstock.acell('d1').value)
 mature_rootstocks = int(rootstock.acell('e1').value)
 
-cutting_success = rootstocks_potted / cuttings_taken
-potting_success = mature_rootstocks / rootstocks_potted
+
+def Get_survival_rate(start_num, end_num):
+    if int(start_num) == 0:
+        return 'The starting number is not recorded.'
+    elif int(end_num) > int(start_num):
+        return 'You ended up with more units than you started with.'
+    else:
+        return int(end_num) / int(start_num)
+
+def Is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
+potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
 rootstock_data = rootstock.get_all_values()
 print(rootstock_data)
@@ -79,15 +95,19 @@ def Create_year():
         print(f"Year {new_rootstock_year} created. {num_cuttings} cuttings planned for this year.")
         if num_cuttings == 0:
             print("You've chosen to plan your cutting campaign later!")
+        
+        year_zero_stocks = grafts_year_zero.get('c4:h4') [0]
+
+        year_zero_stocks_int = [int(value) for value in year_zero_stocks]
+        plants.insert_rows([year_zero_stocks_int], 2)
 
         graft_starting_values = [
-            [2023, 'planned', 0, 0, 0, 0, 0, 0],
-            [2023, 'grafted', 0, 0, 0, 0, 0, 0],
-            [2023, 'stock', 0, 0, 0, 0, 0, 0],
+            [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0],
+            [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0],
+            [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0],
             ]
 
         grafts_year_zero.insert_rows(graft_starting_values, 2)
-
 
     else:
         print(f"The year {new_rootstock_year} has not been created. The current year is still {rootstock_year}")
@@ -122,6 +142,9 @@ def Help():
 def Startup_error_msg():
     print("Startup error message called")
 
+
+
+"""Tell the user they need to start up the program with an argument to make the program actually do anything."""
 if len(sys.argv) == 1:
     Startup_instructions()
 else:
