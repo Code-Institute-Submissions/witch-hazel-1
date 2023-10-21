@@ -132,8 +132,16 @@ def Plan_cutting_campaign():
         else:
             Print("Plan cuttings action cancelled.")
 
-def Record_cuttings():
-    print("Cuttings completed")
+def Record_cuttings_taken():
+    cuttings_taken = rootstock.acell(c1).value
+    cuttings_planned = rootstock.acell('b1').value
+    if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
+        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
+        cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: "))
+        rootstock.update_acell('c1', cuttings_taken)
+        print(f"You have now taken a total of {cuttings_taken} out of a planned_total of {cuttings_planned}!")
+    else:
+        print("Record new cuttings taken action cancelled.")
 
 def Record_potted_cuttings():
     print("cuttings potted")
@@ -170,6 +178,8 @@ else:
         Create_year()
     elif parameter == "plan_cuttings":
         Plan_cutting_campaign()
+    elif parameter == "take_cuttings":
+        Record_cuttings_taken()
     elif parameter == "plan_grafting":
         Plan_grafting_campaign()
     elif parameter == "hold_back":
