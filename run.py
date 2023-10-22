@@ -21,6 +21,8 @@ help_text = "\n#################################################################
     \n                   If you are not ready to plan all your cuttings or grafting, you can leave all or part of that task until later, by calling the 'plan_cuttings' or\
     \n                   'plan_grafting' operations later.\
     \n\n    plan_cuttings: This operation asks you to enter the number of cuttings you wish to produced of your currently preferred rootstock.\
+    \n\n    take_cuttings: This operation asks you how many cuttings you want to add to the record of cuttings actually taken. It tots up a running total.\
+    \n\n    pot_cuttings: This operation asks you how many successfully rooted cuttings you want to add to the record of potted up grafts. It tots a running total.\
     \n\n    plan_grafting: This operation first asks you to choose the cultivar for which you wish to produce grafts.\
     \n                   It then asks you to enter the number of grafts you wish to produce, giving you the information on how many root stocks are currently available.\
     \n\n    record_loss:   This operation asks you to choose the cultivar and age of the plants for which you want to record a loss.\
@@ -133,8 +135,8 @@ def Plan_cutting_campaign():
             Print("Plan cuttings action cancelled.")
 
 def Record_cuttings_taken():
-    cuttings_taken = rootstock.acell(c1).value
-    cuttings_planned = rootstock.acell('b1').value
+    cuttings_taken = int(rootstock.acell('c1').value)
+    cuttings_planned = int(rootstock.acell('b1').value)
     if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
         \nType 'y' for yes or 'n' for no: ").lower() == 'y':
         cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: "))
@@ -144,7 +146,19 @@ def Record_cuttings_taken():
         print("Record new cuttings taken action cancelled.")
 
 def Record_potted_cuttings():
-    print("cuttings potted")
+    cuttings_taken = int(rootstock.acell('c1').value)
+    cuttings_potted = int(rootstock.acell('d1').value)
+    new_rootstocks = int(rootstock.acell('e1').value)
+    if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
+        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
+        newly_potted = int(input(f"How many cuttings have you now potted up in addition to the ones already recorded: "))
+        cuttings_potted += newly_potted
+        new_rootstocks += newly_potted
+        rootstock.update_acell('d1', cuttings_potted)
+        rootstock.update_acell('e1', cuttings_potted)
+        print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}! That means you now have {new_rootstocks} year-zero rootstocks for grafting next year.")
+    else:
+        print("Record new cuttings potted action cancelled.")
 
 def Plan_grafting_campaign():
     print("Grafting campaign planning completed")
@@ -180,6 +194,8 @@ else:
         Plan_cutting_campaign()
     elif parameter == "take_cuttings":
         Record_cuttings_taken()
+    elif parameter == "pot_cuttings":
+        Record_potted_cuttings()
     elif parameter == "plan_grafting":
         Plan_grafting_campaign()
     elif parameter == "hold_back":
