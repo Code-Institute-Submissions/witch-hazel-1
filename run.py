@@ -139,7 +139,7 @@ def Record_cuttings_taken():
         \nType 'y' for yes or 'n' for no: ").lower() == 'y':
         cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: "))
         rootstock.update_acell('c1', cuttings_taken)
-        print(f"You have now taken a total of {cuttings_taken} out of a planned_total of {cuttings_planned}!")
+        print(f"You have now taken a total of {cuttings_taken} cuttings out of a planned_total of {cuttings_planned}!")
     else:
         print("Record new cuttings taken action cancelled.")
 
