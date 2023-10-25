@@ -48,10 +48,13 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+
+
 SHEET = GSPREAD_CLIENT.open('hamamelis')
 rootstock = SHEET.worksheet('rootstock')
 grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
+
 cuttings_taken = int(rootstock.acell('c1').value)
 rootstocks_potted = int(rootstock.acell('d1').value)
 mature_rootstocks = int(rootstock.acell('e1').value)
@@ -72,6 +75,17 @@ def Is_number(s):
     except ValueError:
         return False
 
+def Plan_grafts(graft_num):
+    column_letter = chr(ord('C') + graft_num - 1)
+    
+    cultivar_name_address = f"{column_letter}1"
+    cell_address = f"{column_letter}2"
+    cultivar_name = grafts_year_zero.acell(cultivar_name_address).value
+    current_value = int(grafts_year_zero.acell(cell_address).value)
+    print(f"The current planned figure you have for this year for {cultivar_name} is {current_value}. \n\n ")
+            new_value = int(input("What value would you like to replace that number with? \n "))
+    grafts_year_zero.update_acell(cell_address, value)
+
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
@@ -87,11 +101,11 @@ def Create_year():
 
     print(f"The last year created was {rootstock_year}")
     cuttings_last_year = rootstock.acell('c2').value
-    if input(f"Would you like to create a record for {new_rootstock_year}? Type 'y' for yes and 'n' for no: ").lower() == 'y':
+    if input(f"Would you like to create a record for {new_rootstock_year}? Type 'y' for yes and 'n' for no: \n").lower() == 'y':
         print(f"\nInfo: You took {cuttings_taken} cuttings last year and successfully potted {rootstocks_potted} ({round(cutting_success * 100)}%) of them.\
-        \nYou currently have {mature_rootstocks} maturing rootstocks in stock.\n")
+        \nYou currently have {mature_rootstocks} maturing rootstocks in stock.")
         num_cuttings = int(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
-        \n(Enter 0 if you would like to plan the number of cuttings to be taken later): "))
+        \n(Enter 0 if you would like to plan the number of cuttings to be taken later): \n"))
         values = [new_rootstock_year, num_cuttings, 0, 0, 0]
         rootstock.insert_row(values)  
         print(f"Year {new_rootstock_year} created. {num_cuttings} cuttings planned for this year.")
@@ -119,16 +133,16 @@ def Plan_cutting_campaign():
     last_year_cuttings = rootstock.acell('c2').value
     if int(planned_cuttings) > 0:
         if input(f"So far you have planned to take {planned_cuttings} cuttings! Would you like replace that number with a new one?\
-        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
-            planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year. The present planned figure for this year is {planned_cuttings}. Please enter a new figure for planned cuttings for this year: "))
+        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+            planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year. The present planned figure for this year is {planned_cuttings}. Please enter a new figure for planned cuttings for this year: \n"))
             rootstock.update_acell('b1', planned_cuttings)
             print("Cuttings campaign planning session completed")
         else:
             Print("Plan cuttings action cancelled.")
     else:
         if input(f"Would you like to plan the number of cuttings you intend to take this season? \
-        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
-            planned_cuttings = int(input(f"Please enter the number of cuttings you want to take this year: "))
+        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+            planned_cuttings = int(input(f"Please enter the number of cuttings you want to take this year: \n"))
             rootstock.update_acell('b1', planned_cuttings)
             print("Cuttings campaign planning session completed")
         else:
@@ -138,8 +152,8 @@ def Record_cuttings_taken():
     cuttings_taken = int(rootstock.acell('c1').value)
     cuttings_planned = int(rootstock.acell('b1').value)
     if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
-        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
-        cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: "))
+        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: \n"))
         rootstock.update_acell('c1', cuttings_taken)
         print(f"You have now taken a total of {cuttings_taken} cuttings out of a planned_total of {cuttings_planned}!")
     else:
@@ -150,18 +164,51 @@ def Record_potted_cuttings():
     cuttings_potted = int(rootstock.acell('d1').value)
     new_rootstocks = int(rootstock.acell('e1').value)
     if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
-        \nType 'y' for yes or 'n' for no: ").lower() == 'y':
-        newly_potted = int(input(f"How many cuttings have you now potted up in addition to the ones already recorded: "))
+        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        newly_potted = int(input(f"How many cuttings have you now potted up in addition to the ones already recorded: \n"))
         cuttings_potted += newly_potted
         new_rootstocks += newly_potted
         rootstock.update_acell('d1', cuttings_potted)
         rootstock.update_acell('e1', cuttings_potted)
-        print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}! That means you now have {new_rootstocks} year-zero rootstocks for grafting next year.")
+        print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}! That means you now have {new_rootstocks} immature rootstocks for grafting next year.")
     else:
         print("Record new cuttings potted action cancelled.")
 
 def Plan_grafting_campaign():
-    print("Grafting campaign planning completed")
+    rootstocks_available = int(rootstock.acell('e2').value)
+
+    row_values = grafts_year_zero.row_values(1)
+    first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values))
+    last_column = chr(ord('A') + first_empty_index)
+    print(last_column)
+    name_range = f"c1:{last_column}1"
+    value_range = f"c2:{last_column}2"
+
+    row_numbers = [1, 2]
+
+    ranges = [f'A{row}:{last_column}{row}' for row in row_numbers]
+
+    data = {}
+
+    for range_to_read in ranges:
+        values =grafts_year_zero.get(range_to_read)[0]
+        keys = grafts_year_zero.get(range_to_read.replace(str(row_numbers[0]), str(row_numbers[1])))[0]
+        data.update(dict(zip(keys, values)))
+
+    print(data)
+
+    cultivars = grafts_year_zero.get(name_range) [0]
+    planned_numbers = grafts_year_zero.get(value_range) [0]
+    count = 0
+    print(f"For which cultivar would you like to plan a grafting campaign?\
+    \nYou currently have {rootstocks_available} rootstocks available for use in grafting. \n")
+    for cultivar in cultivars:
+        count += 1
+        print(f"{count}. {cultivar}")
+
+    print("For which cultivar would you like to plan your grafting?\n")
+    cultivar_value = int(input("Please enter the number of the cultivar (see the cultivar listed above): \n")
+    
 
 def Hold_back():
     print("Stocks held back")
