@@ -84,8 +84,7 @@ def Plan_grafts(graft_num):
     current_value = int(grafts_year_zero.acell(cell_address).value)
     print(f"The current planned figure you have for this year for {cultivar_name} is {current_value}. \n\n ")
     new_value = int(input("What value would you like to replace that number with? \n "))
-    grafts_year_zero.update_acell(cell_address, value)1
-    jaime
+    grafts_year_zero.update_acell(cell_address, value)
 
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
