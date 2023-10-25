@@ -83,7 +83,7 @@ def Plan_grafts(graft_num):
     cultivar_name = grafts_year_zero.acell(cultivar_name_address).value
     current_value = int(grafts_year_zero.acell(cell_address).value)
     print(f"The current planned figure you have for this year for {cultivar_name} is {current_value}. \n\n ")
-            new_value = int(input("What value would you like to replace that number with? \n "))
+    new_value = int(input("What value would you like to replace that number with? \n "))
     grafts_year_zero.update_acell(cell_address, value)
 
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
@@ -207,7 +207,7 @@ def Plan_grafting_campaign():
         print(f"{count}. {cultivar}")
 
     print("For which cultivar would you like to plan your grafting?\n")
-    cultivar_value = int(input("Please enter the number of the cultivar (see the cultivar listed above): \n")
+    cultivar_value = int(input("Please enter the number of the cultivar (see the cultivar listed above): \n"))
     
 
 def Hold_back():
