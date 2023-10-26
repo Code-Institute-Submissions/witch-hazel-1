@@ -196,13 +196,31 @@ def Plan_cutting_campaign():
             rootstock.update_acell('b1', planned_cuttings)
             print("Cuttings campaign planning session completed.")
         else:
-            Print("Plan cuttings action cancelled.")
+            print("Plan cuttings action cancelled.  No changes have been made to the data.")
 
 """
 Option 3:
 Lets user record cuttings.
 Ideally used daily during the cuttings campaign (in Autumn).
 """
+
+def Run_main_if_clause(taken, planned):
+    if taken >= planned:
+        print(f"You have already reached the number of cuttings you planned to take this year: {taken} cuttings taken out of {planned} planned!")
+    else:
+        print(f"So far you have taken {taken} cuttings!")
+    if input("Would you like to add to that number? Type 'y' for yes or 'n' for no: \n").lower() == 'y':
+        taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: \n"))
+        rootstock.update_acell('c1', taken)
+        if taken >= planned:
+            print(f"Congratulations! You have achieved the planned number of cuttings: {taken} cuttings taken out of {planned} planned!")
+        else:
+            print(f"You have now taken a total of {taken} cuttings out of a planned_total of {planned}!")
+
+        print("Cuttings campaign record added successfully.")
+    else:
+        print("Cuttings taken action cancelled. No changes have been made to the data.")
+
 def Record_cuttings_taken():
     cuttings_taken = int(rootstock.acell('c1').value)
     cuttings_planned = int(rootstock.acell('b1').value)
@@ -210,21 +228,11 @@ def Record_cuttings_taken():
     if cuttings_rooted > 0:
         if input("You have already begun potting up cuttings for this year. Are you sure you want to take cuttings at this time?\
          \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
-                \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-                cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: \n"))
-                rootstock.update_acell('c1', cuttings_taken)
-                print(f"You have now taken a total of {cuttings_taken} cuttings out of a planned_total of {cuttings_planned}!\
-                \nCuttings campaign record added successfully.")
+            Run_main_if_clause(cuttings_taken, cuttings_planned)
         else:
             print("Record new cuttings taken action cancelled.")
     else:
-        if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
-                \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-                cuttings_taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: \n"))
-                rootstock.update_acell('c1', cuttings_taken)
-                print(f"You have now taken a total of {cuttings_taken} cuttings out of a planned_total of {cuttings_planned}!\
-                \nCuttings campaign record added successfully.")
+        Run_main_if_clause(cuttings_taken, cuttings_planned)
         
 
 """
