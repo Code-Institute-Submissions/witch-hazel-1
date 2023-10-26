@@ -427,7 +427,7 @@ def Record_loss():
 
         current_number = int(plants.acell(address_affected).value)
         print(f"You have chosen to register a loss of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
-        \nThere are currently {current_number} of that category recorded in the system.")
+        \nThere are currently {current_number} plants of that category recorded in the system.")
         while True:
             number_lost = input("How many plants of that category have been lost since then? \n")
             try:
@@ -438,9 +438,9 @@ def Record_loss():
                     print(f"You can't have lost more plants of this category than you actually had in the nursery! Please enter an integer between 0 and {current_number}: ")
             except ValueError:
                 print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
-        
-        rootstock.update_acell(address_affected, current_number - number_lost)
-        print(f"Loss of {number_lost} {cultivars[cultivar_value - 1]} of year-{affected_year} recorded. You now have a remaining stock of {rootstock.acell(address_affected).value} plants of that category.") 
+        current_number -= number_lost
+        plants.update_acell(address_affected, current_number)
+        print(f"Loss of {number_lost} {cultivars[cultivar_value - 1]} of year-{affected_year} recorded. You now have a remaining stock of {plants.acell(address_affected).value} plants of that category.") 
         
         #number_lost
     print("Loss recorded successfully.")
@@ -450,11 +450,66 @@ Option 8:
 Essentially the opposite of Option 7.
 """
 def Record_gain():
-    print("Acquisition_recorded")
+    #Did we acquire new_rootstocks?
+    if input(f"Would you like to record an acquisition of new rootstocks?\
+    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        address_affected = 'e1'
+        total_rootstocks = int(rootstock.acell(address_affected).value)
+    
+        print(f"At the last count there were {total_rootstocks} new rootstocks in the nursery")
+        
+        while True:
+            number_gained = input("How many rootstocks have been acquired since then? \n")
+            try:
+                number_gained = int(number_gained)
+                break
+            except ValueError:
+                print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+        
+        rootstock.update_acell(address_affected, total_rootstocks + number_gained)
+        print(f"Acquisition of {number_gained} new rootstocks recorded. You now have a stock of {rootstock.acell(address_affected).value} new rootstocks.")
+    else:
+        #If what's been gained is grafted plants
+        #First define the cultivar affected
+        row_values = plants.row_values(1)
+        first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
+        last_column = chr(ord('A') + first_empty_index)
+
+        name_range = f"a1:{last_column}1" #Names of cultivars
+        cultivars = plants.get(name_range) [0]
+
+        
+        #List out the names of the cultivars you have in your data in an ordered list.
+        print(f"For which cultivar would you like record a loss?")
+        count = 0
+        for cultivar in cultivars:
+            count += 1
+            print(f"{count}. {cultivar}")
+
+        cultivar_value = int(input("Please enter the cultivar number for which you want to record an acquisition (see the cultivars listed above): \n"))
+        affected_year = int(input("Please enter the age of the plants for which you want to record an acquisition (typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
+        address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+
+        current_number = int(plants.acell(address_affected).value)
+        print(f"You have chosen to register an acquisition of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
+        \nThere are currently {current_number} plants of that category recorded in the system.")
+        while True:
+            number_gained = input("How many plants of that category have been acquired since then? \n")
+            try:
+                number_gained = int(number_gained)
+                break
+            except ValueError:
+                print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+        current_number += number_gained
+        plants.update_acell(address_affected, current_number)
+        print(f"Acquisition of {number_gained} {cultivars[cultivar_value - 1]} of year-{affected_year} recorded. You currently have a stock of {plants.acell(address_affected).value} plants of that category.") 
+        
+        #number_lost
+    print("Acquisition recorded successfully.")
 
 """
 Option 9:
-Essentially a combination of Options 7 and 8.
+Essentially a Option 7 with a twist.
 Results in the number of cultivars from year n being removed and then added to year n-1.
 """
 def Hold_back():

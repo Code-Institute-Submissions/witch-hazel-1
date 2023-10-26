@@ -130,10 +130,13 @@ Todo
 logging
 reasons for loss/gain
 wipeouts
+loss of year-zero grafted plants
 storage and committing
 reporting
 refactoring
+adding new cultivars
 program continuity
 escape errors due to badly formatted spreadsheets
+authentication for access to spreadsheets
 heroku setup
 heroku problems
