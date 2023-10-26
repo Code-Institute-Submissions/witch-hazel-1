@@ -29,8 +29,9 @@ help_text = "\n#################################################################
     \nwill indicated. Negative numbers are always interpreted as invalid. Any time you enter an\
     \ninvalid number, the app will give you another opportunity to enter a valid one.\
     \n\n\nPlease look at the relevant section of the README.md file to find out which numbers\
-    \n\nare valid in each individual user interaction.\
+    \nare valid in each individual user interaction.\
     \n\n#############################################################################################################################################################\
+    \n(Scroll up if necessary to read the help text!)\
     \n"
 
 SCOPE = [
@@ -96,9 +97,8 @@ def Startup_instructions():
     \n10. Bring plants forward one year\
     \n\n11. Check plant stock\
     \nFor full list of the program's functions and instructions on how to call them, enter '0' on the\
-    \ncommand line. This will show you the help text for the app.
+    \ncommand line. This will show you the help text for the app.\
     \n\nYou must restart the app for each operation you would like to perform.\
-    \n\n    
     \n\n")
     
     lower_bound = 0
@@ -112,7 +112,6 @@ def Startup_instructions():
                 break
             else:
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and {upper_bound}. Please enter a valid number: ")
-                print(f"Please indicate which operation you would like to perform by entering the corresponding number: \n")
         except ValueError:
             print(f"Your number must be an integer. Decimal numbers, text and special characters, etc. are not allowed: ")
 
@@ -121,7 +120,6 @@ def Startup_instructions():
 """
 Option 0
 """
-
 def Help():
     print(help_text)
 
