@@ -352,7 +352,7 @@ def Record_grafts():
         print(f"{count}. {cultivar}")
 
     print("Which cultivar has been grafted?\n")
-    cultivar_value = int(input("Please enter the number of the cultivar for the new grafts you want to record (see the cultivars listed above): \n"))
+    cultivar_value = int(input("Please enter the cultivar number of the new grafts you want to record (see the cultivars listed above): \n"))
     address_grafts = f"{chr(ord('C') + cultivar_value - 1)}3"
     address_rootstocks = 'e2'
     grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
@@ -364,9 +364,9 @@ def Record_grafts():
         grafts_this_cultivar += newly_made_grafts
         grafts_year_zero.update_acell(address_grafts, grafts_this_cultivar)
         rootstock.update_acell(address_rootstocks, int(rootstock.acell(address_rootstocks).value) - newly_made_grafts)
-        print(int(rootstock.acell(address_rootstocks).value) - newly_made_grafts)
+        print(address_grafts)
         print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
-            \nThe new total of grafts made this year for this cultivar is {rootstock.acell(address_grafts).value}\
+            \nThe new total of grafts made this year for this cultivar is {grafts_year_zero.acell(address_grafts).value}\
             \nSuccessfully completed record of new grafts made.")
 
     else:
