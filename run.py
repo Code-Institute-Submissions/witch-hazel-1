@@ -288,11 +288,12 @@ def Plan_grafting_campaign():
     total_planned = sum(planned_numbers)
     
     
-    count = 0
     print(f"For which cultivar would you like to plan a grafting campaign?\
     \nYou currently have {rootstocks_available} rootstocks available for use in grafting.\
     \nOf these, {rootstocks_available - total_planned} have not yet been reserved in your plan")
+
     #List out the names of the cultivars you have in your data in an ordered list.
+    count = 0
     for cultivar in cultivars:
         count += 1
         print(f"{count}. {cultivar}")
@@ -311,7 +312,7 @@ def Plan_grafting_campaign():
             \nCuttings campaign planning session completed")
 
     else:
-        print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.  No changes have been made to the data.")
+        print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled. No changes have been made to the data.")
 
 
 """
@@ -340,13 +341,12 @@ def Record_grafts():
     grafts_this_year = [int(x) for x in grafts_this_year] #Converts the strings in the planned numbers list into integers to make it possible to sum them together.
     total_grafted = sum(grafts_this_year)
     
-    
-    count = 0
     print(f"For which cultivar would you like record new grafts completed?\
     \nYou currently have {rootstocks_available} rootstocks available for use in grafting.\
     \nOf these, {rootstocks_available - total_planned} have not yet been reserved in your plan.")
 
     #List out the names of the cultivars you have in your data in an ordered list.
+    count = 0
     for cultivar in cultivars:
         count += 1
         print(f"{count}. {cultivar}")
@@ -381,7 +381,48 @@ May be used throughout the year.
 Losses of cuttings are not recorded until the time comes to pot up those of them that have rooted successfully.
 """
 def Record_loss():
-    print("Loss recorded")
+    #Did we lose new_rootstocks?
+    if input(f"Would you like to record a loss of new rootstocks?\
+    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        affected_cell = 'e1'
+        total_rootstocks = int(rootstock.acell(affected_cell).value)
+    
+        print(f"At the last count there were {total_rootstocks} new rootstocks in the nursery")
+        
+        while True:
+            number_lost = input("How many rootstocks have been lost since then? \n")
+            try:
+                number_lost = int(number_lost)
+                if 0 <= number_lost <= total_rootstocks:
+                    break
+                else:
+                    print(f"You can't have lost more rootstocks than you actually had in the nursery! Please enter an integer between 0 and {total_rootstocks}: ")
+            except ValueError:
+                print(f"Your number must be an integer. Decimal numbers, text and special characters, etc. are not allowed: ")
+        
+        rootstock.update_acell(affected_cell, total_rootstocks - number_lost)
+    else:
+
+        row_values = grafts_year_zero.row_values(1)
+        first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
+        last_column = chr(ord('A') + first_empty_index)
+
+        name_range = f"c1:{last_column}1" #Names of cultivars
+        cultivars = grafts_year_zero.get(name_range) [0]
+
+        
+        #List out the names of the cultivars you have in your data in an ordered list.
+        print(f"For which cultivar would you like record a loss?")
+        count = 0
+        for cultivar in cultivars:
+            count += 1
+            print(f"{count}. {cultivar}")
+
+        affected_cultivar = int(input("Please enter the cultivar number for which you want to record a loss (see the cultivars listed above): \n"))
+        
+        #affected_age
+        #number_lost
+    print("Loss recorded successfully")
 
 """
 Option 8:
