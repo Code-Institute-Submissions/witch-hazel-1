@@ -278,7 +278,7 @@ def Plan_grafting_campaign():
 
     row_values = grafts_year_zero.row_values(1)
     first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data)
-    last_column = chr(ord('A') + first_empty_index)
+    last_column = chr(ord('a') + first_empty_index)
 
     name_range = f"c1:{last_column}1"
     planned_range = f"c2:{last_column}2"
@@ -301,7 +301,7 @@ def Plan_grafting_campaign():
 
     print("For which cultivar would you like to plan your grafting?\n")
     cultivar_value = int(input("Please enter the number of the cultivar for which you want to plan grafting (see the cultivars listed above): \n"))
-    cell_address = f"{chr(ord('C') + cultivar_value - 1)}2"
+    cell_address = f"{chr(ord('c') + cultivar_value - 1)}2"
     print(cell_address)
     print(f"You have chosen to plan graft numbers for {cultivars[cultivar_value - 1]}")
     print(f"So far, you have planned to graft {planned_numbers[cultivar_value - 1]}")
@@ -328,7 +328,7 @@ def Record_grafts():
 
     row_values = grafts_year_zero.row_values(1)
     first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
-    last_column = chr(ord('A') + first_empty_index)
+    last_column = chr(ord('a') + first_empty_index)
 
     name_range = f"c1:{last_column}1" #Names of cultivars
     planned_range = f"c2:{last_column}2" #Numbers of planned grafts
@@ -354,7 +354,7 @@ def Record_grafts():
 
     print("Which cultivar has been grafted?\n")
     cultivar_value = int(input("Please enter the cultivar number of the new grafts you want to record (see the cultivars listed above): \n"))
-    address_grafts = f"{chr(ord('C') + cultivar_value - 1)}3"
+    address_grafts = f"{chr(ord('c') + cultivar_value - 1)}3"
     address_rootstocks = 'e2'
     grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
     print(f"You have chosen to record grafts of {cultivars[cultivar_value - 1]}")
@@ -408,7 +408,7 @@ def Record_loss():
         #First define the cultivar affected
         row_values = plants.row_values(1)
         first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
-        last_column = chr(ord('A') + first_empty_index)
+        last_column = chr(ord('a') + first_empty_index)
 
         name_range = f"a1:{last_column}1" #Names of cultivars
         cultivars = plants.get(name_range) [0]
@@ -473,7 +473,7 @@ def Record_gain():
         #First define the cultivar affected
         row_values = plants.row_values(1)
         first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
-        last_column = chr(ord('A') + first_empty_index)
+        last_column = chr(ord('a') + first_empty_index)
 
         name_range = f"a1:{last_column}1" #Names of cultivars
         cultivars = plants.get(name_range) [0]
@@ -510,18 +510,132 @@ def Record_gain():
 """
 Option 9:
 Essentially a Option 7 with a twist.
-Results in the number of cultivars from year n being removed and then added to year n-1.
+Results in the given number of the chosen cultivar from year n being removed and then added to year n-1.
 """
 def Hold_back():
-    print("Stocks held back")
+    #First define the cultivar affected
+    row_values = plants.row_values(1)
+    first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
+    last_column = chr(ord('a') + first_empty_index)
+
+    name_range = f"a1:{last_column}1" #Names of cultivars
+    cultivars = plants.get(name_range) [0]
+
+    #List out the names of the cultivars you have in your data in an ordered list.
+    print(f"For which cultivar would you like hold back plants?")
+    count = 0
+    for cultivar in cultivars:
+        count += 1
+        print(f"{count}. {cultivar}")
+
+    cultivar_value = int(input("Please enter the cultivar number for which you want to hold plants back (see the cultivars listed above): \n"))
+    while True:
+        affected_year = int(input("Please enter the age of the plants that you want to hold back (typing '2' for year-two plants or '3' for year-three plants, and so on): \n"))
+        try:
+            affected_year = int(affected_year)
+            if affected_year > 1:
+                break
+            elif affected_year == 1:
+                print(f"Year-one plants cannot be held back. Enter 2 or higher. But remember there's no point in entering an age greater than the age of the nursery.")
+            else:
+                print(f"Please enter an integer between 2 and the age of the nursery.")
+        except ValueError:
+            print(f"Your number must be an integer greater than 2 and less than the age of the nursery. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+                
+
+    from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+    to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year}"
+
+    current_number_from = int(plants.acell(from_address_affected).value)
+    current_number_to = int(plants.acell(to_address_affected).value)
+    print(f"You have chosen to hold back {cultivars[cultivar_value - 1]} plants of age year-{affected_year}.\
+    \nThere are currently {current_number_from} plants of that category recorded in the system.\
+    \nThere are now {current_number_to} plants of that cultivar listed as being a year younger.\
+    \nThe specified number of plants will be held back for a year.")
+    while True:
+        number_held_back = input("How many plants of that category do you want to hold back for a year? \n")
+        try:
+            number_held_back = int(number_held_back)
+            if 0 <= number_held_back <= current_number_from:
+                break
+            else:
+                print(f"You can't hold back more plants of this category than you actually have in the nursery! Please enter an integer between 0 and {current_number_from}: ")
+        except ValueError:
+            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+
+    current_number_from -= number_held_back
+    current_number_to += number_held_back
+    plants.update_acell(from_address_affected, current_number_from)
+    plants.update_acell(to_address_affected, current_number_to)
+    print(f"Successfully recorded holding back {number_held_back} {cultivars[cultivar_value - 1]} plants of year-{affected_year}.\
+    \nYou now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
+    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year - 1}") 
+
+    print("Plants held back successfully.")
 
 """
 Option 10:
 The same as Option 9, but in the opposite direction.
-Results in the number of cultivars from year n being removed and then added to year n-1.
+Results in the given number of cultivars from year n being removed and then added to year n+1.
 """
 def Bring_forward():
-    print("Stocks brought forward")
+    #First define the cultivar affected
+    row_values = plants.row_values(1)
+    first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
+    last_column = chr(ord('a') + first_empty_index)
+
+    name_range = f"a1:{last_column}1" #Names of cultivars
+    cultivars = plants.get(name_range) [0]
+
+    #List out the names of the cultivars you have in your data in an ordered list.
+    print(f"For which cultivar would you like bring plants forward?")
+    count = 0
+    for cultivar in cultivars:
+        count += 1
+        print(f"{count}. {cultivar}")
+
+    cultivar_value = int(input("Please enter the cultivar number for which you want to bring plants forward (see the cultivars listed above): \n"))
+    while True:
+        affected_year = int(input("Please enter the age of the plants for which you want to bring plants forward (typing '1' for year-one plants or '2' for year-two plants, and so on): \n"))
+        try:
+            affected_year = int(affected_year)
+            if affected_year >= 1:
+                break
+            else:
+                print(f"Please enter an integer between 1 and the age of the nursery.")
+        except ValueError:
+            print(f"Your number must be an integer and must be at least 1, and less than the age of the nursery. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+                
+
+    from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+    to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 2}"
+
+    current_number_from = int(plants.acell(from_address_affected).value)
+    current_number_to = int(plants.acell(to_address_affected).value)
+    print(f"You have chosen to bring forward {cultivars[cultivar_value - 1]} plants of age year-{affected_year}.\
+    \nThere are currently {current_number_from} plants of that category recorded in the system.\
+    \nThere are now {current_number_to} plants of that cultivar listed as being a year older.\
+    \nThe specified number of plants will be brought forward by a year.")
+    while True:
+        number_brought_forward = input("How many plants of that category do you want to bring forward for a year? \n")
+        try:
+            number_brought_forward = int(number_brought_forward)
+            if 0 <= number_brought_forward <= current_number_from:
+                break
+            else:
+                print(f"You can't bring forward more plants of this category than you actually have in the nursery! Please enter an integer between 0 and {current_number_from}: ")
+        except ValueError:
+            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+
+    current_number_from -= number_brought_forward
+    current_number_to += number_brought_forward
+    plants.update_acell(from_address_affected, current_number_from)
+    plants.update_acell(to_address_affected, current_number_to)
+    print(f"Successfully recorded bringing forward {number_brought_forward} {cultivars[cultivar_value - 1]} plants of year-{affected_year}.\
+    \nYou now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
+    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year + 1}") 
+
+    print("Plants brought forward successfully.")
 
 """
 Option 11:
@@ -565,11 +679,11 @@ def Execute_option(operation):
         print("You have chosen to record the acquisition of a number of plants")
         Record_gain()
     elif operation == 9:
-        print("You have chosen to hold back a number of grafted plants from their cohort to the previous one")
+        print("You have chosen to hold back a number of grafted plants for a year")
         Hold_back()
     elif operation == 10:
+        print("You have chosen to bring a number of grafted plants forward by a year")
         Bring_forward()
-        print("You have chosen bring a number of grafted plants forward from their cohort to next one")
     elif operation == 11:
         Check_plant_stock()
     else:
