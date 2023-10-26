@@ -2,10 +2,12 @@ import gspread
 from google.oauth2.service_account import Credentials
 import sys
 
-help_text = "\n#############################################################################################################################################################\
-    \n\n                                                       W I T C H - H A Z E L\
-    \nTo run witch-hazel, call the script file that contains its code ('run.py') by simply typing the name of the file on the command line (``run.py``)\
-    \nOn opening, the app will show you a list of the options available to you and ask which of them you would like to perform.\
+help_text = "\n################################################################################\
+    \n\n                             W I T C H - H A Z E L\
+    \nTo run witch-hazel, call the script file that contains its code ('run.py') by\
+    \nsimply typing the name of the file on the command line (``run.py``).\
+    \nOn opening, the app will show you a list of the options available to you and\
+    \n ask which of them you would like to perform.\
     \n\n0. Help\
     \n1. Close out current year\
     \n\n2. Plan this year's cutting campaign\
@@ -15,25 +17,27 @@ help_text = "\n#################################################################
     \n6. Record grafts taken\
     \n\n7. Record plant losses\
     \n8. Record plant gains\
-    \n9. Hold over plants for one year\
+    \n9. Hold plants over for one year\
     \n10. Bring plants forward one year\
-    \n\n11. Check plant stock\
+    \n\n11. Add new cultivar\
     \n\nYou should then type in the number of the operation you wish to perform.\
     \nThe app will then guide you through the operation you have chosen to perform.\
     \nYou will need to restart the app each time you wish to run an operation.\
     \n\nPlease see the README.md file for further details on each of these options.\
-    \n\nAt some points it may be necessary to ask you a yes or no question. Where this happens\
-    \nyou should answer in the affirmative by typing a 'y' or 'Y' on the command line.\
-    \nTyping in any other symbol will be interpreted as a 'No', which will result in the app closing.\
-    \n\nIn other cases you will be asked to enter a number. Sometimes the range of valid numbers\
-    \nwill indicated. Negative numbers are always interpreted as invalid. Any time you enter an\
-    \ninvalid number, the app will give you another opportunity to enter a valid one.\
-    \n\n\nPlease look at the relevant section of the README.md file to find out which numbers\
-    \nare valid in each individual user interaction.\
-    \n\n#############################################################################################################################################################\
+    \n\nAt some points it may be necessary to ask you a yes or no question. Where this\
+    \nhappens you should answer in the affirmative by typing a 'y' or 'Y' on the\
+    \ncommand line. Typing in any other symbol will be interpreted as a 'No', which\
+    \nwill result in the app closing.\
+    \n\nIn other cases you will be asked to enter a number. Sometimes the range of\
+    \nvalid numbers will be indicated. Negative numbers are always interpreted as\
+    \n invalid. Any time you enter an invalid number, the app will give you another\
+    \nopportunity to enter a valid one.\
+    \n\n\nPlease look at the relevant section of the README.md file to find out which\
+    \nnumbers are valid in each individual user interaction.\
+    \n\n###############################################################################\
     \n(Scroll up if necessary to read the help text!)\
     \n"
-
+    
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -65,23 +69,16 @@ def Get_survival_rate(start_num, end_num):
         return 'You ended up with more units than you started with.'
     else:
         return int(end_num) / int(start_num)
-
-def Is_integer(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
-        
+      
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
-
 
 """
 The program's main menu on startup
 """
 def Startup_instructions():
-    print("Welcome to witch-hazel, your simple app for planning your production of grafted Hamamelis plants!\
+    print("Welcome to witch-hazel, your simple app for planning your production of\
+    \n of grafted Hamamelis plants!\
     \nWhat would you like to do?\
     \nChoose from among the following functions:\
     \n\n0. Help\
@@ -95,8 +92,9 @@ def Startup_instructions():
     \n8. Record plant gains\
     \n9. Hold over plants for one year\
     \n10. Bring plants forward one year\
-    \n\n11. Check plant stock\
-    \nFor full list of the program's functions and instructions on how to call them, enter '0' on the\
+    \n\n11. Add new cultivar\
+    \nFor a full list of the program's functions and instructions on how to call\
+    \nthem, enter '0' on the\
     \ncommand line. This will show you the help text for the app.\
     \n\nYou must restart the app for each operation you would like to perform.\
     \n\n")
@@ -105,15 +103,18 @@ def Startup_instructions():
     upper_bound = 11
 
     while True:
-        user_entry = input(f"Please indicate which operation you would like to perform by entering the corresponding number: \n")
+        user_entry = input(f"Please indicate which operation you would like to perform by entering the\
+        \ncorresponding number: \n")
         try:
             int_option = int(user_entry)
             if lower_bound <= int_option <= upper_bound:
                 break
             else:
-                print(f"Invalid input. Your number must be a whole number between {lower_bound} and {upper_bound}. Please enter a valid number: ")
+                print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
+                \n{upper_bound}. Please enter a valid number: ")
         except ValueError:
-            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers,\
+            \ntext and special characters, etc. are not allowed: ")
 
     Execute_option(int_option)
 
@@ -134,13 +135,15 @@ def Create_year():
 
     print(f"The last year created was {rootstock_year}")
     cuttings_last_year = rootstock.acell('c2').value
-    if input(f"Would you like to create a record for {new_rootstock_year}? Type 'y' for yes and 'n' for no: \n").lower() == 'y':
+    if input(f"Would you like to create a record for {new_rootstock_year}?\
+    \nType 'y' for yes and 'n' for no: \n").lower() == 'y':
         print(f"\nInfo: You took {cuttings_taken} cuttings last year and successfully potted {rootstocks_potted} ({round(cutting_success * 100)}%) of them.\
         \nYou currently have {mature_rootstocks} maturing rootstocks in stock.")
         num_cuttings = int(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
         \n(Enter 0 if you would like to plan the number of cuttings to be taken later): \n"))
         values = [new_rootstock_year, num_cuttings, 0, 0, 0]
-        rootstock.insert_row(values)  
+        rootstock.insert_row(values)
+        rootstock.update_acell('e3', 0) 
         print(f"Year {new_rootstock_year} created. {num_cuttings} cuttings planned for this year.")
         if num_cuttings == 0:
             print("You've chosen to plan your cutting campaign later!")
@@ -304,7 +307,7 @@ def Plan_grafting_campaign():
     cell_address = f"{chr(ord('c') + cultivar_value - 1)}2"
     print(cell_address)
     print(f"You have chosen to plan graft numbers for {cultivars[cultivar_value - 1]}")
-    print(f"So far, you have planned to graft {planned_numbers[cultivar_value - 1]}")
+    print(f"So far, you have planned to make {planned_numbers[cultivar_value - 1]} grafts of this cultivar.")
     if input("Would you like to replace this value?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
         new_planned_value = int(input(f"Type in the new planned value for {cultivars[cultivar_value - 1]}: \n"))
@@ -321,7 +324,7 @@ Option 6:
 Lets user record the number of grafts taken for a chosen cultivar.
 Should be used in late winter; at grafting time.
 Shows the user the total number of rootstocks ready for grafting and the number left.
-Warns the user when they've used more rootstocks than they actually have. 
+Warns the user when they've used more rootstocks than they actually have.
 """
 def Record_grafts():
     rootstocks_available = int(rootstock.acell('e2').value)
@@ -353,7 +356,9 @@ def Record_grafts():
         print(f"{count}. {cultivar}")
 
     print("Which cultivar has been grafted?\n")
-    cultivar_value = int(input("Please enter the cultivar number of the new grafts you want to record (see the cultivars listed above): \n"))
+    
+    cultivar_value = int(input("Please enter the cultivar number of the new grafts you want to record (see the\
+    \ncultivars listed above): \n"))
     address_grafts = f"{chr(ord('c') + cultivar_value - 1)}3"
     address_rootstocks = 'e2'
     grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
@@ -365,7 +370,6 @@ def Record_grafts():
         grafts_this_cultivar += newly_made_grafts
         grafts_year_zero.update_acell(address_grafts, grafts_this_cultivar)
         rootstock.update_acell(address_rootstocks, int(rootstock.acell(address_rootstocks).value) - newly_made_grafts)
-        print(address_grafts)
         print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
             \nThe new total of grafts made this year for this cultivar is {grafts_year_zero.acell(address_grafts).value}\
             \nSuccessfully completed record of new grafts made.")
@@ -397,9 +401,11 @@ def Record_loss():
                 if 0 <= number_lost <= total_rootstocks:
                     break
                 else:
-                    print(f"You can't have lost more rootstocks than you actually had in the nursery! Please enter an integer between 0 and {total_rootstocks}: ")
+                    print(f"You can't have lost more rootstocks than you actually had in the nursery!\
+                    \nPlease enter an integer between 0 and {total_rootstocks}: ")
             except ValueError:
-                print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+                print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers,\
+                \ntext and special characters, etc. are not allowed: ")
         
         rootstock.update_acell(address_affected, total_rootstocks - number_lost)
         print(f"Loss of {number_lost} new rootstocks recorded. You now have a stock of {rootstock.acell(address_affected).value} new rootstocks.")
@@ -528,19 +534,27 @@ def Hold_back():
         count += 1
         print(f"{count}. {cultivar}")
 
-    cultivar_value = int(input("Please enter the cultivar number for which you want to hold plants back (see the cultivars listed above): \n"))
+    cultivar_value = int(input("Please enter the cultivar number for which you want to hold plants back (see\
+    \nthe cultivars listed above): \n"))
     while True:
-        affected_year = int(input("Please enter the age of the plants that you want to hold back (typing '2' for year-two plants or '3' for year-three plants, and so on): \n"))
+        affected_year = int(input("Please enter the age of the plants that you want to hold back (typing '2'\
+        \nfor year-two plants or '3' for year-three plants, and so on): \n"))
         try:
             affected_year = int(affected_year)
             if affected_year > 1:
                 break
             elif affected_year == 1:
-                print(f"Year-one plants cannot be held back. Enter 2 or higher. But remember there's no point in entering an age greater than the age of the nursery.")
+                print(f"Year-one plants cannot be held back. Enter 2 or higher. But remember there's\
+                \nno point in entering an age greater than the age of the nursery.")
             else:
                 print(f"Please enter an integer between 2 and the age of the nursery.")
         except ValueError:
-            print(f"Your number must be an integer greater than 2 and less than the age of the nursery. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+            """
+              ********************************************************************************
+"""
+            print(f"Your number must be an integer greater than 2 and less than the age of the\
+            \nnursery. Negative and decimal-point numbers, text and special characters, etc.\
+            \nare not allowed: ")
                 
 
     from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
@@ -559,9 +573,11 @@ def Hold_back():
             if 0 <= number_held_back <= current_number_from:
                 break
             else:
-                print(f"You can't hold back more plants of this category than you actually have in the nursery! Please enter an integer between 0 and {current_number_from}: ")
+                print(f"You can't hold back more plants of this category than you actually have in the\
+                \nnursery! Please enter an integer between 0 and {current_number_from}: ")
         except ValueError:
-            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers,\
+            \ntext and special characters, etc. are not allowed: ")
 
     current_number_from -= number_held_back
     current_number_to += number_held_back
@@ -569,7 +585,7 @@ def Hold_back():
     plants.update_acell(to_address_affected, current_number_to)
     print(f"Successfully recorded holding back {number_held_back} {cultivars[cultivar_value - 1]} plants of year-{affected_year}.\
     \nYou now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
-    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year - 1}") 
+    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year - 1} plants of that cultivar.") 
 
     print("Plants held back successfully.")
 
@@ -594,9 +610,11 @@ def Bring_forward():
         count += 1
         print(f"{count}. {cultivar}")
 
-    cultivar_value = int(input("Please enter the cultivar number for which you want to bring plants forward (see the cultivars listed above): \n"))
+    cultivar_value = int(input("Please enter the cultivar number for which you want to bring plants forward\
+    \n(see the cultivars listed above): \n"))
     while True:
-        affected_year = int(input("Please enter the age of the plants for which you want to bring plants forward (typing '1' for year-one plants or '2' for year-two plants, and so on): \n"))
+        affected_year = int(input("Please enter the age of the plants for which you want to bring plants forward\
+        \n(typing '1' for year-one plants or '2' for year-two plants, and so on): \n"))
         try:
             affected_year = int(affected_year)
             if affected_year >= 1:
@@ -604,7 +622,9 @@ def Bring_forward():
             else:
                 print(f"Please enter an integer between 1 and the age of the nursery.")
         except ValueError:
-            print(f"Your number must be an integer and must be at least 1, and less than the age of the nursery. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+            print(f"Your number must be an integer and must be at least 1, and less than the age of\
+            \nthe nursery. Negative and decimal-point numbers, text and special characters, etc.\
+            \nare not allowed: ")
                 
 
     from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
@@ -623,9 +643,11 @@ def Bring_forward():
             if 0 <= number_brought_forward <= current_number_from:
                 break
             else:
-                print(f"You can't bring forward more plants of this category than you actually have in the nursery! Please enter an integer between 0 and {current_number_from}: ")
+                print(f"You can't bring forward more plants of this category than you actually have in\
+                the nursery! Please enter an integer between 0 and {current_number_from}: ")
         except ValueError:
-            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
+            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers,\
+            \ntext and special characters, etc. are not allowed: ")
 
     current_number_from -= number_brought_forward
     current_number_to += number_brought_forward
@@ -633,17 +655,16 @@ def Bring_forward():
     plants.update_acell(to_address_affected, current_number_to)
     print(f"Successfully recorded bringing forward {number_brought_forward} {cultivars[cultivar_value - 1]} plants of year-{affected_year}.\
     \nYou now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
-    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year + 1}") 
+    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year + 1} plants of that cultivar.") 
 
     print("Plants brought forward successfully.")
 
 """
 Option 11:
-Reports on the current situation for the current year showing 
-on screen a list of all planned and actual cutting and graft numbers for the year.
+Allows the user to add a new cultivar to the Hamamelis plants currently grown in the nursery.
 """
-def Check_plant_stock():
-    print("Plant stocks checked")
+def Add_new_cultivar():
+    print("This functionality has not yet been implemented. Please watch this space!")
 
 
 
@@ -670,22 +691,23 @@ def Execute_option(operation):
         print("You have chosen to plan your grafting campaign.")
         Plan_grafting_campaign()
     elif operation == 6:
-        print("You have chosen to record the completion a number of new grafts")
+        print("You have chosen to record the completion a number of new grafts.")
         Record_grafts()
     elif operation == 7:
-        print("You have chosen to record the loss of a number of plants")
+        print("You have chosen to record the loss of a number of plants.")
         Record_loss()
     elif operation == 8:
-        print("You have chosen to record the acquisition of a number of plants")
+        print("You have chosen to record the acquisition of a number of plants.")
         Record_gain()
     elif operation == 9:
-        print("You have chosen to hold back a number of grafted plants for a year")
+        print("You have chosen to hold back a number of grafted plants for a year.")
         Hold_back()
     elif operation == 10:
-        print("You have chosen to bring a number of grafted plants forward by a year")
+        print("You have chosen to bring a number of grafted plants forward by a year.")
         Bring_forward()
     elif operation == 11:
-        Check_plant_stock()
+        print("We are sorry to say that this functionality has not been implemented yet.")
+        Add_new_cultivar()
     else:
         Print("Please enter a valid integer between 1 and 11")
 
