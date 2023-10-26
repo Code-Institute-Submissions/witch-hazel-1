@@ -2,41 +2,35 @@ import gspread
 from google.oauth2.service_account import Credentials
 import sys
 
-startup_instructions = "You must enter an argument after the program script name to use this program.\
-    \nSimply entering 'run.py' on the command line is not enough.\
-    \nYou must enter a command in the form 'run.py nnnn' (where 'nnnn' is the name of one of the functions that the program contains).\
-    \nFor a full list of the program's functions and instructions on how to call them, enter 'run.py help' on the command line.\
-    \nAlways be careful to use only lower case letters."
-
 help_text = "\n#############################################################################################################################################################\
-    \n                                                         W I T C H  H A Z E L\
-    \n\nTo run Witch Hazel from the command line you need to call the script file that contains its code ('run.py') followed by a space, followed by the name of the operation\
-    \nyou want to execute.\
-    \nPlease enter one of the operations available using exactly the spelling shown below, and remembering that the names are case-sensitive.\
-    \nFor example, if you want to plan your cutting production for the year, carefully type 'run.py plan_cuttings' on the command line.\
-    \n\nThe following is a list of the operations that this program can help you execute:\
-    \n\n    help:          The 'help' operation produces this information message. It shows you how to use this program. \
-    \n\n    new_year:      Creates a new year (it should be run once in the autumn of the previous year).\
-    \n                   Once you have created your new new year, you will be asked if you want to plan your cuttings and/or grafts for that year immediately.\
-    \n                   If you are not ready to plan all your cuttings or grafting, you can leave all or part of that task until later, by calling the 'plan_cuttings' or\
-    \n                   'plan_grafting' operations later.\
-    \n\n    plan_cuttings: This operation asks you to enter the number of cuttings you wish to produced of your currently preferred rootstock.\
-    \n\n    take_cuttings: This operation asks you how many cuttings you want to add to the record of cuttings actually taken. It tots up a running total.\
-    \n\n    pot_cuttings: This operation asks you how many successfully rooted cuttings you want to add to the record of potted up grafts. It tots a running total.\
-    \n\n    plan_grafting: This operation first asks you to choose the cultivar for which you wish to produce grafts.\
-    \n                   It then asks you to enter the number of grafts you wish to produce, giving you the information on how many root stocks are currently available.\
-    \n\n    record_loss:   This operation asks you to choose the cultivar and age of the plants for which you want to record a loss.\
-    \n                   It then asks you how many plants of that cultivar and age you have lost.\
-    \n\n    record_gain:   This operation asks you to choose the cultivar and age of the plants for which you want to record an acquisition or other gain.\
-    \n                   It then asks you how many plants of that cultivar and age you have gained or acquired.\
-    \n\n    check_stock: This operation asks to choose a cultivar and age and shows you how many of that plant you have in stock, and how many\
-    \n                   of them you originally grafted in year zero. It also shows a percentage loss rate since year zero.\
-    \n\n    hold_back:     This operation asks you to choose the cultivar whose age distribution numbers you wish to adjust and the affected age.\
-    \n                   It then asks you how many plants of that cultivar and age you wish to hold back for one year. It is identical to recording a loss for\
-    \n                   the cultivar and age you have chosen and then recording a gain for the plants of that cultivar one year younger.\
-    \n\n    bring_forward: This operation asks you to choose the cultivar whose age distribution numbers you wish to adjust and the affected age.\
-    \n                   It then asks you how many plants of that cultivar and age you wish to bring forward by one year. It is identical to recording a loss for\
-    \n                   the cultivar and age you have chosen and then recording a gain for the plants of that cultivar one year older.\
+    \n\n                                                       W I T C H - H A Z E L\
+    \nTo run witch-hazel, call the script file that contains its code ('run.py') by simply typing the name of the file on the command line (``run.py``)\
+    \nThe app will show you a list of the options available to you and ask which of them you would like to perform.\
+    \n\n0. Help\
+    \n1. Close out current year\
+    \n\n2. Plan this year's cutting campaign\
+    \n3. Record cuttings taken\
+    \n4. Record rooted cuttings potted up\
+    \n\n5. Plan grafts for this year\
+    \n6. Record grafts taken\
+    \n\n7. Record plant losses\
+    \n8. Record plant gains\
+    \n9. Hold over plants for one year\
+    \n10. Bring plants forward one year\
+    \n\n11. Check plant stock\
+    \n\nYou should then type in the number of the operation you wish to perform.\
+    \nThe app will then guide you through the operation you have chosen to perform.\
+    \nYou will need to restart the app each time you wish to run an operation.\
+    \n\nPlease see the README.md file for further details on each of these options.\
+    \n\nAt some points it may be necessary to ask you a yes or no question. Where this happens\
+    \nyou should answer in the affirmative by typing a 'y' or 'Y' on the command line.\
+    \nTyping in any other symbol will be interpreted as a 'No', which will result in the app closing.\
+    \n\nIn other cases you will be asked to enter a number. Sometimes the range of valid numbers\
+    \nwill indicated. Negative numbers are always interpreted as invalid. Any time you enter an\
+    \ninvalid number, the app will give you another opportunity to enter a valid one.\
+    \nYou can cancel the current operation by entering a 'c' or 'C'.\
+    \n\n\nPlease look at the relevant section of the README.md file to find out which numbers\
+    \n\nare valid in each individual user interaction.\
     \n\n#############################################################################################################################################################\
     \n"
 
@@ -59,7 +53,6 @@ cuttings_taken = int(rootstock.acell('c1').value)
 rootstocks_potted = int(rootstock.acell('d1').value)
 mature_rootstocks = int(rootstock.acell('e1').value)
 
-
 def Get_survival_rate(start_num, end_num):
     if int(start_num) == 0:
         return 'The starting number is not recorded.'
@@ -74,6 +67,48 @@ def Is_number(s):
         return True
     except ValueError:
         return False
+        
+cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
+potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
+
+rootstock_data = rootstock.get_all_values()
+grafts_data = grafts_year_zero.get_all_values()
+Plants_data = plants.get_all_values()
+
+def Startup_instructions():
+    print("Welcome to witch-hazel, your simple app for planning your production of grafted Hamamelis plants!\
+    \nWhat would you like to do?\
+    \nChoose from among the following functions:\
+    \n\n0. Help\
+    \n\n1. Create new year/Close out current year\
+    \n\n2. Plan this year's cutting campaign\
+    \n3. Record cuttings taken\
+    \n4. Record rooted cuttings potted up\
+    \n\n5. Plan grafts for this year\
+    \n6. Record grafts taken\
+    \n\n7. Record plant losses\
+    \n8. Record plant gains\
+    \n9. Hold over plants for one year\
+    \n10. Bring plants forward one year\
+    \n\n11. Check plant stock\
+    \nFor full list of the program's functions and instructions on how to call them, enter '0' on the command line, to close out the current year and start a new year, enter '1', and so on.\
+    \n\n")
+    lower_bound = 0
+    upper_bound = 11
+
+    while True:
+        user_entry = input(f"Please indicate which operation you would like to perform by entering the corresponding number: \n")
+        try:
+            int_option = int(user_entry)
+            if lower_bound <= int_option <= upper_bound:
+                break
+            else:
+                print(f"Invalid input. Your number must be a whole number between {lower_bound} and {upper_bound}. Please enter a valid number: ")
+                print(f"Please indicate which operation you would like to perform by entering the corresponding number: \n")
+        except ValueError:
+            print(f"Your number must be an integer. Decimal numbers, text and special characters, etc. are not allowed: ")
+
+    Execute_option(int_option)
 
 def Plan_grafts(graft_num):
     column_letter = chr(ord('C') + graft_num - 1)
@@ -86,14 +121,6 @@ def Plan_grafts(graft_num):
     new_value = int(input("What value would you like to replace that number with? \n "))
     grafts_year_zero.update_acell(cell_address, value)
 
-cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
-potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
-
-rootstock_data = rootstock.get_all_values()
-print(rootstock_data)
-
-def Startup_instructions():
-    print(startup_instructions)
 
 def Create_year():
     rootstock_year = rootstock.acell('a1').value
@@ -209,7 +236,8 @@ def Plan_grafting_campaign():
     print("For which cultivar would you like to plan your grafting?\n")
     cultivar_value = int(input("Please enter the number of the cultivar for which you want to plan grafting (see the cultivar listed above): \n"))
 
-    
+def Record_grafts():
+    print("Grafts recorded")    
 
 def Hold_back():
     print("Stocks held back")
@@ -220,7 +248,7 @@ def Bring_forward():
 def Record_loss():
     print("Loss recorded")
 
-def Record_acquisition():
+def Record_gain():
     print("Acquisition_recorded")
 
 def Help():
@@ -229,33 +257,44 @@ def Help():
 def Startup_error_msg():
     print("Startup error message called")
 
-
-
 """Tell the user they need to start up the program with an argument to make the program actually do anything."""
-if len(sys.argv) == 1:
-    Startup_instructions()
-else:
-    parameter = sys.argv[1]
-    if parameter == "new_year":
-        Create_year()
-    elif parameter == "plan_cuttings":
-        Plan_cutting_campaign()
-    elif parameter == "take_cuttings":
-        Record_cuttings_taken()
-    elif parameter == "pot_cuttings":
-        Record_potted_cuttings()
-    elif parameter == "plan_grafting":
-        Plan_grafting_campaign()
-    elif parameter == "hold_back":
-        Hold_back()
-    elif parameter == "bring_forward":
-        Bring_forward()
-    elif parameter == "record_loss":
-        Record_loss()
-    elif parameter == "record_gain":
-        Record_acquisition()
-    elif parameter == "help":
+def Execute_option(operation):
+    if operation == 0:
+        print("You have chosen HELP.")
         Help()
+    elif operation == 1:
+        print("You have chosen to close out the current year and open a new one.")
+        Create_year()
+    elif operation == 2:
+        print("You have chosen to plan this year's cutting campaign.")
+        Plan_cutting_campaign()
+    elif operation == 3:
+        print("You have chosen to record having taken some cuttings.")
+        Record_cuttings_taken()
+    elif operation == 4:
+        print("You have chosen to record having potted some rooted cuttings.")
+        Record_potted_cuttings()
+    elif operation == 5:
+        print("You have chosen to plan your grafting campaign.")
+        Plan_grafting_campaign()
+    elif operation == 6:
+        print("You have chosen to record having created a number of new grafts")
+        Record_grafts()
+    elif operation == 7:
+        print("You have chosen to record the loss of a number of grafted plants")
+        Record_loss()
+    elif operation == 8:
+        print("You have chosen to record the acquisition of a number of grafted plants")
+        Record_gain()
+    elif operation == 9:
+        print("You have chosen to hold back a number of grafted plants from their cohort to the previous one")
+        Hold_back()
+    elif operation == 10:
+        Bring_forward()
+        print("You have chosen bring a number of grafted plants forward from their cohort to next one")
+    elif operation == 11:
+        Check_plant_stock()
     else:
-        Startup_error_msg()
+        Print("Please enter a valid integer between 1 and 11")
 
+Startup_instructions()
