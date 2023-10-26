@@ -5,7 +5,7 @@ import sys
 help_text = "\n#############################################################################################################################################################\
     \n\n                                                       W I T C H - H A Z E L\
     \nTo run witch-hazel, call the script file that contains its code ('run.py') by simply typing the name of the file on the command line (``run.py``)\
-    \nThe app will show you a list of the options available to you and ask which of them you would like to perform.\
+    \nOn opening, the app will show you a list of the options available to you and ask which of them you would like to perform.\
     \n\n0. Help\
     \n1. Close out current year\
     \n\n2. Plan this year's cutting campaign\
@@ -28,7 +28,6 @@ help_text = "\n#################################################################
     \n\nIn other cases you will be asked to enter a number. Sometimes the range of valid numbers\
     \nwill indicated. Negative numbers are always interpreted as invalid. Any time you enter an\
     \ninvalid number, the app will give you another opportunity to enter a valid one.\
-    \nYou can cancel the current operation by entering a 'c' or 'C'.\
     \n\n\nPlease look at the relevant section of the README.md file to find out which numbers\
     \n\nare valid in each individual user interaction.\
     \n\n#############################################################################################################################################################\
@@ -53,6 +52,11 @@ cuttings_taken = int(rootstock.acell('c1').value)
 rootstocks_potted = int(rootstock.acell('d1').value)
 mature_rootstocks = int(rootstock.acell('e1').value)
 
+rootstock_data = rootstock.get_all_values()
+grafts_data = grafts_year_zero.get_all_values()
+Plants_data = plants.get_all_values()
+
+
 def Get_survival_rate(start_num, end_num):
     if int(start_num) == 0:
         return 'The starting number is not recorded.'
@@ -61,9 +65,9 @@ def Get_survival_rate(start_num, end_num):
     else:
         return int(end_num) / int(start_num)
 
-def Is_number(s):
+def Is_integer(s):
     try:
-        float(s)
+        int(s)
         return True
     except ValueError:
         return False
@@ -71,10 +75,10 @@ def Is_number(s):
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
-rootstock_data = rootstock.get_all_values()
-grafts_data = grafts_year_zero.get_all_values()
-Plants_data = plants.get_all_values()
 
+"""
+The program's main menu on startup
+"""
 def Startup_instructions():
     print("Welcome to witch-hazel, your simple app for planning your production of grafted Hamamelis plants!\
     \nWhat would you like to do?\
@@ -91,8 +95,12 @@ def Startup_instructions():
     \n9. Hold over plants for one year\
     \n10. Bring plants forward one year\
     \n\n11. Check plant stock\
-    \nFor full list of the program's functions and instructions on how to call them, enter '0' on the command line, to close out the current year and start a new year, enter '1', and so on.\
+    \nFor full list of the program's functions and instructions on how to call them, enter '0' on the\
+    \ncommand line. This will show you the help text for the app.
+    \n\nYou must restart the app for each operation you would like to perform.\
+    \n\n    
     \n\n")
+    
     lower_bound = 0
     upper_bound = 11
 
@@ -110,18 +118,18 @@ def Startup_instructions():
 
     Execute_option(int_option)
 
-def Plan_grafts(graft_num):
-    column_letter = chr(ord('C') + graft_num - 1)
-    
-    cultivar_name_address = f"{column_letter}1"
-    cell_address = f"{column_letter}2"
-    cultivar_name = grafts_year_zero.acell(cultivar_name_address).value
-    current_value = int(grafts_year_zero.acell(cell_address).value)
-    print(f"The current planned figure you have for this year for {cultivar_name} is {current_value}. \n\n ")
-    new_value = int(input("What value would you like to replace that number with? \n "))
-    grafts_year_zero.update_acell(cell_address, value)
+"""
+Option 0
+"""
 
+def Help():
+    print(help_text)
 
+"""
+Option 1:
+This function adds the rows necessary to create a new year and copies the row for stocks of this year's grafts from the 
+grafts-year-zero to the plants worksheet. It puts the current year out of reach of the relevant seasonal planning and work tasks.
+"""
 def Create_year():
     rootstock_year = rootstock.acell('a1').value
     new_rootstock_year = int(rootstock_year) + 1
@@ -155,6 +163,10 @@ def Create_year():
     else:
         print(f"The year {new_rootstock_year} has not been created. The current year is still {rootstock_year}")
 
+"""
+Option 2:
+Helps plan cuttings task
+"""
 def Plan_cutting_campaign():
     planned_cuttings = rootstock.acell('b1').value
     last_year_cuttings = rootstock.acell('c2').value
@@ -175,6 +187,11 @@ def Plan_cutting_campaign():
         else:
             Print("Plan cuttings action cancelled.")
 
+"""
+Option 3:
+Lets user record cuttings.
+Ideally used daily during the cuttings campaign (in Autumn).
+"""
 def Record_cuttings_taken():
     cuttings_taken = int(rootstock.acell('c1').value)
     cuttings_planned = int(rootstock.acell('b1').value)
@@ -186,6 +203,11 @@ def Record_cuttings_taken():
     else:
         print("Record new cuttings taken action cancelled.")
 
+"""
+Option 4:
+Lets user record progress in potting up the successfully rooted cuttings (taken the previous Autumn).
+Ideally used daily during the potting campaign (in the Spring).
+"""
 def Record_potted_cuttings():
     cuttings_taken = int(rootstock.acell('c1').value)
     cuttings_potted = int(rootstock.acell('d1').value)
@@ -201,6 +223,13 @@ def Record_potted_cuttings():
     else:
         print("Record new cuttings potted action cancelled.")
 
+"""
+Option 5:
+Lets user add a planned number of grafts for each cultivar.
+Should be used in late winter.
+Shows the user the total number of rootstocks ready for grafting and the number left.
+Warns the user when they're planning to use more rootstocks than they actually have.
+"""
 def Plan_grafting_campaign():
     rootstocks_available = int(rootstock.acell('e2').value)
 
@@ -236,28 +265,62 @@ def Plan_grafting_campaign():
     print("For which cultivar would you like to plan your grafting?\n")
     cultivar_value = int(input("Please enter the number of the cultivar for which you want to plan grafting (see the cultivar listed above): \n"))
 
+"""
+Option 6:
+Lets user record the number of grafts taken for each cultivar.
+Should be used in late winter.
+Shows the user the total number of rootstocks ready for grafting and the number left.
+Warns the user when they've used more rootstocks than they actually have. 
+"""
 def Record_grafts():
     print("Grafts recorded")    
 
-def Hold_back():
-    print("Stocks held back")
-
-def Bring_forward():
-    print("Stocks brought forward")
-
+"""
+Option 7:
+Lets user record losses in stocks for any cultivar in any year. 
+Works for both rooted cuttings and grafted cultivars.
+May be used throughout the year.
+Losses of cuttings are not recorded until the time comes to pot up those of them that have rooted successfully.
+"""
 def Record_loss():
     print("Loss recorded")
 
+"""
+Option 8:
+Essentially the opposite of Option 7.
+"""
 def Record_gain():
     print("Acquisition_recorded")
 
-def Help():
-    print(help_text)
+"""
+Option 9:
+Essentially a combination of Options 7 and 8.
+Results in the number of cultivars from year n being removed and then added to year n-1.
+"""
+def Hold_back():
+    print("Stocks held back")
 
-def Startup_error_msg():
-    print("Startup error message called")
+"""
+Option 10:
+The same as Option 9, but in the opposite direction.
+Results in the number of cultivars from year n being removed and then added to year n-1.
+"""
+def Bring_forward():
+    print("Stocks brought forward")
 
-"""Tell the user they need to start up the program with an argument to make the program actually do anything."""
+"""
+Option 11:
+Reports on the current situation for the current year showing 
+on screen a list of all planned and actual cutting and graft numbers for the year.
+"""
+def Check_plant_stock():
+    print("Plant stocks checked")
+
+
+
+"""
+Executes the option chosen by the user
+"""   
 def Execute_option(operation):
     if operation == 0:
         print("You have chosen HELP.")
