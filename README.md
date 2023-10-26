@@ -122,4 +122,18 @@ Aside from the restrictions on user entries already mentioned, the user is never
 ---
 ## Programming philosophy
 
-Being an app generally modelling a procedural series of steps, little use was made of the concepts of OOP in its design. Few custom classes were specifically designed for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.
+Being an app generally modelling a procedural series of steps, little use was made of the concepts of OOP in its design. Few custom classes were specifically designed for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.  It may, however, be useful to look at other programs created for a similar purpose when the time comes to refactor this code, and to use the advantages of OOD/OOP to make the code more efficient and more comprehensible.
+
+##
+
+Todo
+logging
+reasons for loss/gain
+wipeouts
+storage and committing
+reporting
+refactoring
+program continuity
+escape errors due to badly formatted spreadsheets
+heroku setup
+heroku problems

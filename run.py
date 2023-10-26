@@ -113,7 +113,7 @@ def Startup_instructions():
             else:
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and {upper_bound}. Please enter a valid number: ")
         except ValueError:
-            print(f"Your number must be an integer. Decimal numbers, text and special characters, etc. are not allowed: ")
+            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
 
     Execute_option(int_option)
 
@@ -209,6 +209,7 @@ def Run_main_if_clause(taken, planned):
         print(f"You have already reached the number of cuttings you planned to take this year: {taken} cuttings taken out of {planned} planned!")
     else:
         print(f"So far you have taken {taken} cuttings!")
+
     if input("Would you like to add to that number? Type 'y' for yes or 'n' for no: \n").lower() == 'y':
         taken += int(input(f"How many cuttings have you now taken in addition to the ones already recorded: \n"))
         rootstock.update_acell('c1', taken)
@@ -230,7 +231,7 @@ def Record_cuttings_taken():
          \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
             Run_main_if_clause(cuttings_taken, cuttings_planned)
         else:
-            print("Record new cuttings taken action cancelled.  No changes have been made to the data.")
+            print("Record new cuttings taken action cancelled. No changes have been made to the data.")
     else:
         Run_main_if_clause(cuttings_taken, cuttings_planned)
         
@@ -242,8 +243,8 @@ Ideally used daily during the potting campaign (in the Spring).
 """
 def Record_potted_cuttings():
     cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_potted = int(rootstock.acell('d1').value) #This value in the worksheet reflects the work done. It does not go down.
-    new_rootstocks = int(rootstock.acell('e1').value) #This value in the worksheet reflects stocks available. It goes down as and when stocks are lost or used up.
+    cuttings_potted = int(rootstock.acell('d1').value) #This value in the worksheet reflects the work done. Once recorded this number cannot be subtracted from. You can only add to it!
+    new_rootstocks = int(rootstock.acell('e1').value) #This value in the worksheet reflects stocks available. It is subtracted from as and when stocks are lost or used up.
     if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
         newly_potted = int(input(f"How many cuttings have you now potted up in addition to the ones already recorded: \n"))
@@ -384,8 +385,8 @@ def Record_loss():
     #Did we lose new_rootstocks?
     if input(f"Would you like to record a loss of new rootstocks?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        affected_cell = 'e1'
-        total_rootstocks = int(rootstock.acell(affected_cell).value)
+        address_affected = 'e1'
+        total_rootstocks = int(rootstock.acell(address_affected).value)
     
         print(f"At the last count there were {total_rootstocks} new rootstocks in the nursery")
         
@@ -398,17 +399,19 @@ def Record_loss():
                 else:
                     print(f"You can't have lost more rootstocks than you actually had in the nursery! Please enter an integer between 0 and {total_rootstocks}: ")
             except ValueError:
-                print(f"Your number must be an integer. Decimal numbers, text and special characters, etc. are not allowed: ")
+                print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
         
-        rootstock.update_acell(affected_cell, total_rootstocks - number_lost)
+        rootstock.update_acell(address_affected, total_rootstocks - number_lost)
+        print(f"Loss of {number_lost} new rootstocks recorded. You now have a stock of {rootstock.acell(address_affected).value} new rootstocks.")
     else:
-
-        row_values = grafts_year_zero.row_values(1)
+        #If what's been lost is grafted plants
+        #First define the cultivar affected
+        row_values = plants.row_values(1)
         first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
         last_column = chr(ord('A') + first_empty_index)
 
-        name_range = f"c1:{last_column}1" #Names of cultivars
-        cultivars = grafts_year_zero.get(name_range) [0]
+        name_range = f"a1:{last_column}1" #Names of cultivars
+        cultivars = plants.get(name_range) [0]
 
         
         #List out the names of the cultivars you have in your data in an ordered list.
@@ -418,11 +421,29 @@ def Record_loss():
             count += 1
             print(f"{count}. {cultivar}")
 
-        affected_cultivar = int(input("Please enter the cultivar number for which you want to record a loss (see the cultivars listed above): \n"))
+        cultivar_value = int(input("Please enter the cultivar number for which you want to record a loss (see the cultivars listed above): \n"))
+        affected_year = int(input("Please enter the age of the plants for which you want to record a loss (typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
+        address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+
+        current_number = int(plants.acell(address_affected).value)
+        print(f"You have chosen to register a loss of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
+        \nThere are currently {current_number} of that category recorded in the system.")
+        while True:
+            number_lost = input("How many plants of that category have been lost since then? \n")
+            try:
+                number_lost = int(number_lost)
+                if 0 <= number_lost <= current_number:
+                    break
+                else:
+                    print(f"You can't have lost more plants of this category than you actually had in the nursery! Please enter an integer between 0 and {current_number}: ")
+            except ValueError:
+                print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, text and special characters, etc. are not allowed: ")
         
-        #affected_age
+        rootstock.update_acell(address_affected, current_number - number_lost)
+        print(f"Loss of {number_lost} {cultivars[cultivar_value - 1]} of year-{affected_year} recorded. You now have a remaining stock of {rootstock.acell(address_affected).value} plants of that category.") 
+        
         #number_lost
-    print("Loss recorded successfully")
+    print("Loss recorded successfully.")
 
 """
 Option 8:
@@ -483,10 +504,10 @@ def Execute_option(operation):
         print("You have chosen to record the completion a number of new grafts")
         Record_grafts()
     elif operation == 7:
-        print("You have chosen to record the loss of a number of grafted plants")
+        print("You have chosen to record the loss of a number of plants")
         Record_loss()
     elif operation == 8:
-        print("You have chosen to record the acquisition of a number of grafted plants")
+        print("You have chosen to record the acquisition of a number of plants")
         Record_gain()
     elif operation == 9:
         print("You have chosen to hold back a number of grafted plants from their cohort to the previous one")
