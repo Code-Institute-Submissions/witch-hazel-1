@@ -194,7 +194,8 @@ def Plan_cutting_campaign():
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
             planned_cuttings = int(input(f"Please enter the number of cuttings you want to take this year: \n"))
             rootstock.update_acell('b1', planned_cuttings)
-            print("Cuttings campaign planning session completed.")
+            print("Planned number of cuttings successfully changed.\
+            \nCuttings campaign planning session completed")
         else:
             print("Plan cuttings action cancelled.  No changes have been made to the data.")
 
@@ -229,7 +230,7 @@ def Record_cuttings_taken():
          \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
             Run_main_if_clause(cuttings_taken, cuttings_planned)
         else:
-            print("Record new cuttings taken action cancelled.")
+            print("Record new cuttings taken action cancelled.  No changes have been made to the data.")
     else:
         Run_main_if_clause(cuttings_taken, cuttings_planned)
         
@@ -241,7 +242,7 @@ Ideally used daily during the potting campaign (in the Spring).
 """
 def Record_potted_cuttings():
     cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_potted = int(rootstock.acell('d1').value) #this value in the worksheet reflecs the work done. It does not go down.
+    cuttings_potted = int(rootstock.acell('d1').value) #This value in the worksheet reflects the work done. It does not go down.
     new_rootstocks = int(rootstock.acell('e1').value) #This value in the worksheet reflects stocks available. It goes down as and when stocks are lost or used up.
     if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
@@ -250,58 +251,68 @@ def Record_potted_cuttings():
             print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll have potted up more cuttings than you took in the Autumn.\
             \nThat is not normally possible!\
             \nIf you're sure that the total number of newly potted rootstocks is in fact {newly_potted + new_rootstocks}, then you must first change the figure for cuttings (Option 3) before continuing!\
-            \nRecord new cuttings potted action cancelled.")
+            \nRecord new cuttings potted action cancelled.  No changes have been made to the data.")
         else:
             cuttings_potted += newly_potted
             new_rootstocks += newly_potted
             rootstock.update_acell('d1', cuttings_potted)
-            rootstock.update_acell('e1', cuttings_potted)
+            rootstock.update_acell('e1', new_rootstocks)
             print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}!\
             \nThat means you now have {new_rootstocks} immature rootstocks available for grafting next year (minus any losses in the meantime).")
     else:
-        print("Record new cuttings potted action cancelled.")
+        print("Record new cuttings potted action cancelled.  No changes have been made to the data.")
 
 """
 Option 5:
 Lets user add a planned number of grafts for each cultivar.
-Should be used in late winter.
+Should be used in late winter (February or March).
 Shows the user the total number of rootstocks ready for grafting and the number left.
 Warns the user when they're planning to use more rootstocks than they actually have.
 """
+def Find_cultivar(index):
+    return
+
 def Plan_grafting_campaign():
-    rootstocks_available = int(rootstock.acell('e2').value)
+    rootstocks_available = int(rootstock.acell('f2').value)
 
     row_values = grafts_year_zero.row_values(1)
-    first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values))
+    first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data)
     last_column = chr(ord('A') + first_empty_index)
-    print(last_column)
+
     name_range = f"c1:{last_column}1"
     value_range = f"c2:{last_column}2"
 
-    row_numbers = [1, 2]
-
-    ranges = [f'A{row}:{last_column}{row}' for row in row_numbers]
-
-    data = {}
-
-    for range_to_read in ranges:
-        values =grafts_year_zero.get(range_to_read)[0]
-        keys = grafts_year_zero.get(range_to_read.replace(str(row_numbers[0]), str(row_numbers[1])))[0]
-        data.update(dict(zip(keys, values)))
-
-    print(data)
-
     cultivars = grafts_year_zero.get(name_range) [0]
     planned_numbers = grafts_year_zero.get(value_range) [0]
+    planned_numbers = [int(x) for x in planned_numbers]
+    total_planned = sum(planned_numbers)
+    
+    
     count = 0
     print(f"For which cultivar would you like to plan a grafting campaign?\
-    \nYou currently have {rootstocks_available} rootstocks available for use in grafting. \n")
+    \nYou currently have {rootstocks_available} rootstocks available for use in grafting.\
+    \nOf these, {rootstocks_available - total_planned} have not yet been reserved in your plan")
+    #List out the names of the cultivars you have in your data in an ordered list.
     for cultivar in cultivars:
         count += 1
         print(f"{count}. {cultivar}")
 
     print("For which cultivar would you like to plan your grafting?\n")
-    cultivar_value = int(input("Please enter the number of the cultivar for which you want to plan grafting (see the cultivar listed above): \n"))
+    cultivar_value = int(input("Please enter the number of the cultivar for which you want to plan grafting (see the cultivars listed above): \n"))
+    cell_address = f"{chr(ord('C') + cultivar_value - 1)}2"
+    print(cell_address)
+    print(f"You have chosen to plan graft numbers for {cultivars[cultivar_value - 1]}")
+    print(f"So far, you have planned to graft {planned_numbers[cultivar_value - 1]}")
+    if input("Would you like to replace this value?\
+    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        new_planned_value = int(input(f"Type in the new planned value for {cultivars[cultivar_value - 1]}: \n"))
+        grafts_year_zero.update_acell(cell_address, new_planned_value)
+        print(f"Planned number of grafts for {cultivars[cultivar_value - 1]} successfully changed.\
+            \nCuttings campaign planning session completed")
+
+    else:
+        print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.  No changes have been made to the data.")
+
 
 """
 Option 6:
@@ -379,7 +390,7 @@ def Execute_option(operation):
         print("You have chosen to plan your grafting campaign.")
         Plan_grafting_campaign()
     elif operation == 6:
-        print("You have chosen to record having created a number of new grafts")
+        print("You have chosen to record the completion a number of new grafts")
         Record_grafts()
     elif operation == 7:
         print("You have chosen to record the loss of a number of grafted plants")
