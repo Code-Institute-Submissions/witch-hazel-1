@@ -273,18 +273,18 @@ def Find_cultivar(index):
     return
 
 def Plan_grafting_campaign():
-    rootstocks_available = int(rootstock.acell('f2').value)
+    rootstocks_available = int(rootstock.acell('e2').value)
 
     row_values = grafts_year_zero.row_values(1)
     first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data)
     last_column = chr(ord('A') + first_empty_index)
 
     name_range = f"c1:{last_column}1"
-    value_range = f"c2:{last_column}2"
+    planned_range = f"c2:{last_column}2"
 
     cultivars = grafts_year_zero.get(name_range) [0]
-    planned_numbers = grafts_year_zero.get(value_range) [0]
-    planned_numbers = [int(x) for x in planned_numbers]
+    planned_numbers = grafts_year_zero.get(planned_range) [0]
+    planned_numbers = [int(x) for x in planned_numbers] #Converts the strings in the planned numbers list into integers to make it possible to sum them together.
     total_planned = sum(planned_numbers)
     
     
@@ -316,13 +316,62 @@ def Plan_grafting_campaign():
 
 """
 Option 6:
-Lets user record the number of grafts taken for each cultivar.
-Should be used in late winter.
+Lets user record the number of grafts taken for a chosen cultivar.
+Should be used in late winter; at grafting time.
 Shows the user the total number of rootstocks ready for grafting and the number left.
 Warns the user when they've used more rootstocks than they actually have. 
 """
 def Record_grafts():
-    print("Grafts recorded")    
+    rootstocks_available = int(rootstock.acell('e2').value)
+
+    row_values = grafts_year_zero.row_values(1)
+    first_empty_index = next((i for i, val in enumerate(row_values) if not val), len(row_values)) #Find the column to stop at (first column that contains no data).
+    last_column = chr(ord('A') + first_empty_index)
+
+    name_range = f"c1:{last_column}1" #Names of cultivars
+    planned_range = f"c2:{last_column}2" #Numbers of planned grafts
+    grafted_range = f"c3:{last_column}3" #Plants already grafted
+    
+    cultivars = grafts_year_zero.get(name_range) [0]
+    planned_numbers = grafts_year_zero.get(planned_range) [0]
+    planned_numbers = [int(x) for x in planned_numbers] #Converts the strings in the planned numbers list into integers to make it possible to sum them together.
+    total_planned = sum(planned_numbers)
+    grafts_this_year = grafts_year_zero.get(grafted_range) [0]
+    grafts_this_year = [int(x) for x in grafts_this_year] #Converts the strings in the planned numbers list into integers to make it possible to sum them together.
+    total_grafted = sum(grafts_this_year)
+    
+    
+    count = 0
+    print(f"For which cultivar would you like record new grafts completed?\
+    \nYou currently have {rootstocks_available} rootstocks available for use in grafting.\
+    \nOf these, {rootstocks_available - total_planned} have not yet been reserved in your plan.")
+
+    #List out the names of the cultivars you have in your data in an ordered list.
+    for cultivar in cultivars:
+        count += 1
+        print(f"{count}. {cultivar}")
+
+    print("Which cultivar has been grafted?\n")
+    cultivar_value = int(input("Please enter the number of the cultivar for the new grafts you want to record (see the cultivars listed above): \n"))
+    address_grafts = f"{chr(ord('C') + cultivar_value - 1)}3"
+    address_rootstocks = 'e2'
+    grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
+    print(f"You have chosen to record grafts of {cultivars[cultivar_value - 1]}")
+    print(f"So far, you have grafted {grafts_this_cultivar} of this cultivar.")
+    if input("Would you like to add to this value?\
+    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        newly_made_grafts = int(input(f"Type in the number of new grafts you have made of {cultivars[cultivar_value - 1]}: \n"))
+        grafts_this_cultivar += newly_made_grafts
+        grafts_year_zero.update_acell(address_grafts, grafts_this_cultivar)
+        rootstock.update_acell(address_rootstocks, int(rootstock.acell(address_rootstocks).value) - newly_made_grafts)
+        print(int(rootstock.acell(address_rootstocks).value) - newly_made_grafts)
+        print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
+            \nThe new total of grafts made this year for this cultivar is {rootstock.acell(address_grafts).value}\
+            \nSuccessfully completed record of new grafts made.")
+
+    else:
+        print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.  No changes have been made to the data.")
+    
 
 """
 Option 7:
