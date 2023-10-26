@@ -166,22 +166,35 @@ Option 2:
 Helps plan cuttings task
 """
 def Plan_cutting_campaign():
-    planned_cuttings = rootstock.acell('b1').value
-    last_year_cuttings = rootstock.acell('c2').value
+    planned_cuttings = int(rootstock.acell('b1').value)
+    last_year_cuttings = int(rootstock.acell('c2').value)
+    last_year_rooted_cuttings = int(rootstock.acell('d2').value)
+    this_year_cuttings_taken = int(rootstock.acell('c1').value)
     if int(planned_cuttings) > 0:
         if input(f"So far you have planned to take {planned_cuttings} cuttings! Would you like replace that number with a new one?\
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year. The present planned figure for this year is {planned_cuttings}. Please enter a new figure for planned cuttings for this year: \n"))
-            rootstock.update_acell('b1', planned_cuttings)
-            print("Cuttings campaign planning session completed")
+            planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
+            \nThe present planned figure for this year is {planned_cuttings}.\
+            \nPlease enter a new figure for planned cuttings for this year: \n"))
+            if planned_cuttings <= this_year_cuttings_taken:
+                print("yes")
+                if input(f"You have already taken {this_year_cuttings_taken} cuttings this year; more than your new planned figure!\
+                \nAre you sure you want to replace the planned figure with this one? Type 'y' for yes or 'n' for no: \n").lower() == 'y':
+                    rootstock.update_acell('b1', planned_cuttings)
+                    print("Planned number of cuttings successfully changed.\
+                    \nCuttings campaign planning session completed")
+            else:
+                rootstock.update_acell('b1', planned_cuttings)
+                print("Planned number of cuttings successfully changed.\
+                \nCuttings campaign planning session completed")
         else:
-            Print("Plan cuttings action cancelled.")
+            Print("Plan cuttings action cancelled. No changes have been made to the data.")
     else:
         if input(f"Would you like to plan the number of cuttings you intend to take this season? \
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
             planned_cuttings = int(input(f"Please enter the number of cuttings you want to take this year: \n"))
             rootstock.update_acell('b1', planned_cuttings)
-            print("Cuttings campaign planning session completed")
+            print("Cuttings campaign planning session completed.")
         else:
             Print("Plan cuttings action cancelled.")
 
