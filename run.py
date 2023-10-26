@@ -203,7 +203,6 @@ Option 3:
 Lets user record cuttings.
 Ideally used daily during the cuttings campaign (in Autumn).
 """
-
 def Run_main_if_clause(taken, planned):
     if taken >= planned:
         print(f"You have already reached the number of cuttings you planned to take this year: {taken} cuttings taken out of {planned} planned!")
@@ -242,16 +241,23 @@ Ideally used daily during the potting campaign (in the Spring).
 """
 def Record_potted_cuttings():
     cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_potted = int(rootstock.acell('d1').value)
-    new_rootstocks = int(rootstock.acell('e1').value)
-    if input(f"So far you have taken {cuttings_taken} cuttings! Would you like to add to that number?\
+    cuttings_potted = int(rootstock.acell('d1').value) #this value in the worksheet reflecs the work done. It does not go down.
+    new_rootstocks = int(rootstock.acell('e1').value) #This value in the worksheet reflects stocks available. It goes down as and when stocks are lost or used up.
+    if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
         newly_potted = int(input(f"How many cuttings have you now potted up in addition to the ones already recorded: \n"))
-        cuttings_potted += newly_potted
-        new_rootstocks += newly_potted
-        rootstock.update_acell('d1', cuttings_potted)
-        rootstock.update_acell('e1', cuttings_potted)
-        print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}! That means you now have {new_rootstocks} immature rootstocks for grafting next year.")
+        if cuttings_potted + newly_potted > cuttings_taken:
+            print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll have potted up more cuttings than you took in the Autumn.\
+            \nThat is not normally possible!\
+            \nIf you're sure that the total number of newly potted rootstocks is in fact {newly_potted + new_rootstocks}, then you must first change the figure for cuttings (Option 3) before continuing!\
+            \nRecord new cuttings potted action cancelled.")
+        else:
+            cuttings_potted += newly_potted
+            new_rootstocks += newly_potted
+            rootstock.update_acell('d1', cuttings_potted)
+            rootstock.update_acell('e1', cuttings_potted)
+            print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}!\
+            \nThat means you now have {new_rootstocks} immature rootstocks available for grafting next year (minus any losses in the meantime).")
     else:
         print("Record new cuttings potted action cancelled.")
 
@@ -367,7 +373,7 @@ def Execute_option(operation):
         print("You have chosen to record having taken some cuttings.")
         Record_cuttings_taken()
     elif operation == 4:
-        print("You have chosen to record having potted some rooted cuttings.")
+        print("You have chosen to record having potted up some rooted cuttings.")
         Record_potted_cuttings()
     elif operation == 5:
         print("You have chosen to plan your grafting campaign.")
