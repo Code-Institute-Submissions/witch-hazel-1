@@ -2,6 +2,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 import sys
 
+
 help_text = "\n################################################################################\
     \n\n                             W I T C H - H A Z E L\
     \nTo run witch-hazel, call the script file that contains its code ('run.py') by\
@@ -73,6 +74,7 @@ def Get_survival_rate(start_num, end_num):
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted) 
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
+
 """
 The program's main menu on startup
 """
@@ -117,6 +119,7 @@ def Startup_instructions():
             \ntext and special characters, etc. are not allowed: ")
 
     Execute_option(int_option)
+
 
 """
 Option 0
@@ -164,6 +167,7 @@ def Create_year():
     else:
         print(f"The year {new_rootstock_year} has not been created. The current year is still {rootstock_year}")
 
+
 """
 Option 2:
 Helps plan cuttings task
@@ -201,6 +205,7 @@ def Plan_cutting_campaign():
             \nCuttings campaign planning session completed")
         else:
             print("Plan cuttings action cancelled.  No changes have been made to the data.")
+
 
 """
 Option 3:
@@ -265,6 +270,7 @@ def Record_potted_cuttings():
             \nThat means you now have {new_rootstocks} immature rootstocks available for grafting next year (minus any losses in the meantime).")
     else:
         print("Record new cuttings potted action cancelled.  No changes have been made to the data.")
+
 
 """
 Option 5:
@@ -451,6 +457,7 @@ def Record_loss():
         #number_lost
     print("Loss recorded successfully.")
 
+
 """
 Option 8:
 Essentially the opposite of Option 7.
@@ -513,6 +520,7 @@ def Record_gain():
         #number_lost
     print("Acquisition recorded successfully.")
 
+
 """
 Option 9:
 Essentially a Option 7 with a twist.
@@ -549,14 +557,10 @@ def Hold_back():
             else:
                 print(f"Please enter an integer between 2 and the age of the nursery.")
         except ValueError:
-            """
-              ********************************************************************************
-"""
             print(f"Your number must be an integer greater than 2 and less than the age of the\
             \nnursery. Negative and decimal-point numbers, text and special characters, etc.\
             \nare not allowed: ")
                 
-
     from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
     to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year}"
 
@@ -588,6 +592,7 @@ def Hold_back():
     \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year - 1} plants of that cultivar.") 
 
     print("Plants held back successfully.")
+
 
 """
 Option 10:
@@ -659,13 +664,13 @@ def Bring_forward():
 
     print("Plants brought forward successfully.")
 
+
 """
 Option 11:
 Allows the user to add a new cultivar to the Hamamelis plants currently grown in the nursery.
 """
 def Add_new_cultivar():
     print("This functionality has not yet been implemented. Please watch this space!")
-
 
 
 """
@@ -710,5 +715,6 @@ def Execute_option(operation):
         Add_new_cultivar()
     else:
         Print("Please enter a valid integer between 1 and 11")
+
 
 Startup_instructions()
