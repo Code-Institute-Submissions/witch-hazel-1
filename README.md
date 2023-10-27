@@ -9,17 +9,49 @@ Code Institute - Third Milestone Project: Create a user-responsive command-line 
 
 *A very common cultivar of H. x intermedia ('Arnold Promise') giving a spectacular show of leaf colour in mid-October*
 
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [The user story](#the-user-story)
+   * [Specialist growers](#specialist-growers)
+   * [The plant production workflow](#the-plant-production-workflow)
+- [What the customer wants](#what-the-customer-wants)
+- [System design](#system-design)
+   * [The 'rootstock' worksheet ](#the-rootstock-worksheet)
+   * [The 'grafts-year-zero' worksheet](#the-grafts-year-zero-worksheet)
+   * [The 'plants' worksheet](#the-plants-worksheet)
+- [The program's original workflow and the technical issues with the technology used](#the-programs-original-workflow-and-the-technical-issues-with-the-technology-used)
+- [The program's workflow:](#the-programs-workflow)
+   * [Seasonal tasks in order](#seasonal-tasks-in-order)
+   * [ad-hoc tasks](#ad-hoc-tasks)
+- [Bug fixes and warning resolution](#bug-fixes-and-warning-resolution)
+   * [Bugs](#bugs)
+   * [Warnings](#warnings)
+- [App robustness](#app-robustness)
+   * [Numerical vs character/string entries](#numerical-vs-characterstring-entries)
+   * [Out of range numbers](#out-of-range-numbers)
+   * [Yes or no responses](#yes-or-no-responses)
+- [Programming philosophy](#programming-philosophy)
+- [Sharing the hamamelis google spreadsheet](#sharing-the-hamamelis-google-spreadsheet)
+- [Registering for Heroku and using it](#registering-for-heroku-and-using-it)
+- [Lessons learned](#lessons-learned)
+- [Other unresolved issues and future development](#other-unresolved-issues-and-future-development)
+- [Credits](#credits)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="the-user-story"></a>
 ## The user story
 
 Laura and Donal are joint owners in a specialist horticultural business based in rural Roscommon. Their main business is in growing and selling wholesale high-value shrubs and flowering plants, mostly to garden centres all over Ireland and Europe.
 
 
-
+<!-- TOC --><a name="specialist-growers"></a>
 ### Specialist growers
 
 Their company, **Witch Hazel**, is named after the beautiful group of plant species (all grouped under the genus name _Hamamelis_) upon which the couple made their reputation soon after leaving agricultural college. This genus, whose English-language common name is the Witch Hazel, is a slow-growing shrub that produces masses of delicate yellow, orange or red flowers in mid to late winter and spectacularly coloured leaves in autumn. Most of the cultivars grown by Laura and Donal are descended from _Hamamelis x intermedia_, a cross between Japanese witch hazel (_H. japonica_) and Chinese witch hazel (_H. mollis_), but they also grow for sale cultivars of both parent species (i.e., _H. mollis_ and _H. japonica_). All the plants they grow for sale are propagated by means of grafting buds onto the root stock of a third Hamamelis species, _H. virginiana_ or the American Witch Hazel, which doesn't produce either such beautiful winter flowers or such rich autumn leaf colours as any of its East Asian relatives, but provides a hardy root upon which the its more spectacular relatives can thrive. Another advantage of the procedure is that grafted plants will begin flowering several years younger than plants grown on their own root. The labour cost of producing such grafts is what drives the high market value of garden varieties of Witch Hazel on the wholesale and retail markets.
 
 
+<!-- TOC --><a name="the-plant-production-workflow"></a>
 ### The plant production workflow
 
 The two owners have jointly developed a highly efficient way of producing such grafted plants. They have a plentiful standing stock of _H. virginiana_, which they propagate using soft-wood cuttings over the course of the Roscommon winter (year zero). The following spring (around about April), they pot up all the cuttings that have rooted successfully and grow them on until they become small, one-year-old pot plants. In late winter of year one (usually February or early March), they graft onto those young plants (referred to as 'rootstocks') the carefully selected buds (which they call 'scions') from their lovingly tended stock of mature cultivar specimens. The resulting grafted plants are then cared for for at least five years before being offered on the market as small bushes (about 50 to 60 cm tall) still in their original oblong three-litre pots. Once the graft has sealed successfully (there may be considerable losses during the period before the graft seals), care for the small plants becomes a good deal less labour-intensive; the work mostly involving keeping them watered (and free of waterlogging), controlling weeds, and removing and disposing of any losses. The vast majority of the work is required for production and potting of the rootstocks from cuttings and at the grafting stage, as well as in the early aftercare of the new grafts. For this reason, the profitability of each year's production depends on knowing how many plants to graft to satisfy demand a few years down the road, and making sure at the outset that they have enough healthy, potted-up root stocks available on which they can graft all the plants they want every year just as winter is beginning to turn to spring.
@@ -40,6 +72,7 @@ Both Laura and Donal often referred to "Year Zero", by which they meant the cale
 
 - - -
 
+<!-- TOC --><a name="what-the-customer-wants"></a>
 ## What the customer wants
 
 Laura and Donal have asked me to provide them with a simple command line program to help them plan their propagation, grafting and crop management activities while the plants are being grown on for sale. They don't need any fancy graphics or sophisticated GUI, but they do want the program to be fairly simple to use and maintain, and to guide them through each step of the workflow. They want it to serve the following purposes:
@@ -56,6 +89,7 @@ N.B.: They currently grow six different cultivars for sale (but might expand the
 
 - - -
 
+<!-- TOC --><a name="system-design"></a>
 ## System design
 
 ![Some flow charts portraying a selection of important witch-hazel worklflows](assets/readme_assets/hamamelis.gif)
@@ -73,6 +107,7 @@ For simplicity's sake, and because I thought the data was not enormously complex
 
 The data should be read as follows.
 
+<!-- TOC --><a name="the-rootstock-worksheet"></a>
 ### The 'rootstock' worksheet 
 - The first column (A) is a label to tell the witch-hazel program what year the figures in the corresponding row refer to. The current year is at the top. 
 - The top figure in the second column (B) shows the number of cuttings that the couple plan to take in the autumn of the current year minus one. The figures below that represent the number of cuttings that the couple planned to take in each relevant year minus one in the past.
@@ -84,6 +119,7 @@ Any rootstocks left over after the year's grafting campaign is finished remain i
 
 *The rootstock worksheet as it might look towards the end of a growing year*
 
+<!-- TOC --><a name="the-grafts-year-zero-worksheet"></a>
 ### The 'grafts-year-zero' worksheet
 The grafts-year-zero worksheet contains two more columns than the number of cultivars of _Hamamelis_ currently cultivated by the Witch Hazel nursery. 
 - The first column identifies the year to which the data in the corresponding row refers.
@@ -93,6 +129,7 @@ The grafts-year-zero worksheet contains two more columns than the number of cult
 
 *The grafts-year-zero worksheet as it might look towards the end of a growing year*
 
+<!-- TOC --><a name="the-plants-worksheet"></a>
 ### The 'plants' worksheet
 The plants worksheet is a little simpler. It shows the current stocks of each cultivar of each age group &ndash; i.e.: the total number of grafts of that age currently in stock, adjusted according to the losses and gains subsequently recorded by the couple in the witch-hazel program using the record_loss, record_gain, hold_back and bring_forward functions (see below).
 ![The plants worksheet towards the end of a year](assets/readme_assets/plants_old_year.png)
@@ -102,6 +139,7 @@ The plants worksheet is a little simpler. It shows the current stocks of each cu
 
 - - - 
 
+<!-- TOC --><a name="the-programs-original-workflow-and-the-technical-issues-with-the-technology-used"></a>
 ## The program's original workflow and the technical issues with the technology used
 
 At the outset of programming, I wanted the app to call a run.py file in the usual way but to attach an argument after a blank space on the command line, depending on the task that the user wished to do at that time. Unfortunately, the Heroku pseudo terminal on which the app is destined to run does not allow the use of command-line arguments (or at least I have been unable to find a way of implementing such a command-line-argument-based design). Due to some issues with my implementation of the Heroku architecture, I discovered this limitation rather late in the day. As a result I was forced redesign the app at the last-minuteto follow a different (and in my opinion much less elegant) logic. Originally, the user would have typed the run.py file name on the terminal, followed by a space and then a short string indicating what they wanted the app to do.
@@ -112,8 +150,10 @@ The time used dealing with this problem at the last minute may have affected som
 
 - - - 
 
+<!-- TOC --><a name="the-programs-workflow"></a>
 ## The program's workflow:
 
+<!-- TOC --><a name="seasonal-tasks-in-order"></a>
 ### Seasonal tasks in order
 Typically towards the autumn of every year, the owners will want to close out the figures they have entered over the previous year, begin a new year and start work on planning their campaign of taking H. Virginiana cuttings. They begin this task by running the app and choosing option ``1`` (``Create new year/Close out current year``). This function adds the required new lines for the new current year on each worksheet, and copies the data on graft stocks for the old current year to date from the ``grafts-year-zero`` worksheet to the ``plants`` worksheet. This has the effect of putting the data for the previous year out of reach of the seasonal tasks.
 
@@ -151,6 +191,7 @@ _N.B.: In order to record total work done separately from current stocks (i.e., 
 - _cuttings taken vs total rootstocks_
 - _grafts taken vs total plants in stock (recorded for each cultivar separately)_
 
+<!-- TOC --><a name="ad-hoc-tasks"></a>
 ### ad-hoc tasks
 Option ``7`` (``Record plant losses``) asks the user the cultivar and age of the plants they want to record as lost (including year-zero rooted cuttings), showing them the current figure for that cultivar and age. The user is prevented from entering a number greater than that figure. It gives a confirmation message before writing the data entered by the user to the spreadsheet.
 
@@ -168,13 +209,16 @@ Reductions in plant stocks through _sales_ are not recorded in this app. The cou
 
 The same can be said of a number of other parts of the nursery workflow.
 
+<!-- TOC --><a name="bug-fixes-and-warning-resolution"></a>
 ## Bug fixes and warning resolution
+<!-- TOC --><a name="bugs"></a>
 ### Bugs
 Bugs were fixed as they arose during smoke testing.
 
 As far as practicable, all Bugs are resolved separately and the Bug resolution is recorded in Git commits separately, prefixing the commit text with "Bug: ".
 
 
+<!-- TOC --><a name="warnings"></a>
 ### Warnings
 pycodestyle issues (all warnings) were closed shortly before submitting the app project.
 
@@ -186,40 +230,53 @@ $ pycodestyle ...
   warnings.warn(
 run.py:318:22: E231 missing whitespace after ':'
 run.py:318:22: E701 multiple statements on one line (colon)
+run.py:428:80: E501 line too long (82 > 79 characters)
 ```
 
+In reality there are at least a dozen warnings relating to lines that are too long, but they do not affect the Heroku pseudo-terminal and do not appear to affect the readability of the code. I corrected them, saw that the caused bugs in the presentation, and even in the running of the code itself, and reversed them (one by one).
+
+<!-- TOC --><a name="app-robustness"></a>
 ## App robustness
 
+<!-- TOC --><a name="numerical-vs-characterstring-entries"></a>
 ### Numerical vs character/string entries
 Aside from the restrictions on user entries mentioned above, the user must not enter either a negative number or an entry that cannot be rendered as an integer. Sadly, in most cases, I have not had the time to resolve all issues relating to the user entering characters and strings that cannot be converted into integers yet, but I have put the necessary software in place in some functions (notably the opening menu function and functions 6, 7, 8 and 9). I have told the users to be careful not to make non-numerical entries where numerical entries are expected.
 
+<!-- TOC --><a name="out-of-range-numbers"></a>
 ### Out of range numbers
 The app has been designed so that integers entered outside the valid range of values are handled elegantly without the program havin to shut down. Users are shown an appropriate message repeatedly until they make a valid entry.
 
+<!-- TOC --><a name="yes-or-no-responses"></a>
 ### Yes or no responses
 The app is designed so that the user can respond to yes or know answers by entering 'y' or 'Y' for yes; entering any other value than 'y' or 'Y' is interpreted as a no.
 
 ---
+<!-- TOC --><a name="programming-philosophy"></a>
 ## Programming philosophy
 
 Being an app generally modelling a procedural series of steps, little use was made of the concepts of OOP in its design. Few custom classes were specifically designed for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.  It may, however, be useful to look at other programs created for a similar purpose when the time comes to refactor this code, and to use the advantages of OOD/OOP to make the code more efficient and more comprehensible.
 
+<!-- TOC --><a name="sharing-the-hamamelis-google-spreadsheet"></a>
 ## Sharing the hamamelis google spreadsheet
 
 This section is work in progress.
 
+<!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
 ## Registering for Heroku and using it
 
 This section is work in progress.
 
+<!-- TOC --><a name="lessons-learned"></a>
 ## Lessons learned
 
 This section is work in progress.
 
+<!-- TOC --><a name="other-unresolved-issues-and-future-development"></a>
 ## Other unresolved issues and future development
 
 This section is work in progress.
 
+<!-- TOC --><a name="credits"></a>
 ## Credits
 
 This section is work in progress.
