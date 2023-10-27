@@ -145,7 +145,7 @@ def Create_year():
     cuttings_last_year = rootstock.acell('c2').value
     if input(f"Would you like to create a record for {new_rootstock_year}?\
     \nType 'y' for yes and 'n' for no: \n").lower() == 'y':
-        print(f"\nInfo: You took {cuttings_taken} cuttings last year and successfully potted {rootstocks_potted} ({round(cutting_success * 100)}%) of them.\
+        print(f"\nInfo: You took {cuttings_taken} cuttings last year.\
         \nYou now have {mature_rootstocks} maturing rootstocks in stock.")
         num_cuttings = int(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
         \n(Enter 0 if you want to plan cutting numbers later): \n"))
@@ -416,8 +416,7 @@ def Record_grafts():
     print(f"So far, you have grafted {grafts_this_cultivar} of this cultivar.")
     if input("Would you like to add to this value?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        newly_made_grafts =
-        int(input(f"Type in the number of new grafts you have made of\
+        newly_made_grafts = int(input(f"Type in the number of new grafts you have made of\
         \n{cultivars[cultivar_value - 1]}: \n"))
         grafts_this_cultivar += newly_made_grafts
         grafts_year_zero.update_acell(address_grafts, grafts_this_cultivar)
@@ -426,8 +425,7 @@ def Record_grafts():
                                newly_made_grafts)
         print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
             \nThe new total of grafts made this year\
-            \nfor this cultivar is\
-             {grafts_year_zero.acell(address_grafts).value}\
+            \nfor this cultivar is {grafts_year_zero.acell(address_grafts).value}\
             \nSuccessfully completed record of new grafts made.")
 
     else:
@@ -450,12 +448,10 @@ def Record_loss():
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
-        print(f"At the last count there were {total_rootstocks}\
-        new rootstocks in the nursery")
+        print(f"At the last count there were {total_rootstocks} new rootstocks in the nursery")
 
         while True:
-            number_lost = input("How many rootstocks have been lost\
-            since then? \n")
+            number_lost = input("How many rootstocks have been lost since then? \n")
             try:
                 number_lost = int(number_lost)
                 if 0 <= number_lost <= total_rootstocks:
@@ -471,8 +467,7 @@ def Record_loss():
         rootstock.update_acell(address_affected,
                                total_rootstocks - number_lost)
         print(f"Loss of {number_lost} new rootstocks recorded.\
-        \nYou now have a stock of\
-        {rootstock.acell(address_affected).value} new rootstocks.")
+        \nYou now have a stock of {rootstock.acell(address_affected).value} new rootstocks.")
     else:
         """
         If what's been lost is grafted plants
@@ -498,8 +493,7 @@ def Record_loss():
         cultivar_value = int(input("Please enter the cultivar number for which you want to record a loss\
         \n(see the cultivars listed above): \n"))
         affected_year = int(input("Please enter the age of the plants for which you want to record a loss\
-        \n(typing '1' for year-one plants,\
-         '2' for year-two plants, and so on): \n"))
+        \n(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
@@ -507,8 +501,7 @@ def Record_loss():
         \nThere are currently {current_number} plants of that category\
         recorded in the system.")
         while True:
-            number_lost = input("How many plants of that category\
-            have been lost since then? \n")
+            number_lost = input("How many plants of that category have been lost since then? \n")
             try:
                 number_lost = int(number_lost)
                 if 0 <= number_lost <= current_number:
@@ -523,9 +516,7 @@ def Record_loss():
         current_number -= number_lost
         plants.update_acell(address_affected, current_number)
         print(f"Loss of {number_lost} {cultivars[cultivar_value - 1]} of year-{affected_year} recorded.\
-        \nYou now have a remaining stock of\
-        {plants.acell(address_affected).value}\
-        plants of that category.")
+        \nYou now have a remaining stock of {plants.acell(address_affected).value} plants of that category.")
 
         # number_lost
     print("Loss recorded successfully.")
@@ -586,17 +577,14 @@ def Record_gain():
         cultivar_value = int(input("Please enter the cultivar number for which you want to enter an acquisition\
         \n(see the cultivars listed above): \n"))
         affected_year = int(input("Please enter the age of the plants for which you want to enter an acquisition\
-        \n(typing '1' for year-one plants, \
-        '2' for year-two plants, and so on): \n"))
+        \n(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
         print(f"You have chosen to register an acquisition of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
-        \nThere are currently {current_number} plants of that category\
-        recorded in the system.")
+        \nThere are currently {current_number} plants of that category recorded in the system.")
         while True:
-            number_gained = input("How many plants of that category have \
-            been acquired since then? \n")
+            number_gained = input("How many plants of that category have been acquired since then? \n")
             try:
                 number_gained = int(number_gained)
                 break
@@ -607,8 +595,7 @@ def Record_gain():
         current_number += number_gained
         plants.update_acell(address_affected, current_number)
         print(f"Acquisition of {number_gained} {cultivars[cultivar_value - 1]} of year-{affected_year} recorded.\
-        \nYou currently have a stock of \
-         {plants.acell(address_affected).value} plants of that category.")
+        \nYou currently have a stock of {plants.acell(address_affected).value} plants of that category.")
 
         # number_lost
     print("Acquisition recorded successfully.")
@@ -671,8 +658,7 @@ def Hold_back():
     \nThere are now {current_number_to} plants of that cultivar listed as being a year younger.\
     \nThe specified number of plants will be held back for a year.")
     while True:
-        number_held_back = input("How many plants of that category do you want to \
-        hold back a year? \n")
+        number_held_back = input("How many plants of that category do you want to hold back a year? \n")
         try:
             number_held_back = int(number_held_back)
             if 0 <= number_held_back <= current_number_from:
@@ -691,8 +677,7 @@ def Hold_back():
     plants.update_acell(to_address_affected, current_number_to)
     print(f"Successfully recorded holding back {number_held_back} {cultivars[cultivar_value - 1]} plants of year-{affected_year}.\
     \nYou now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
-    \nand a total stock of {plants.acell(to_address_affected).value} of \
-    year-{affected_year - 1} plants of that cultivar.")
+    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year - 1} plants of that cultivar.")
 
     print("Plants held back successfully.")
 
@@ -727,8 +712,7 @@ def Bring_forward():
     \n(see the cultivars listed above): \n"))
     while True:
         affected_year = int(input("Please enter the age of the plants for which you want to bring plants forward\
-        \n(typing '1' for year-one plants or '2' for year-two plants, \
-        and so on): \n"))
+        \n(typing '1' for year-one plants or '2' for year-two plants, and so on): \n"))
         try:
             affected_year = int(affected_year)
             if affected_year >= 1:
@@ -751,8 +735,7 @@ def Bring_forward():
     \nThere are now {current_number_to} plants of that cultivar listed as being a year older.\
     \nThe specified number of plants will be brought forward by a year.")
     while True:
-        number_brought_forward = input("How many plants of that category do you want to \
-        bring forward for a year? \n")
+        number_brought_forward = input("How many plants of that category do you want to bring forward for a year? \n")
         try:
             number_brought_forward = int(number_brought_forward)
             if 0 <= number_brought_forward <= current_number_from:
@@ -772,8 +755,7 @@ def Bring_forward():
     plants.update_acell(to_address_affected, current_number_to)
     print(f"Successfully recorded bringing forward {number_brought_forward} {cultivars[cultivar_value - 1]} plants of year-{affected_year}.\
     \nYou now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
-    \nand a total stock of {plants.acell(to_address_affected).value}\
-    of year-{affected_year + 1} plants of that cultivar.")
+    \nand a total stock of {plants.acell(to_address_affected).value} of year-{affected_year + 1} plants of that cultivar.")
 
     print("Plants brought forward successfully.")
 
@@ -796,7 +778,7 @@ def Execute_option(operation):
         Help()
     elif operation == 1:
         print("You've chosen to close out the current year \
-        and open a new one.")
+        \nand open a new one.")
         Create_year()
     elif operation == 2:
         print("You've chosen to plan this year's cutting campaign.")
@@ -823,8 +805,7 @@ def Execute_option(operation):
         print("You've chosen to hold a number of grafted plants back a year.")
         Hold_back()
     elif operation == 10:
-        print("You've chosen to bring a number of grafted plants \
-        forward a year.")
+        print("You've chosen to bring a number of grafted plants forward a year.")
         Bring_forward()
     elif operation == 11:
         print("Sorry! This functionality has not yet been implemented.")
