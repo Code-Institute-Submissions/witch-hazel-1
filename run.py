@@ -500,8 +500,7 @@ def Record_loss():
         affected_year = int(input("Please enter the age of the plants for which you want to record a loss\
         \n(typing '1' for year-one plants,\
          '2' for year-two plants, and so on): \n"))
-        address_affected = f"{chr(ord('a') +
-                              cultivar_value - 1)}{affected_year + 1}"
+        address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
         print(f"You have chosen to register a loss of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
@@ -589,8 +588,7 @@ def Record_gain():
         affected_year = int(input("Please enter the age of the plants for which you want to enter an acquisition\
         \n(typing '1' for year-one plants, \
         '2' for year-two plants, and so on): \n"))
-        address_affected = f"{chr(ord('a') +
-                              cultivar_value - 1)}{affected_year + 1}"
+        address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
         print(f"You have chosen to register an acquisition of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
@@ -663,10 +661,8 @@ def Hold_back():
             \nnursery. Negative and decimal-point numbers, text and special characters, etc.\
             \nare not allowed: ")
 
-    from_address_affected = f"{chr(ord('a') +
-                               cultivar_value - 1)}{affected_year + 1}"
-    to_address_affected = f"{chr(ord('a') +
-                             cultivar_value - 1)}{affected_year}"
+    from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+    to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year}"
 
     current_number_from = int(plants.acell(from_address_affected).value)
     current_number_to = int(plants.acell(to_address_affected).value)
@@ -745,10 +741,8 @@ def Bring_forward():
             \nthe nursery. Negative and decimal-point numbers, text and special characters, etc.\
             \nare not allowed: ")
 
-    from_address_affected = f"{chr(ord('a') +
-                               cultivar_value - 1)}{affected_year + 1}"
-    to_address_affected = f"{chr(ord('a') +
-                             cultivar_value - 1)}{affected_year + 2}"
+    from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+    to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 2}"
 
     current_number_from = int(plants.acell(from_address_affected).value)
     current_number_to = int(plants.acell(to_address_affected).value)

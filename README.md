@@ -168,31 +168,58 @@ Reductions in plant stocks through _sales_ are not recorded in this app. The cou
 
 The same can be said of a number of other parts of the nursery workflow.
 
-##
+## Bug fixes and warning resolution
+### Bugs
+Bugs were fixed as they arose during smoke testing.
 
-### Numerical vs string entries
-Aside from the restrictions on user entries mentioned above, the user is not allowed to enter either a negative number or an entry that cannot be rendered as an integer.
+As far as practicable, all Bugs are resolved separately and the Bug resolution is recorded in Git commits separately, prefixing the commit text with "Bug: ".
+
+
+### Warnings
+pycodestyle issues (all warnings) were closed shortly before submitting the app project.
+
+Two warnings could not be resolved, but appear not affect the functioning, reading or comprehension of the program in any way! They were:
+```
+$ pip install pycodestyle
+$ pycodestyle ...
+
+  warnings.warn(
+run.py:318:22: E231 missing whitespace after ':'
+run.py:318:22: E701 multiple statements on one line (colon)
+```
+
+## App robustness
+
+### Numerical vs character/string entries
+Aside from the restrictions on user entries mentioned above, the user must not enter either a negative number or an entry that cannot be rendered as an integer. Sadly, in most cases, I have not had the time to resolve all issues relating to the user entering characters and strings that cannot be converted into integers yet, but I have put the necessary software in place in some functions (notably the opening menu function and functions 6, 7, 8 and 9). I have told the users to be careful not to make non-numerical entries where numerical entries are expected.
+
+### Out of range numbers
+The app has been designed so that integers entered outside the valid range of values are handled elegantly without the program havin to shut down. Users are shown an appropriate message repeatedly until they make a valid entry.
+
+### Yes or no responses
+The app is designed so that the user can respond to yes or know answers by entering 'y' or 'Y' for yes; entering any other value than 'y' or 'Y' is interpreted as a no.
 
 ---
 ## Programming philosophy
 
 Being an app generally modelling a procedural series of steps, little use was made of the concepts of OOP in its design. Few custom classes were specifically designed for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.  It may, however, be useful to look at other programs created for a similar purpose when the time comes to refactor this code, and to use the advantages of OOD/OOP to make the code more efficient and more comprehensible.
 
-##
+## Sharing the hamamelis google spreadsheet
 
-Todo
-logging
-reasons for loss/gain
-disposing of excess rooted cuttings
-wipeouts
-stuff that's more than zero
-loss/acquisition of year-zero grafted plants
-storage and committing
-reporting
-refactoring
-adding new cultivars
-program continuity
-escape errors due to badly formatted spreadsheets
-authentication for access to spreadsheets
-heroku setup
-heroku problems
+This section is work in progress.
+
+## Registering for Heroku and using it
+
+This section is work in progress.
+
+## Lessons learned
+
+This section is work in progress.
+
+## Other unresolved issues and future development
+
+This section is work in progress.
+
+## Credits
+
+This section is work in progress.
