@@ -82,7 +82,7 @@ def Startup_instructions():
     The user may need to scroll up to see the whole text.
     """
     print("Welcome to witch-hazel, your simple app for planning your production of\
-    \n of grafted Hamamelis plants!\
+    \ngrafted Hamamelis plants!\
     \nWhat would you like to do?\
     \nChoose from among the following functions:\
     \n\n0. Help\
@@ -98,13 +98,13 @@ def Startup_instructions():
     \n10. Bring plants forward one year\
     \n\n11. Add new cultivar\
     \n\
-    \n___________________________________________________________________________________\
+    \n_____________________________________________________________________________\
     \nFor a full list of the program's functions and instructions on how\
-    \nto call them, enter '0' on the\
-    \ncommand line. This will show you the help text for the app.\
+    \nto call them, enter '0' on the command line. This will show you\
+    \n the HELP text for the app.\
     \n\nYou must restart the app for each operation you would like to perform.\
     \n\
-    \n___________________________________________________________________________________\
+    \n_____________________________________________________________________________\
     \n")
 
     lower_bound = 0
@@ -112,7 +112,7 @@ def Startup_instructions():
 
     while True:
         user_entry = input(f"Please indicate which operation you would like to perform by\
-        \n entering the corresponding number: \n")
+        \nentering the corresponding number: \n")
         try:
             int_option = int(user_entry)
             if lower_bound <= int_option <= upper_bound:
@@ -191,11 +191,11 @@ def Plan_cutting_campaign():
     if int(planned_cuttings) > 0:
         if input(f"So far you have planned to take {planned_cuttings} cuttings! Would you like replace that number with a new one?\
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+            
             planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
             \nThe present planned figure for this year is {planned_cuttings}.\
             \nEnter a new figure for planned cuttings for this year: \n"))
             if planned_cuttings <= this_year_cuttings_taken:
-                print("yes")
                 if input(f"You have already taken {this_year_cuttings_taken} cuttings this year. This is more than your new planned figure!\
                 \nAre you sure you want to replace the planned figure with this one?\
                 \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
@@ -777,6 +777,8 @@ def Execute_option(operation):
     """
     Executes the option chosen by the user
     """
+
+    print("_____________________________________________________________________________")
     if operation == 0:
         print("You've chosen HELP.")
         Help()
