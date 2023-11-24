@@ -97,11 +97,15 @@ def Startup_instructions():
     \n9. Hold over plants for one year\
     \n10. Bring plants forward one year\
     \n\n11. Add new cultivar\
+    \n\
+    \n___________________________________________________________________________________\
     \nFor a full list of the program's functions and instructions on how\
     \nto call them, enter '0' on the\
     \ncommand line. This will show you the help text for the app.\
     \n\nYou must restart the app for each operation you would like to perform.\
-    \n\n")
+    \n\
+    \n___________________________________________________________________________________\
+    \n")
 
     lower_bound = 0
     upper_bound = 11
