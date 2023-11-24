@@ -107,8 +107,8 @@ def Startup_instructions():
     upper_bound = 11
 
     while True:
-        user_entry = input(f"Please indicate which operation you would like to perform by entering the\
-        \ncorresponding number: \n")
+        user_entry = input(f"Please indicate which operation you would like to perform by\
+        \n entering the corresponding number: \n")
         try:
             int_option = int(user_entry)
             if lower_bound <= int_option <= upper_bound:
@@ -117,8 +117,8 @@ def Startup_instructions():
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
                 \n{upper_bound}. Please enter a valid number: ")
         except ValueError:
-            print(f"Your number must be a positive integer or 0. Negative and decimal-point numbers, \
-            \ntext and special characters, etc. are not allowed: ")
+            print(f"Your number must be a positive integer or 0. Negative and\
+            \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
 
     Execute_option(int_option)
 
