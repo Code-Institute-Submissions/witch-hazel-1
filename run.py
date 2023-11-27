@@ -22,7 +22,7 @@ help_text1 = "\n################################################################
     \n10. Bring plants forward one year\
     \n\n11. Add new cultivar"
 
-    help_text2 = "Type the number of the operation you wish to perform.\
+help_text2 = "Type the number of the operation you wish to perform.\
     \nThe app will guide you through the operation you have chosen to perform.\
     \nYou will need to restart the app each time you wish to run an operation.\
     \n\nLook at the README.md file for details on each of these options.\
@@ -134,7 +134,7 @@ def Help():
     print(help_text1)
     output("Type any key to see more help!")
     print(help_text2)
-    
+
     print("Press any key to continue ...")
     Startup_instructions()
 
