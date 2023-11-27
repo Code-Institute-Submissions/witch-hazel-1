@@ -3,7 +3,7 @@ from google.oauth2.service_account import Credentials
 import sys
 
 
-help_text = "\n##########################################################################\
+help_text1 = "\n##########################################################################\
     \n\n                             W I T C H - H A Z E L\
     \n\nTo run witch-hazel, call the script file that contains its code\
     \nby simply typing the name of the file on the command line (``run.py``).\
@@ -15,13 +15,14 @@ help_text = "\n#################################################################
     \n3. Record cuttings taken\
     \n4. Record rooted cuttings potted up\
     \n\n5. Plan grafts for this year\
-    \n6. Record grafts taken\
+    \n\n6. Record grafts taken\
     \n\n7. Record plant losses\
     \n8. Record plant gains\
     \n9. Hold plants over for one year\
     \n10. Bring plants forward one year\
-    \n\n11. Add new cultivar\
-    \n\nYou should then type the number of the operation you wish to perform.\
+    \n\n11. Add new cultivar"
+
+    help_text2 = "Type the number of the operation you wish to perform.\
     \nThe app will guide you through the operation you have chosen to perform.\
     \nYou will need to restart the app each time you wish to run an operation.\
     \n\nLook at the README.md file for details on each of these options.\
@@ -38,7 +39,6 @@ help_text = "\n#################################################################
     \n\n\nPlease look at the relevant section of the README.md file to find\
     \nout which numbers are valid in each individual user interaction.\
     \n\n###############################################################################\
-    \n(Scroll up if necessary to read the help text!)\
     \n"
 
 SCOPE = [
@@ -131,7 +131,12 @@ def Help():
     """
     Option 0
     """
-    print(help_text)
+    print(help_text1)
+    output("Type any key to see more help!")
+    print(help_text2)
+    
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Create_year():
@@ -178,6 +183,9 @@ def Create_year():
         print(f"The year {new_rootstock_year} has not been created.\
         \nThe current year is still {rootstock_year}")
 
+    print("Press any key to continue ...")
+    Startup_instructions()
+
 
 def Plan_cutting_campaign():
     """
@@ -221,6 +229,9 @@ def Plan_cutting_campaign():
             print("Plan cuttings action cancelled.\
             \nNo changes have been made to the data.")
 
+    print("Press any key to continue ...")
+    Startup_instructions()
+
 
 def Run_main_if_clause(taken, planned):
     """
@@ -250,6 +261,9 @@ def Run_main_if_clause(taken, planned):
     else:
         print("Cuttings taken action cancelled.\
         \nNo changes have been made to the data.")
+    
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Record_cuttings_taken():
@@ -266,6 +280,9 @@ def Record_cuttings_taken():
             \nNo changes have been made to the data.")
     else:
         Run_main_if_clause(cuttings_taken, cuttings_planned)
+
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Record_potted_cuttings():
@@ -300,6 +317,9 @@ def Record_potted_cuttings():
     else:
         print("Record new cuttings potted action cancelled.\
         \nNo changes have been made to the data.")
+
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Plan_grafting_campaign():
@@ -362,6 +382,9 @@ def Plan_grafting_campaign():
     else:
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
+    
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Record_grafts():
@@ -435,6 +458,9 @@ def Record_grafts():
     else:
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
+    
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Record_loss():
@@ -525,6 +551,9 @@ def Record_loss():
         # number_lost
     print("Loss recorded successfully.")
 
+    print("Press any key to continue ...")
+    Startup_instructions()
+
 
 def Record_gain():
     """
@@ -603,6 +632,9 @@ def Record_gain():
 
         # number_lost
     print("Acquisition recorded successfully.")
+    
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Hold_back():
@@ -685,6 +717,9 @@ def Hold_back():
 
     print("Plants held back successfully.")
 
+    print("Press any key to continue ...")
+    Startup_instructions()
+
 
 def Bring_forward():
     """
@@ -763,6 +798,9 @@ def Bring_forward():
 
     print("Plants brought forward successfully.")
 
+    print("Press any key to continue ...")
+    Startup_instructions()
+
 
 def Add_new_cultivar():
     """
@@ -771,6 +809,9 @@ def Add_new_cultivar():
     """
     print("This functionality has not yet been implemented.\
     \nPlease watch this space!")
+
+    print("Press any key to continue ...")
+    Startup_instructions()
 
 
 def Execute_option(operation):
@@ -783,8 +824,7 @@ def Execute_option(operation):
         print("You've chosen HELP.")
         Help()
     elif operation == 1:
-        print("You've chosen to close out the current year \
-        \nand open a new one.")
+        print("You've chosen to close out the current year and open a new one.")
         Create_year()
     elif operation == 2:
         print("You've chosen to plan this year's cutting campaign.")
@@ -817,7 +857,7 @@ def Execute_option(operation):
         print("Sorry! This functionality has not yet been implemented.")
         Add_new_cultivar()
     else:
-        Print("Please enter a valid integer between 1 and 11")
+        Print("Please enter a valid integer between 0 (for Help) and 11")
 
 
 Startup_instructions()
