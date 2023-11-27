@@ -132,10 +132,10 @@ def Help():
     Option 0
     """
     print(help_text1)
-    output("Type any key to see more help!")
+    input("Type any key to see more help!")
     print(help_text2)
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -183,7 +183,7 @@ def Create_year():
         print(f"The year {new_rootstock_year} has not been created.\
         \nThe current year is still {rootstock_year}")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -229,7 +229,7 @@ def Plan_cutting_campaign():
             print("Plan cuttings action cancelled.\
             \nNo changes have been made to the data.")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -262,7 +262,7 @@ def Run_main_if_clause(taken, planned):
         print("Cuttings taken action cancelled.\
         \nNo changes have been made to the data.")
     
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -281,7 +281,7 @@ def Record_cuttings_taken():
     else:
         Run_main_if_clause(cuttings_taken, cuttings_planned)
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -318,7 +318,7 @@ def Record_potted_cuttings():
         print("Record new cuttings potted action cancelled.\
         \nNo changes have been made to the data.")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -383,7 +383,7 @@ def Plan_grafting_campaign():
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
     
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -459,7 +459,7 @@ def Record_grafts():
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
     
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -551,7 +551,7 @@ def Record_loss():
         # number_lost
     print("Loss recorded successfully.")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -633,7 +633,7 @@ def Record_gain():
         # number_lost
     print("Acquisition recorded successfully.")
     
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -717,7 +717,7 @@ def Hold_back():
 
     print("Plants held back successfully.")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -798,7 +798,7 @@ def Bring_forward():
 
     print("Plants brought forward successfully.")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
@@ -810,7 +810,7 @@ def Add_new_cultivar():
     print("This functionality has not yet been implemented.\
     \nPlease watch this space!")
 
-    print("Press any key to continue ...")
+    input("Press any key to continue ...")
     Startup_instructions()
 
 
