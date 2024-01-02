@@ -49,8 +49,8 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-
 SHEET = GSPREAD_CLIENT.open('hamamelis')
+
 rootstock = SHEET.worksheet('rootstock')
 grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
@@ -215,7 +215,7 @@ def Plan_cutting_campaign():
                 print("Planned number of cuttings successfully changed.\
                 \nCuttings campaign planning session completed")
         else:
-            Print("Plan cuttings action cancelled.\
+            print("Plan cuttings action cancelled.\
             \nNo changes have been made to the data.")
     else:
         if input(f"Would you like to plan the number of cuttings you intend to take this season? \
@@ -857,7 +857,7 @@ def Execute_option(operation):
         print("Sorry! This functionality has not yet been implemented.")
         Add_new_cultivar()
     else:
-        Print("Please enter a valid integer between 0 (for Help) and 11")
+        print("Please enter a valid integer between 0 (for Help) and 11")
 
 
 Startup_instructions()

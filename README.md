@@ -298,17 +298,21 @@ I then opened my personal CI Students Gitpod dashboard and created a new Workspa
 
 I located the credentials file which I had already downloaded and dragged & dropped it into the root directory of my gitpod witch-hazel workspace and then renamed it "creds.json".
 
-I then copied the client_email value from the creds.json file and opened my hamamelis Google Spreadsheet and clicked on the "Share" button at top right. I pasted the client_email value in to the Add people and groups into the text box that then appeared, chose "editor", unchecked the "notify people" checkbox and pressed "Send" and then "Done".
+I then copied the client_email value from the creds.json file and opened my hamamelis Google Spreadsheet and clicked on the "Share" button at top right. I pasted the client_email value in to the Add people and groups into the text box that then appeared, chose "editor", unchecked the "notify people" checkbox and pressed "Send" and then "Done". This set up the permissions for my app project to access and edit my hamamelis spreadsheet.
 
-To prevent the sensitive information contained in the creds.json file from being added to the files saved in the github repository, I added the file name to the list of files to be ignored by git to the "gitignore" file.
+To prevent the sensitive information contained in the creds.json file from being added to the files saved in the github repository, I added the file name to the list of files to be ignored by git to the "gitignore" file before running a git stage, commit, push operation.
 
-This put me in a position to begin my development work.
+I then installed gspread and google-auth by typing the commands ``pip3 install gspread google-auth``.
 
+Doing this put me in a position to begin my coding, my first step being to write ``import gspread`` and ``from google-oauth2.service_account import Credentials`` at the top of my run.py file, followed by five constants to be used by the App to maintain communication with my Google spreadsheet:
+- SCOPE (which lists the URLs of the three APIs that the App will need in order to run)
+- CREDS (which tells the App the file where the relevan credential values are to be found)
+- SCOPED_CREDS (which relates the CREDS to the SCOPEd APIs for which they are valid)
+- GSPREAD_CLIENT (which represents the client of the App as defined by the SCOPED_CREDS)
+- SHEET (the actual spreadsheet the App will be working with)
 
-<!-- TOC --><a name="sharing-the-hamamelis-google-spreadsheet"></a>
-### Sharing the hamamelis google spreadsheet
+From here on in, I suggest using the Git commit logs combined with my inline comments to explain the content of my Python code. 
 
-This section is work in progress.
 
 <!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
 ## Registering for Heroku and using it
