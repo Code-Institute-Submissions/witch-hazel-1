@@ -57,14 +57,14 @@ Their company, **Witch Hazel**, is named after the beautiful group of plant spec
 The two owners have jointly developed a highly efficient way of producing such grafted plants. They have a plentiful standing stock of _H. virginiana_, which they propagate using soft-wood cuttings over the course of the Roscommon winter (year zero). The following spring (around about April), they pot up all the cuttings that have rooted successfully and grow them on until they become small, one-year-old pot plants. In late winter of year one (usually February or early March), they graft onto those young plants (referred to as 'rootstocks') the carefully selected buds (which they call 'scions') from their lovingly tended stock of mature cultivar specimens. The resulting grafted plants are then cared for for at least five years before being offered on the market as small bushes (about 50 to 60 cm tall) still in their original oblong three-litre pots. Once the graft has sealed successfully (there may be considerable losses during the period before the graft seals), care for the small plants becomes a good deal less labour-intensive; the work mostly involving keeping them watered (and free of waterlogging), controlling weeds, and removing and disposing of any losses. The vast majority of the work is required for production and potting of the rootstocks from cuttings and at the grafting stage, as well as in the early aftercare of the new grafts. For this reason, the profitability of each year's production depends on knowing how many plants to graft to satisfy demand a few years down the road, and making sure at the outset that they have enough healthy, potted-up root stocks available on which they can graft all the plants they want every year just as winter is beginning to turn to spring.
 
 Donal explained the workflow in Hamamelis production as follows:
-- Green woody H. virginiana cuttings are taken in October/November and inserted with regular spacing in open ground (in a sheltered spot and well-drained, gritty and nutrient-poor soil). Those of cuttings that successfully produce roots are potted up in April/May of the following year. Donal tells me that most losses at this stage are incurred in the form of cuttings that fail to root. That's why they take many more cuttings than will eventually be needed. Rooted cuttings not needed for grafting almost a year later (in Year Zero &ndash; see below) are disposed of without ever being potted up. The couple always try to avoid such wastage, although after years over which few rooted cuttings die, there will often be a surplus of rootstocks ready for grafting. Such surplus rootstocks are rarely still suitable for grafting a year later, so they are disposed of.
+- Green woody H. virginiana cuttings are taken in October/November and inserted with regular spacing in open ground (in a sheltered spot and well-drained, gritty and nutrient-poor soil). Those of cuttings that successfully produce roots are potted up in April/May of the following year. Donal tells me that most losses at this stage are incurred in the form of cuttings that fail to root. That's why they take many more cuttings than will eventually be needed. Rooted cuttings not needed for grafting almost a year later (in Year Zero &ndash; see below) are disposed of without ever being potted up. The couple always try to avoid such wastage, although after years over which few rooted cuttings die, there will often be a surplus of rootstocks ready for grafting. Such surplus rootstocks are rarely still suitable for grafting a year later, so they are usually disposed of.
 - As compost and pots (the only other critical inputs) can be ordered at short notice, neither input represents a bottleneck risk for the couple. They don't need these variables to be modelled in the program for the moment.
 - The production process currently does not involve any repotting; each successfully rooted cutting is potted into its final three-litre pot.
 - The rooted, potted-up cuttings of H. virginiana are grown on for a full season and are readied for grafting in February to March of Year One (the precise time of year depends on the weather and the seasonal maturity of the scion buds to be grafted onto them).
 - The couple can't recall any year in which there was any shortage of scion buds, though actually selecting, cutting and preparing them correctly is a painstaking and time-intensive job.
 - Actually joining the scions onto the rootstocks is also a highly skilled and time-consuming task. But here again, the tools and materials required (a grafting knife, grafting tape and horticultural wax) are easy to obtain at short notice.
 - After the hard graft of grafting has been completed, the new baby plants are carefully placed in intensive care in the couple's polyethylene tunnel for about two months, during which time there may be substantial losses (up to 40%) through failure of the graft to fuse.
-- Once that period is over, the plants are taken outside to a sheltered spot on open ground. Their three-litre pots are buried to the neck in humus-rich soil to reduce the risk of drying out. They will remain there for several years until they're large enough for sale. The youngest cohort offered for sale are in their fifth year from year zero. All the plants are watered, weeded, cared for and re-spaced where required, and any losses (which are generally much less frequent once they have survived year one) are removed intermittently and disposed of.
+- Once that period is over, the plants are taken outside to a sheltered spot on open ground. Their three-litre pots are buried to the neck in well-drained, humus-rich soil to reduce the risk of drying out. They will remain there for several years until they're large enough for sale. The youngest cohort offered for sale are in their fifth year from year zero. All the plants are watered, weeded, cared for and re-spaced where required, and any losses (which are generally much less frequent once the plants have survived year one) are removed intermittently and disposed of.
 - Unsold fifth-year plants may be repotted and grown on for sale as more mature specimens in subsequent years. This part of the production process has not yet been modelled in the witch-hazel app.
 - Each year's production is kept together and grouped by cultivar, but particular plants that are growing particularly well or particularly slowly may be promoted or demoted to another year cohort where appropriate.
 
@@ -161,7 +161,7 @@ Also within the ``Create new year/Close out current year`` function, users can c
 
 ![The rootstock worksheet straight after the user executes the ``Create new year/Close out current year`` function](assets/readme_assets/rootstock_new_year.png)
 
-*The rootstock worksheet straight after the user executes the ``Create new year/Close out current year`` function. Note that the user has chosen to enter a value for planned cuttings of 2800. That value can be changed at any time during the year by running Option 2 ``Plan this year's cutting campaign``.*
+*The rootstock worksheet straight after the user executes the ``Create new year/Close out current year`` function. Note that the user has chosen to enter a value for planned cuttings of 2,800. That value can be changed at any time during the year by running Option 2 ``Plan this year's cutting campaign``.*
 
 - - -
 
@@ -256,8 +256,57 @@ The app is designed so that the user can respond to yes or know answers by enter
 
 Being an app generally modelling a procedural series of steps, little use was made of the concepts of OOP in its design. Few custom classes were specifically designed for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.  It may, however, be useful to look at other programs created for a similar purpose when the time comes to refactor this code, and to use the advantages of OOD/OOP to make the code more efficient and more comprehensible.
 
+## Setting up the environment
+The first task I completed was to create the spreadsheet with which Laura and Donal's app are going to interact. As I already have a Google account, there was no need to set up a new account. I simply navigated to https://docs.google.com/spreadsheets and created a Google spreadsheet (called "Hamamelis") that contained the three pages illustrated and explained above, inserting the data given to me by Laura and Donal.
+
+I then set up the google API to give Laura and Donal's new App read and write access the spreadsheet (they will no be allowed to modify the data on the spreadsheet directly by hand).
+
+I did this by clicking on the Share button at top left from within my "Hamamelis" Google spreadsheet and choosing my personal Google account. I then navigated to https://console.cloud.google.com/, selected the "Select a project" button and selected "New project".  I named my project "Hamamelis".
+
+I then clicked "Select Project", which brought me onto the new "Hamamelis" project dashboard page.  
+
+From there I selected the Navigation menu and selected "APIs & Services / Library.
+
+There I enabled two APIs: one for Google Drive (to generate the necessary credentials) and one for Google Sheets.
+
+### The Google Drive API
+
+To initiate the Google Drive API ran a search for "Google Drive", which gave me "Google Drive API" at the top of my search results list. I clicked on it and then on the "Enable"  button on the page that then appeared. This brought me to the Google Drive Overview page.
+
+On this page I clicked on the CREDENTIALS tab and then on the "Create Credentials" button under that tab, I chose Google Drive API from the dropdown menu and then "Application Data" to answer the question "What data will you be accessing?" and then clicked 'Next'.
+
+I entered "hamamelis" as my Service account name, along with a short description of purpose of the service account. I then pressed the "Create and Continue" button, and then chose the role "Editor" and pressed the "Continue" button. Leaving all other actions blank, I then pressed "Done".
+
+This brought me back to the Credentials page for the Google Drive API, where I could see my newly created hamamelis service account at the bottom of the page. I clicked on it to get to the hamamelis service account page and then went to the Keys tab, where I chose "Create new key" from the "Add Key" the dropdown list.
+
+This created a json file containing the necessary API credentials for download to my machine.  Once the download was complete I noted the directory to which it was downloaded.
+
+
+### The Google sheets API
+
+Once all that was done, I navigated back to the APIs and Services/Library page and searched for the Google Sheets API, which yielded a single result. I clicked on it and then on the Enable button in the Google Sheets API page.
+
+
+### The Github repository and the Gitpod workspace
+
+I set up the Github repository for my project (under the name "witch-hazel" &ndash; https://github.com/JaimeHyland/witch-hazel) using the template made available by Code Institute at https://github.com/Code-Institute-Org/p3-template by clicking on the "Create a new repository" option on the "Use this template" dropdown list (setting the name as "JaimeHyland/witch-hazel"). I made the repository public (leaving the radio button selected by default as it is).
+
+I then opened my personal CI Students Gitpod dashboard and created a new Workspace including all the files created for the witch-hazel repository by the CI p3-template. I did so by clicking on the Create new workspace button, selecting the witch-hazel repository from the list of all my existing repositories in my personal Github account and then clicking on "Continue". Ihe workspace that then opened, I checked to make sure that all the files listed in the instructional video were present.
+
+
+### Sharing the hamamelis Google Spreadsheet
+
+I located the credentials file which I had already downloaded and dragged & dropped it into the root directory of my gitpod witch-hazel workspace and then renamed it "creds.json".
+
+I then copied the client_email value from the creds.json file and opened my hamamelis Google Spreadsheet and clicked on the "Share" button at top right. I pasted the client_email value in to the Add people and groups into the text box that then appeared, chose "editor", unchecked the "notify people" checkbox and pressed "Send" and then "Done".
+
+To prevent the sensitive information contained in the creds.json file from being added to the files saved in the github repository, I added the file name to the list of files to be ignored by git to the "gitignore" file.
+
+This put me in a position to begin my development work.
+
+
 <!-- TOC --><a name="sharing-the-hamamelis-google-spreadsheet"></a>
-## Sharing the hamamelis google spreadsheet
+### Sharing the hamamelis google spreadsheet
 
 This section is work in progress.
 
