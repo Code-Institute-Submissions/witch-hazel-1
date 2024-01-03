@@ -81,8 +81,11 @@ def Startup_instructions():
     The program's main menu on startup
     The user may need to scroll up to see the whole text.
     """
+
+
     print("Welcome to witch-hazel, your simple app for planning your production of\
     \ngrafted Hamamelis plants!\
+    \n\
     \nWhat would you like to do?\
     \nChoose from among the following functions:\
     \n\n0. Help\
@@ -103,7 +106,7 @@ def Startup_instructions():
     \nFor a full list of the program's functions and instructions on how\
     \nto call them, enter '0' on the command line. This will show you\
     \n the HELP text for the app.\
-    \n\nType "EXIT" to close the witch-hazel app.\
+    \n\nType 'EXIT' to close the witch-hazel app.\
     \n\
     \n_____________________________________________________________________________\
     \n")
@@ -118,14 +121,16 @@ def Startup_instructions():
             int_option = int(user_entry)
             if lower_bound <= int_option <= upper_bound:
                 break
-            elif user_entry.lower == 'exit':
-                exit()
             else:
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
                 \n{upper_bound}. Please enter a valid number: ")
         except ValueError:
-            print(f"Your number must be a positive integer or 0. Negative and\
-            \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
+            if user_entry.lower() == 'exit':
+                print("Exiting witch-hazel app")
+                exit()
+            else:
+                print(f"Your number must be a positive integer or 0. Negative and\
+                \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
 
     Execute_option(int_option)
 
