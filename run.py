@@ -99,10 +99,11 @@ def Startup_instructions():
     \n\n11. Add new cultivar\
     \n\
     \n_____________________________________________________________________________\
+    \n\
     \nFor a full list of the program's functions and instructions on how\
     \nto call them, enter '0' on the command line. This will show you\
     \n the HELP text for the app.\
-    \n\nYou must restart the app for each operation you would like to perform.\
+    \n\nType "EXIT" to close the witch-hazel app.\
     \n\
     \n_____________________________________________________________________________\
     \n")
@@ -117,6 +118,8 @@ def Startup_instructions():
             int_option = int(user_entry)
             if lower_bound <= int_option <= upper_bound:
                 break
+            elif user_entry.lower == 'exit':
+                exit()
             else:
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
                 \n{upper_bound}. Please enter a valid number: ")
@@ -135,7 +138,8 @@ def Help():
     input("Type any key to see more help!")
     print(help_text2)
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -183,7 +187,8 @@ def Create_year():
         print(f"The year {new_rootstock_year} has not been created.\
         \nThe current year is still {rootstock_year}")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -229,7 +234,8 @@ def Plan_cutting_campaign():
             print("Plan cuttings action cancelled.\
             \nNo changes have been made to the data.")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -262,7 +268,8 @@ def Run_main_if_clause(taken, planned):
         print("Cuttings taken action cancelled.\
         \nNo changes have been made to the data.")
     
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -281,7 +288,8 @@ def Record_cuttings_taken():
     else:
         Run_main_if_clause(cuttings_taken, cuttings_planned)
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -318,7 +326,8 @@ def Record_potted_cuttings():
         print("Record new cuttings potted action cancelled.\
         \nNo changes have been made to the data.")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -383,7 +392,8 @@ def Plan_grafting_campaign():
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
     
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -459,7 +469,8 @@ def Record_grafts():
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
     
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -551,7 +562,8 @@ def Record_loss():
         # number_lost
     print("Loss recorded successfully.")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -633,7 +645,8 @@ def Record_gain():
         # number_lost
     print("Acquisition recorded successfully.")
     
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -717,7 +730,8 @@ def Hold_back():
 
     print("Plants held back successfully.")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -798,7 +812,8 @@ def Bring_forward():
 
     print("Plants brought forward successfully.")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -810,7 +825,8 @@ def Add_new_cultivar():
     print("This functionality has not yet been implemented.\
     \nPlease watch this space!")
 
-    input("Press any key to continue ...")
+    print("Press any key to continue ...")
+    input()
     Startup_instructions()
 
 
@@ -820,6 +836,7 @@ def Execute_option(operation):
     """
 
     print("_____________________________________________________________________________")
+    print(" ")
     if operation == 0:
         print("You've chosen HELP.")
         Help()
