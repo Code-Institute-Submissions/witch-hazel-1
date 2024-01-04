@@ -254,7 +254,29 @@ The app is designed so that the user can respond to yes or know answers by enter
 <!-- TOC --><a name="programming-philosophy"></a>
 ## Programming philosophy
 
-Being an app generally modelling a procedural series of steps, little use was made of the concepts of OOP in its design. Few custom classes were specifically designed for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.  It may, however, be useful to look at other programs created for a similar purpose when the time comes to refactor this code, and to use the advantages of OOD/OOP to make the code more efficient and more comprehensible.
+Being an app generally modelling a procedural series of steps, I made only limited active use of the concepts of OOP in my code: though I used a number of pre-coded classes through importing a number of packages, I created few custom classes specifically for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.
+
+## Manual testing
+
+### Features testing
+
+### Browser compatibility
+
+### Device compatibility and responsiveness
+
+### Code validation
+
+### Bugs and bug squashing
+
+### Lighthouse testing
+
+### Accessibility (webaim coolors)
+
+## Automated testing
+
+
+
+
 
 ## Setting up the environment
 The first task I completed was to create the spreadsheet with which Laura and Donal's app are going to interact. As I already have a Google account, there was no need to set up a new account. I simply navigated to https://docs.google.com/spreadsheets and created a Google spreadsheet (called "Hamamelis") that contained the three pages illustrated and explained above, inserting the data given to me by Laura and Donal.
@@ -317,7 +339,36 @@ From here on in, I suggest using the Git commit logs combined with my inline com
 <!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
 ## Registering for Heroku and using it
 
-This section is work in progress.
+### Initial registration
+
+My first step to facilitate deploying my App on the Heroku Python environment  was to add my app's dependencies into my requirements.txt file (which the Heroku environment refers to when installing the necessary features on creation). I do this by running `` pip3 freeze > requirements.txt``, which collects all necessary installations on the Gitpod workspace and writes them into the requirements.txt file.
+
+The next step was to create an account with Heroku at heroku.com. I clicked on "Sign up for free" and filled out the sign-up form (using a genuine email address and with Role as Student and country as Germany), and then clicked "Create free account". I then confirmed via the validation email that Heroku sent me and set a password. And I then logged and accepted the Heroku terms of service.  Heroku now requires a real 16-digit credit or debit card for all its accounts and requires users to implement a minimum two-step validation process to use its hosting services. The form of validation I chose was using a code number sent to my smartphone on each log-in via Salesforce's Authenticator app. After a variety of issues relating to mutually incompatible localizations, limited payment options and complex processes to access the credit organised for me by Code Institute, I was eventually able to set up my account.
+
+
+### Activating Code Institute's Heroku Student Pack
+
+Once I had successfully set up my Heroku account, I navigated to www.heroku.com/github-students, clicked on the "Get the student offer" option, verified my status as a Github student and then clicked "Authorize heroku". I then verified my billing information and confirmed the credit card that I had already entered.  I then entered my first and last names, with "Code Institute" as my school name, and pressed "Send". On the dialog that then opened, I indicated my agreement with the Heroku Terms and Conditions by pressing "Agree" and left the site.
+
+When I checked my account on the following day (at dashboard.heroku.com/account/billing), the appropriate sum was added to my Platform Credits.
+
+
+### Setting up our App in the Heroku environment
+
+From my personal dashboard in the Heroku site, I selected "Create new app" from the "New" dropdown list, gave it the app name "witch-hazel", chose "Europe" as its region and then pressed "Create App". I then clicked on the "Settings" tab and clicked on "Reveal Config Vars". From there I created config var (environment variable) and gave it the entire contents of the creds.json file as its value.
+
+I then scrolled down the page a little, clicked "Add Buildpack" and added two buildpacks (python and nodejs, in that order), saving my work.
+
+I then switched to the deploy tab, selected Github as the environment I wanted to deploy from (under "Deployment method") and pressed "Connect to Github". I then searched for and selected the witch-hazel repository.
+
+I chose the manual "Deploy branch" option and waited until the deployment was complete. When that was done, I clicked on "View" and saw that my Heroku mock terminal had already started my witch-hazel app. I could then run a smoke test to ensure that everything was working in the same way as my App as already created in Gitpod and stored in my Github repository.
+
+From this time on, I could run the "Deploy branch" option on the Deployment tab whenever I completed an important commit to github in order to ensure that I had successfully deployed the latest version of my app to the Heroku environment.
+
+To get the hours of server time I need from Heroku, I needed to activate Eco dynos to allow my applications, including witch-hazel, to work. To set up the service, I went into the billing tab of on my dashboard and clicked on "Subscribe to Eco". After browsing through the information on the page, I clicked on Subscribe, confirmed that my subscription was now in existence and exited Heroku.
+
+Rather nicely, these Eco Dynos go to sleep after a period, so that I don't have to pay for server time that I'm not using.
+
 
 <!-- TOC --><a name="lessons-learned"></a>
 ## Lessons learned
@@ -331,5 +382,5 @@ This section is work in progress.
 
 <!-- TOC --><a name="credits"></a>
 ## Credits
-
+https://www.w3schools.com/
 This section is work in progress.

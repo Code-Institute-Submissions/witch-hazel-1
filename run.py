@@ -63,6 +63,19 @@ rootstock_data = rootstock.get_all_values()
 grafts_data = grafts_year_zero.get_all_values()
 Plants_data = plants.get_all_values()
 
+def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a number. Please enter a number between ", 
+        not_in_range_blurb="That number is out of range. Please enter a number between "):
+    try:
+        number = int(user_input)
+        if min <= number <= max:
+            return number
+        else:
+            return check_is_numeric(input(f"{not_in_range_blurb}{min} and {max}:"))
+    except:
+        if user_input.lower()=='exit':
+            exit()
+        else:
+            return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"))
 
 def Get_survival_rate(start_num, end_num):
     if int(start_num) == 0:
@@ -115,10 +128,10 @@ def Startup_instructions():
     upper_bound = 11
 
     while True:
-        user_entry = input(f"Please indicate which operation you would like to perform by\
+        user_input = input(f"Please indicate which operation you would like to perform by\
         \nentering the corresponding number: \n")
         try:
-            int_option = int(user_entry)
+            int_option = int(user_input)
             if lower_bound <= int_option <= upper_bound:
                 break
             else:
@@ -165,7 +178,7 @@ def Create_year():
     \nType 'y' for yes and 'n' for no: \n").lower() == 'y':
         print(f"\nInfo: You took {cuttings_taken} cuttings last year.\
         \nYou now have {mature_rootstocks} maturing rootstocks in stock.")
-        num_cuttings = int(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
+        num_cuttings = check_is_numeric(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
         \n(Enter 0 if you want to plan cutting numbers later): \n"))
         values = [new_rootstock_year, num_cuttings, 0, 0, 0]
         rootstock.insert_row(values)
@@ -206,11 +219,12 @@ def Plan_cutting_campaign():
     last_year_cuttings = int(rootstock.acell('c2').value)
     last_year_rooted_cuttings = int(rootstock.acell('d2').value)
     this_year_cuttings_taken = int(rootstock.acell('c1').value)
+    current_year = int(rootstock.acell('a1').value)
     if int(planned_cuttings) > 0:
-        if input(f"So far you have planned to take {planned_cuttings} cuttings! Would you like replace that number with a new one?\
+        if input(f"So far you have planned to take {planned_cuttings} cuttings for {current_year}! Would you like replace that number with a new one?\
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
             
-            planned_cuttings = int(input(f"You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
+            planned_cuttings = check_is_numeric(input(f"You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
             \nThe present planned figure for this year is {planned_cuttings}.\
             \nEnter a new figure for planned cuttings for this year: \n"))
             if planned_cuttings <= this_year_cuttings_taken:
@@ -230,7 +244,7 @@ def Plan_cutting_campaign():
     else:
         if input(f"Would you like to plan the number of cuttings you intend to take this season? \
         \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            planned_cuttings = int(input(f"Please enter the number of cuttings\
+            planned_cuttings = check_is_numeric(input(f"Please enter the number of cuttings\
             \nthat you want to take this year: \n"))
             rootstock.update_acell('b1', planned_cuttings)
             print("Planned number of cuttings successfully changed.\
@@ -258,7 +272,7 @@ def Run_main_if_clause(taken, planned):
 
     if input("Would you like to add to that number?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        taken += int(input(f"How many cuttings have you now taken in addition to the ones\
+        taken += check_is_numeric(input(f"How many cuttings have you now taken in addition to the ones\
         \nyou've already recorded: \n"))
         rootstock.update_acell('c1', taken)
         if taken >= planned:
@@ -310,7 +324,7 @@ def Record_potted_cuttings():
     new_rootstocks = int(rootstock.acell('e1').value)
     if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        newly_potted = int(input(f"How many cuttings have you now potted up in addition\
+        newly_potted = check_is_numeric(input(f"How many cuttings have you now potted up in addition\
         \nto the ones already recorded: \n"))
         if cuttings_potted + newly_potted > cuttings_taken:
             print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll have potted up more cuttings than you took in the Autumn.\
@@ -377,7 +391,7 @@ def Plan_grafting_campaign():
         print(f"{count}. {cultivar}")
 
     print("For which cultivar would you like to plan your grafting?\n")
-    cultivar_value = int(input("Please enter the number of the cultivar for which you want to plan grafting\
+    cultivar_value = check_is_numeric(input("Please enter the number of the cultivar for which you want to plan grafting\
     \n(see the cultivars listed above): \n"))
     cell_address = f"{chr(ord('c') + cultivar_value - 1)}2"
     print(cell_address)
@@ -387,7 +401,7 @@ def Plan_grafting_campaign():
     \n{planned_numbers[cultivar_value - 1]} grafts of this cultivar.")
     if input("Would you like to replace this value?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        new_planned_value = int(input(f"Type in the new planned value\
+        new_planned_value = check_is_numeric(input(f"Type in the new planned value\
         \nfor {cultivars[cultivar_value - 1]}: \n"))
         grafts_year_zero.update_acell(cell_address, new_planned_value)
         print(f"Planned number of grafts for {cultivars[cultivar_value - 1]} successfully changed.\
@@ -448,7 +462,7 @@ def Record_grafts():
 
     print("Which cultivar has been grafted?\n")
 
-    cultivar_value = int(input("Please enter the cultivar number of the new grafts you want to record\
+    cultivar_value = check_is_numeric(input("Please enter the cultivar number of the new grafts you want to record\
     \n(see the cultivars listed above): \n"))
     address_grafts = f"{chr(ord('c') + cultivar_value - 1)}3"
     address_rootstocks = 'e2'
@@ -458,7 +472,7 @@ def Record_grafts():
     print(f"So far, you have grafted {grafts_this_cultivar} of this cultivar.")
     if input("Would you like to add to this value?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        newly_made_grafts = int(input(f"Type in the number of new grafts you have made of\
+        newly_made_grafts = check_is_numeric(input(f"Type in the number of new grafts you have made of\
         \n{cultivars[cultivar_value - 1]}: \n"))
         grafts_this_cultivar += newly_made_grafts
         grafts_year_zero.update_acell(address_grafts, grafts_this_cultivar)
@@ -536,9 +550,9 @@ def Record_loss():
             count += 1
             print(f"{count}. {cultivar}")
 
-        cultivar_value = int(input("Please enter the cultivar number for which you want to record a loss\
+        cultivar_value = check_is_numeric(input("Please enter the cultivar number for which you want to record a loss\
         \n(see the cultivars listed above): \n"))
-        affected_year = int(input("Please enter the age of the plants for which you want to record a loss\
+        affected_year = check_is_numeric(input("Please enter the age of the plants for which you want to record a loss\
         \n(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
@@ -624,9 +638,9 @@ def Record_gain():
             count += 1
             print(f"{count}. {cultivar}")
 
-        cultivar_value = int(input("Please enter the cultivar number for which you want to enter an acquisition\
+        cultivar_value = check_is_numeric(input("Please enter the cultivar number for which you want to enter an acquisition\
         \n(see the cultivars listed above): \n"))
-        affected_year = int(input("Please enter the age of the plants for which you want to enter an acquisition\
+        affected_year = check_is_numeric(input("Please enter the age of the plants for which you want to enter an acquisition\
         \n(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
@@ -681,10 +695,10 @@ def Hold_back():
         count += 1
         print(f"{count}. {cultivar}")
 
-    cultivar_value = int(input("Please enter the cultivar number for which you want to hold plants back (see\
+    cultivar_value = check_is_numeric(input("Please enter the cultivar number for which you want to hold plants back (see\
     \nthe cultivars listed above): \n"))
     while True:
-        affected_year = int(input("Please enter the age of the plants that you want to hold back (typing '2'\
+        affected_year = check_is_numeric(input("Please enter the age of the plants that you want to hold back (typing '2'\
         \nfor year-two plants or '3' for year-three plants, and so on): \n"))
         try:
             affected_year = int(affected_year)
@@ -735,7 +749,7 @@ def Hold_back():
 
     print("Plants held back successfully.")
 
-    print("Press any key to continue ...")
+    print("Press )any key to continue ...")
     input()
     Startup_instructions()
 
@@ -766,10 +780,10 @@ def Bring_forward():
         count += 1
         print(f"{count}. {cultivar}")
 
-    cultivar_value = int(input("Please enter the cultivar number for which you want to bring plants forward\
+    cultivar_value = check_is_numeric(input("Please enter the cultivar number for which you want to bring plants forward\
     \n(see the cultivars listed above): \n"))
     while True:
-        affected_year = int(input("Please enter the age of the plants for which you want to bring plants forward\
+        affected_year = check_is_numeric(input("Please enter the age of the plants for which you want to bring plants forward\
         \n(typing '1' for year-one plants or '2' for year-two plants, and so on): \n"))
         try:
             affected_year = int(affected_year)
