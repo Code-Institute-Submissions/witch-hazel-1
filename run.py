@@ -70,12 +70,12 @@ def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a
         if min <= number <= max:
             return number
         else:
-            return check_is_numeric(input(f"{not_in_range_blurb}{min} and {max}:"))
+            return check_is_numeric(input(f"{not_in_range_blurb}{min} and {max}:"), min, max)
     except:
         if user_input.lower()=='exit':
             exit()
         else:
-            return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"))
+            return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"), min, max)
 
 def Get_survival_rate(start_num, end_num):
     if int(start_num) == 0:
@@ -95,10 +95,20 @@ def Startup_instructions():
     The user may need to scroll up to see the whole text.
     """
 
-
-    print("Welcome to witch-hazel, your simple app for planning your production of\
+    Intro_text1 = "**************************************************************\
+    \n\
+    \nWelcome to witch-hazel, your simple app for planning your production of\
     \ngrafted Hamamelis plants!\
     \n\
+    \n\
+    \nFor a full list of the program's functions and instructions on how\
+    \nto call them, enter '0' on the command line. This will show you\
+    \n the HELP text for the app.\
+    \n\nType 'EXIT' to close the witch-hazel app.\
+    \n\
+    \n_____________________________________________________________________________"
+
+    Intro_text2 = "\n\
     \nWhat would you like to do?\
     \nChoose from among the following functions:\
     \n\n0. Help\
@@ -115,17 +125,16 @@ def Startup_instructions():
     \n\n11. Add new cultivar\
     \n\
     \n_____________________________________________________________________________\
-    \n\
-    \nFor a full list of the program's functions and instructions on how\
-    \nto call them, enter '0' on the command line. This will show you\
-    \n the HELP text for the app.\
-    \n\nType 'EXIT' to close the witch-hazel app.\
-    \n\
-    \n_____________________________________________________________________________\
-    \n")
+    \n"
 
     lower_bound = 0
     upper_bound = 11
+
+    print(Intro_text1)
+    print("Press Enter to continue ...")
+    input()
+    print(Intro_text2)
+
 
     while True:
         user_input = input(f"Please indicate which operation you would like to perform by\
@@ -138,7 +147,7 @@ def Startup_instructions():
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
                 \n{upper_bound}. Please enter a valid number: ")
         except ValueError:
-            if user_entry.lower() == 'exit':
+            if user_input.lower() == 'exit':
                 print("Exiting witch-hazel app")
                 exit()
             else:
@@ -153,10 +162,10 @@ def Help():
     Option 0
     """
     print(help_text1)
-    input("Type any key to see more help!")
+    input("Press Enter to see more help!")
     print(help_text2)
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -205,7 +214,7 @@ def Create_year():
         print(f"The year {new_rootstock_year} has not been created.\
         \nThe current year is still {rootstock_year}")
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -253,7 +262,7 @@ def Plan_cutting_campaign():
             print("Plan cuttings action cancelled.\
             \nNo changes have been made to the data.")
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -287,7 +296,7 @@ def Run_main_if_clause(taken, planned):
         print("Cuttings taken action cancelled.\
         \nNo changes have been made to the data.")
     
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -307,7 +316,7 @@ def Record_cuttings_taken():
     else:
         Run_main_if_clause(cuttings_taken, cuttings_planned)
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -345,7 +354,7 @@ def Record_potted_cuttings():
         print("Record new cuttings potted action cancelled.\
         \nNo changes have been made to the data.")
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -392,7 +401,7 @@ def Plan_grafting_campaign():
 
     print("For which cultivar would you like to plan your grafting?\n")
     cultivar_value = check_is_numeric(input("Please enter the number of the cultivar for which you want to plan grafting\
-    \n(see the cultivars listed above): \n"))
+    \n(see the cultivars listed above): \n"), 1, count)
     cell_address = f"{chr(ord('c') + cultivar_value - 1)}2"
     print(cell_address)
     print(f"You have chosen to plan graft numbers\
@@ -411,7 +420,7 @@ def Plan_grafting_campaign():
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
     
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -463,7 +472,7 @@ def Record_grafts():
     print("Which cultivar has been grafted?\n")
 
     cultivar_value = check_is_numeric(input("Please enter the cultivar number of the new grafts you want to record\
-    \n(see the cultivars listed above): \n"))
+    \n(see the cultivars listed above): \n"), 1, count)
     address_grafts = f"{chr(ord('c') + cultivar_value - 1)}3"
     address_rootstocks = 'e2'
     grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
@@ -488,7 +497,7 @@ def Record_grafts():
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
         \nNo changes have been made to the data.")
     
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -581,7 +590,7 @@ def Record_loss():
         # number_lost
     print("Loss recorded successfully.")
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -632,23 +641,23 @@ def Record_gain():
         cultivars = plants.get(name_range)[0]
 
         # List the cultivars in the data in an ordered list.
-        print(f"For which cultivar would you like record a loss?")
+        print(f"For which cultivar would you like record an acquisition?")
         count = 0
         for cultivar in cultivars:
             count += 1
             print(f"{count}. {cultivar}")
 
         cultivar_value = check_is_numeric(input("Please enter the cultivar number for which you want to enter an acquisition\
-        \n(see the cultivars listed above): \n"))
+        \n(see the cultivars listed above): \n"), 1, count)
         affected_year = check_is_numeric(input("Please enter the age of the plants for which you want to enter an acquisition\
-        \n(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
+        \n(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"), 1, 5)
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
         print(f"You have chosen to register an acquisition of {cultivars[cultivar_value - 1]} of age year-{affected_year}.\
         \nThere are currently {current_number} plants of that category recorded in the system.")
         while True:
-            number_gained = input("How many plants of that category have been acquired since then? \n")
+            number_gained = input("How many plants of that category have been acquired since the last recorded entry? \n")
             try:
                 number_gained = int(number_gained)
                 break
@@ -664,7 +673,7 @@ def Record_gain():
         # number_lost
     print("Acquisition recorded successfully.")
     
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -831,7 +840,7 @@ def Bring_forward():
 
     print("Plants brought forward successfully.")
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
@@ -844,7 +853,7 @@ def Add_new_cultivar():
     print("This functionality has not yet been implemented.\
     \nPlease watch this space!")
 
-    print("Press any key to continue ...")
+    print("Press Enter to continue ...")
     input()
     Startup_instructions()
 
