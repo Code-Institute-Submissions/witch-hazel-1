@@ -110,7 +110,7 @@ def Startup_instructions():
 
     Intro_text2 = "\n\
     \nWhat would you like to do?\
-    \nChoose from among the following functions:\
+    \nChoose from among the following operations:\
     \n\n0. Help\
     \n\n1. Create new year/Close out current year\
     \n\n2. Plan this year's cutting campaign\
@@ -123,8 +123,6 @@ def Startup_instructions():
     \n9. Hold over plants for one year\
     \n10. Bring plants forward one year\
     \n\n11. Add new cultivar\
-    \n\
-    \n_____________________________________________________________________________\
     \n"
 
     lower_bound = 0
@@ -134,7 +132,6 @@ def Startup_instructions():
     print("Press Enter to continue ...")
     input()
     print(Intro_text2)
-
 
     while True:
         user_input = input(f"Please indicate which operation you would like to perform by\
