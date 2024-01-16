@@ -28,6 +28,8 @@ Plants_data = plants.get_all_values()
 def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a number. Please enter a number between ", 
         not_in_range_blurb="That number is out of range. Please enter a number between "):
     try:
+        print(f"First split: {user_input.split()[0].lower()}\
+        \nSecond split: {user_input.lower().split()[1]}")
         number = int(user_input)
         if min <= number <= max:
             return number
@@ -36,9 +38,11 @@ def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a
     except:
         if user_input.lower()=='exit':
             exit()
+        elif user_input.lower()=='help':
+            return "help"
         elif user_input.lower().split()[0]=='help' and int(user_input.lower().split()[1]):
             if min <= int(user_input.lower().split()[1]) <= max:
-                help(user_input.lower())
+                return user_input
             else:
                 return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"), min, max)
         else:
@@ -71,9 +75,11 @@ def Startup_instructions():
     print(help_messages.intro_text2)
 
     while True:
-        user_input = input(f"Please indicate which operation you would like to perform by\
-        \nentering the corresponding number: \n")
+        user_input = check_is_numeric(input(f"Please indicate which operation you would like to perform by\
+        \nentering the corresponding number: \n"))
+        print(user_input)
         try:
+            print(user_input)
             int_option = int(user_input)
             if lower_bound <= int_option <= upper_bound:
                 break
@@ -84,162 +90,107 @@ def Startup_instructions():
             if user_input.lower() == 'exit':
                 print("Exiting witch-hazel app")
                 exit()
+            elif user_input.lower() == "help":
+                print("You have chosen the general help function.")
+                print(help_messages.help_text1)
+                input("Press Enter to see more help text")
+                print(help_messages.help_text2)
+            elif user_input.split().len() == 2: 
+                if user_input.split()[0].lower == "help" and int(user_input.split()[1]):
+                    print("You have chosen help on Option {user_input.split()[1]}")
+                    help(user_input.split()[1])
+                else:
+                    print(f"Your number must be a positive integer or 0. Negative and\
+                    \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
             else:
                 print(f"Your number must be a positive integer or 0. Negative and\
                 \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
 
-    Execute_option(int_option)
+    execute_option(int_option)
 
 
-def help(option_no=0):
+def general_help():
+    print(help_messages.help_text_option0)
+
+
+def help(option_no):
     if option_no==0:
-        print(help_messages.help_text1)
-        input("Press Enter to see more help!")
-        print(help_messages.help_text2)
+        print(help_messages.help_text_option0)
 
-        print("Press Enter to continue ...")
-        input()
-        Startup_instructions()
-    elif option_no==0:
-        print("Typing a 0 from the main menu takes you into the general Help function, which\
-        \ngives you summary details on each of the eleven functions of the App.")
-        input("Would you like to go to the general Help function now?")
-    elif input == "help 1":
-        print("Option 1 tells you what the current year is, gives you detailed statistics\
-        on the work you've already planned and recorded as completed for that year, and\
-        \nasks you if you're sure you want to close out that year and create a new year.\
-        \nIf you confirm, it will close out the year and create a new set of records for\
-        \nthe new current year, which will be the previous year plus one.\
-        \n\nBe very careful all your planning is done and all your work for the current year\
-        \nhas been completed and recorded before confirming that you want to create a new year.\
-        \n\nYou should run this option only once a year. We recommend doing so either on\
-        \n31 December of the old current year or as early as possible in January of the new\
-        current year.")
-    elif input == "Option 2":
-        print("Option 2 lets you record the number of cuttings for future rootstocks that\
-        \nyou plan to make for the current year. Later, when you use Option 3 to record\
-        \nthe cuttings you've actually taken (which you can do as often as you like), the App\
-        \nwill let you know when you've reached the number of cuttings you originally planned\
-        \nfor the current year.\
-        \n\nIf you run Option 2 a second time, the App will tell how many cuttings you planned\
-        \nin the previous session and asks you to confirm whether you want to change this number.\
-        \nIf you confirm and enter a new number, this new entry will REPLACE the previous number.\
-        \nIt will not be summed together with the old number!")
-    elif operation == "Option 3":
-        print("Option 3 lets you record the number of cuttings you have taken since you last ran\
-        \nthat Option (or, if you are running the Option for the first time in the current year,\
-        \nthe number of cuttings you have taken so far in the current year).\
-        \n\nYou can run Option 3 as often as you like, though we recommend running it every time\
-        \nyou've completed a session of cutting taking, while the number of cuttings you've taken\
-        \nin that session is still fresh in your mind.\
-        \n\nEach time you record a number of cuttings made, that number is added to the previous\
-        \ntotal.\
-        \n\nThe App will tell you when you've reached (or exceeded) the number of cuttings you\
-        \nplanned to make (using Option 2).")
-    elif operation == "Option 4":
-        print("Option 4 lets you record the number of rooted cuttings you have potted up\
-        \nsince you last ran that Option (or, if you are running the Option for the first time\
-        \nin the current year, the number of rooted cuttings you have potted up so far\
-        \nin the current year).\
-        \n\nYou can run Option 4 as often as you like, though we recommend running it every time\
-        \nyou've completed a session of potting up rooted cuttings, while the number you've potted\
-        \nup in that session is still fresh in your mind.\
-        \n\nEach time you record some rooted cuttings being potted up, that number is added to\
-        \nthe previous total.\
-        \n\nThe App will warn you when you've reached (or exceeded) the number of cuttings you\
-        \nhave recorded as being available for potting up (i.e. the number of cuttings made,\
-        \nminus any losses you have recorded since then).")
-    elif operation == "help 5":
-        print("Option 5 lets you record the number of grafts you plan to make for each cultivar\
-        \nof Hamamelis in the current year. Later, when you use Option 6 to record\
-        \nthe grafts you've actually taken for the chosen cultivar (which you can do as often\
-        \nas you like), the App will let you know when you've reached the number of grafts\
-        \nof that cultivar you originally planned for the current year.\
-        \n\nWhen you choose Option 5, the App will output the list of cultivars recorded in\
-        \nyour data and ask you choose the number of the cultivar whose grafting program you\
-        \nwish to plan for the year.\
-        \n\nIf you run Option 5 a second time for the same cultivar, the App will tell how\
-        \nmany grafts you planned in the previous session and asks you to confirm whether\
-        \nyou want to change this number. If you confirm and enter a new number, this new\
-        \nentry will REPLACE the previous number. It will not be summed together with the\
-        \nold number!")
-    elif operation == "help 6":
-        print("Option 6 lets you record the number of grafts of your chosen cultivar you have\
-        \ntaken since you last ran that Option for that cultivar (or, if you are running\
-        \nthe Option for the first time in the current year, the number of grafts you have\
-        \ntaken so far of that graft in the current year).\
-        \n\nWhen you choose Option 5, the App will output the list of cultivars recorded in\
-        \nyour data and ask you choose the number of the cultivar for which you want to\
-        \nrecord new grafts.\
-        \n\nYou can run Option 6 as often as you like for any cultivar, though we recommend\
-        \nrunning it every time you've completed a session of grafting , while the number\
-        \nof grafts you've taken in that session is still fresh in your mind.\
-        \n\nEach time you record a number of grafts made for a particular cultivar, that\
-        \nnumber is added to the previous total for that cultivar.\
-        \n\nThe App will tell you when you've reached (or exceeded) the number of grafts you\
-        \nplanned to make for that cultivar (using Option 2).")
-    elif operation == "help 7":
-        print("Option 7 lets you record any losses of grafted plants you may suffer. It first\
-        \nasks you to identify the cultivar that has suffered losses and the age of that cultivar\
-        \n(1 for year-one plants, 2 for year-two plants and so on).\
-        \n\nThe number you enter will then be subtracted from the numbers of plants recorded as\
-        \nbeing in stock for that cultivar and that age.\
-        \n\nWe recommend running this option as soon as you can after noting and disposing of\
-        \ndead or irreversibly damaged plants.\
-        \n\nThe App will not allow you to record losses greater than the total stock of the\
-        \naffected cultivar and age. It will let you know when stocks of the affected plants\
-        \nreach zero.")
-    elif operation == "help 8":
-        print("Option 8 lets you record any acquisitions of grafted plants you may make. It first\
-        \nasks you to identify the cultivar you have purchased or otherwise acquired and the age\
-        \nof that cultivar (1 for year-one plants, 2 for year-two and so on).\
-        \n\nThe number you enter will then be added to the numbers of plants recorded as\
-        \nbeing in stock for that cultivar and that age.\
-        \n\nWe recommend running this option as soon as you can after acquiring new plants.\
-        \n\nThe App will let you know when stocks of the affected plants reach the originally\
-        \nplanned number.")
-    elif operation == "help 9":
-        print("A grafted plant assugned a particular age, is not necessarily of that age. The best way\
-        \nof putting it would be to say that Year-Two plants are plants of the size and quality\
-        \ntypical of plants in their second year of growth after grafting. Any plants that have\
-        \ngrown more slowly or faster during the year may need to be reclassified to reflect their\
-        \nprogress. Options 9 and 10 allow you to do this.\
-        \n\nOption 9 allows you to hold back slower plants for a year, so that a number of Year-Three\
-        \nplants, for example, are held back to Year Two.\
-        \n\nIt first asks you to identify the cultivar you want to hold back and then the age\
-        \nof that cultivar (1 for Year-One grafted plants, 2 for Year-Two plants and so on).\
-        \n\nThe affected plants will be held back by one year.\
-        \n\nThe App will not let you know hold back more of the affected plants than there are in\
-        \nstock.\
-        \n\nWe recommend recording such changes as soon as you have physically moved the affected\
-        \nplants to the appropriate section of the nursery.")
-        Hold_back()
-    elif operation == 10:
-        print("A grafted plant assigned a particular age is not necessarily of that age. The best way\
-        \nof putting it would be to say that Year-Two plants are plants of the size and quality\
-        \ntypical of plants in their second year of growth after grafting. Any plants that have\
-        \ngrown more slowly or faster during the year may need to be reclassified to reflect their\
-        \nprogress. Options 9 and 10 allow you to do this.\
-        \n\nOption 10 allows you to bring forward stronger plants by a year, so that a number of\
-        \nYear-Three plants, for example, are brought forward to Year Four.\
-        \n\nIt first asks you to identify the cultivar you want to bring forward and then the age\
-        \nof that cultivar (1 for Year-One grafted plants, 2 for Year-Two plants and so on).\
-        \n\nThe affected plants will be brought forward by one year.\
-        \n\nThe App will not let you know bring forward more of the affected plants than there are in\
-        \nstock.\
-        \n\nWe recommend recording such changes as soon as you have physically moved the affected\
-        \nplants to the appropriate section of the nursery.")
+    elif option_no == 1:
+        print(help_messages.help_text_option1)
+
+    elif option_no == 2:
+        print(help_messages.help_text_option2)
+
+    elif option_no == 3:
+        print(help_messages.help_text_option3)
+
+    elif option_no == 4:
+        print(help_messages.help_text_option4)
+
+    elif option_no == 5:
+        print(help_messages.help_text_option5)
+
+    elif option_no == 6:
+        print(help_messages.help_text_option6)
+
+    elif option_no == 7:
+        print(help_messages.help_text_option7)
+
+    elif option_no == 8:
+        print(help_messages.help_text_option8)
+
+    elif option_no == 9:
+        print(help_messages.help_text_option9)
+
+    elif option_no == 10:
+        print(help_messages.help_text_option10)
+
         Bring_forward()
-    elif operation == 11:
-        print("Sorry! This functionality has not yet been implemented.")
+    elif option_no == 11:
+        print(help_messages.help_text_option11)
         Add_new_cultivar()
     else:
-        print("Please enter a valid integer between 0 and 11")
+        print("For help on a particular option in the app, please type 'help'\
+        \nfollowed by a space, followed by the number of the option for which you\
+        \nwant help (e.g. 'help 6' for help on Option 6)")
+    
+    
+    Startup_instructions()
 
+def run_main_if_clause(taken, planned):
+    
+    if taken >= planned:
+        print(f"You have already reached the number of cuttings you planned to take this year: \
+        \n{taken} cuttings taken out of {planned} planned!")
+    else:
+        print(f"So far you have taken {taken} cuttings!")
 
-def Create_year():
+    if input("Would you like to add to that number?\
+    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        taken += check_is_numeric(input(f"How many cuttings have you now taken in addition to the ones\
+        \nyou've already recorded: \n"))
+        rootstock.update_acell('c1', taken)
+        if taken >= planned:
+            print(f"Congratulations! You have achieved the planned number of cuttings: \
+            \n{taken} cuttings taken out of {planned} planned!")
+        else:
+            print(f"You have now taken a total of {taken} cuttings out of a planned total\
+            \nof {planned}!")
+
+        print("Cuttings campaign record added successfully.")
+    else:
+        print("Cuttings taken action cancelled.\
+        \nNo changes have been made to the data.")
+    
+    print("Press Enter to go back to the main menu")
+    input()
+    Startup_instructions()
+
+def create_year():
     """
-    Option 1:
+    Option 0:
     This function adds the rows necessary to create a new year and copies the
     row for stocks of this year's grafts from the
     grafts-year-zero to the plants worksheet. It puts the current year out of
@@ -286,9 +237,9 @@ def Create_year():
     Startup_instructions()
 
 
-def Plan_cutting_campaign():
+def plan_cutting_campaign():
     """
-    Option 2:
+    Option 1:
     Helps plan cuttings task
     """
     planned_cuttings = int(rootstock.acell('b1').value)
@@ -331,44 +282,16 @@ def Plan_cutting_campaign():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
+    startup_instructions()
 
 
-def Run_main_if_clause(taken, planned):
+def record_cuttings_taken():
     """
     Option 3:
     Lets user record cuttings.
     Ideally used daily during the cuttings campaign (in Autumn).
     """
-    if taken >= planned:
-        print(f"You have already reached the number of cuttings you planned to take this year: \
-        \n{taken} cuttings taken out of {planned} planned!")
-    else:
-        print(f"So far you have taken {taken} cuttings!")
 
-    if input("Would you like to add to that number?\
-    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        taken += check_is_numeric(input(f"How many cuttings have you now taken in addition to the ones\
-        \nyou've already recorded: \n"))
-        rootstock.update_acell('c1', taken)
-        if taken >= planned:
-            print(f"Congratulations! You have achieved the planned number of cuttings: \
-            \n{taken} cuttings taken out of {planned} planned!")
-        else:
-            print(f"You have now taken a total of {taken} cuttings out of a planned total\
-            \nof {planned}!")
-
-        print("Cuttings campaign record added successfully.")
-    else:
-        print("Cuttings taken action cancelled.\
-        \nNo changes have been made to the data.")
-    
-    print("Press Enter to continue ...")
-    input()
-    Startup_instructions()
-
-
-def Record_cuttings_taken():
     cuttings_taken = int(rootstock.acell('c1').value)
     cuttings_planned = int(rootstock.acell('b1').value)
     cuttings_rooted = int(rootstock.acell('d1').value)
@@ -385,10 +308,10 @@ def Record_cuttings_taken():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
+    startup_instructions()
 
 
-def Record_potted_cuttings():
+def record_potted_cuttings():
     """
     Option 4:
     Lets user record progress in potting up the successfully rooted cuttings
@@ -426,7 +349,7 @@ def Record_potted_cuttings():
     Startup_instructions()
 
 
-def Plan_grafting_campaign():
+def plan_grafting_campaign():
     """
     Option 5:
     Lets user add a planned number of grafts for each cultivar.
@@ -492,7 +415,7 @@ def Plan_grafting_campaign():
     Startup_instructions()
 
 
-def Record_grafts():
+def record_grafts():
     """
     Option 6:
     Lets user record the number of grafts taken for a chosen cultivar.
@@ -569,7 +492,7 @@ def Record_grafts():
     Startup_instructions()
 
 
-def Record_loss():
+def record_loss():
     """
     Option 7:
     Lets user record losses in stocks for any cultivar in any year.
@@ -662,7 +585,7 @@ def Record_loss():
     Startup_instructions()
 
 
-def Record_gain():
+def record_gain():
     """
     Option 8:
     Essentially the opposite of Option 7.
@@ -745,7 +668,7 @@ def Record_gain():
     Startup_instructions()
 
 
-def Hold_back():
+def hold_back():
     """
     Option 9:
     Essentially a Option 7 with a twist.
@@ -830,7 +753,7 @@ def Hold_back():
     Startup_instructions()
 
 
-def Bring_forward():
+def bring_forward():
     """
     Option 10:
     The same as Option 9, but in the opposite direction.
@@ -912,7 +835,7 @@ def Bring_forward():
     Startup_instructions()
 
 
-def Add_new_cultivar():
+def add_new_cultivar():
     """
     Option 11:
     Adds new cultivar to the list of Hamamelis plants grown in the nursery.
@@ -925,49 +848,53 @@ def Add_new_cultivar():
     Startup_instructions()
 
 
-def Execute_option(operation):
+def execute_option(input):
     """
-    Executes the option chosen by the user
+    Executes the option typed in by the user
+    on condition it's a valid number.
     """
 
     print("_____________________________________________________________________________")
     print(" ")
-    if operation == 0:
-        print("You've chosen HELP.")
-        help()
-    elif operation == 1:
+    if input == "help":
+        print("You've chosen the general HELP function.")
+        general_help()
+    elif input == 0:
         print("You've chosen to close out the current year and open a new one.")
-        Create_year()
-    elif operation == 2:
+        create_year()
+    elif input == 1:
         print("You've chosen to plan this year's cutting campaign.")
-        Plan_cutting_campaign()
-    elif operation == 3:
+        plan_cutting_campaign()
+    elif input == 2:
         print("You've chosen to record having taken some cuttings.")
-        Record_cuttings_taken()
-    elif operation == 4:
+        record_cuttings_taken()
+    elif input == 3:
         print("You've chosen to record potting up some rooted cuttings.")
-        Record_potted_cuttings()
-    elif operation == 5:
+        record_potted_cuttings()
+    elif input == 4:
         print("You've chosen to plan your grafting campaign.")
-        Plan_grafting_campaign()
-    elif operation == 6:
+        p()
+    elif input == 5:
         print("You've chosen to record a number of new grafts.")
-        Record_grafts()
-    elif operation == 7:
+        record_grafts()
+    elif input == 6:
         print("You've chosen to record the loss of a number of plants.")
-        Record_loss()
-    elif operation == 8:
+        record_loss()
+    elif input == 7:
         print("You've chosen to record the acquisition of a number of plants.")
-        Record_gain()
-    elif operation == 9:
+        record_gain()
+    elif input == 8:
         print("You've chosen to hold a number of grafted plants back a year.")
-        Hold_back()
-    elif operation == 10:
+        hold_back()
+    elif input == 9:
         print("You've chosen to bring a number of grafted plants forward a year.")
-        Bring_forward()
-    elif operation == 11:
+        bring_forward()
+    elif input == 10:
         print("Sorry! This functionality has not yet been implemented.")
-        Add_new_cultivar()
+        add_new_cultivar()
+    elif input == 11:
+        print("Sorry! This functionality has not yet been implemented.")
+        show_current_situation()
     else:
         print("Please enter a valid integer between 0 and 11")
 
@@ -977,7 +904,7 @@ def detailed_help(input):
     """
 
     if input == "help 0":
-        print("Typing "help" from the main menu takes you into the general Help function, which\
+        print("Typing 'help' from the main menu takes you into the general Help function, which\
         \ngives you summary details on each of the eleven functions of the App.")
         input("Would you like to go to the general Help function now?")
     if input == "help 0":
@@ -988,21 +915,20 @@ def detailed_help(input):
         print(help_messages.help_text_option2)
     elif input == "help 3":
         print(help_messages.help_text_option3)
-    elif operation == "help 4":
+    elif input == "help 4":
         print(help_messages.help_text_option4)
-    elif operation == "help 5":
+    elif input == "help 5":
         print(help_messages.help_text_option5)
-    elif operation == "help 6":
+    elif input == "help 6":
         print(help_messages.help_text_option6)
-    elif operation == "help 7":
+    elif input == "help 7":
         print(help_messages.help_text_option7)
-    elif operation == "help 8":
+    elif input == "help 8":
         print(help_messages.help_text_option8)
-        Hold_back()
-    elif operation == 9:
+    elif input == "help 9":
         print(help_messages.help_text_option9)
         Bring_forward()
-    elif operation == 11:
+    elif operation == "help 10":
         print(help_messages.help_text_option10)
         Add_new_cultivar()
     else:

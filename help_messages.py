@@ -45,7 +45,7 @@ intro_text1 = "\n###############################################################
     \nFor a summary list of the functions of witch-hazel, press Enter\
     \n\
     \nFor a full explanation of each of the program's functions and\
-    \ninstructions on how to use them, enter '0' on the command line\
+    \ninstructions on how to use them, enter 'help' on the command line\
     \nonce you have finished scrolling through these texts.\
     \nThis will show you the HELP text for the app.\
     \n\
