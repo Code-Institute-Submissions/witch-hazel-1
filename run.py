@@ -28,8 +28,6 @@ Plants_data = plants.get_all_values()
 def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a number. Please enter a number between ", 
         not_in_range_blurb="That number is out of range. Please enter a number between "):
     try:
-        print(f"First split: {user_input.split()[0].lower()}\
-        \nSecond split: {user_input.lower().split()[1]}")
         number = int(user_input)
         if min <= number <= max:
             return number
@@ -40,10 +38,11 @@ def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a
             exit()
         elif user_input.lower()=='help':
             return "help"
-        elif user_input.lower().split()[0]=='help' and int(user_input.lower().split()[1]):
-            if min <= int(user_input.lower().split()[1]) <= max:
-                return user_input
-            else:
+        elif user_input.lower().split()[0]=='help':
+            try:
+                if min <= int(user_input.lower().split()[1]) <= max:
+                    return user_input
+            except:
                 return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"), min, max)
         else:
             return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"), min, max)
@@ -59,27 +58,30 @@ def Get_survival_rate(start_num, end_num):
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted)
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
-
-def Startup_instructions():
+def startup_instructions():
     """
-    The program's main menu on startup
-    The user may need to scroll up to see the whole text.
+    Welcomes the user to the app.
+    Presents general info on it.
     """
 
     lower_bound = 0
     upper_bound = 11
 
-    print(help_messages.intro_text1)
-    print("Press Enter to continue ...")
-    input()
-    print(help_messages.intro_text2)
+    print(help_messages.intro_text)
+    input("Press Enter to continue ...")
+    print(help_messages.menu_text)
 
+def main_menu():
+    """
+    The program's main menu on startup.
+    """
+
+    print(help_messages.menu_title)
+    print(help_messages.menu_text)
     while True:
-        user_input = check_is_numeric(input(f"Please indicate which operation you would like to perform by\
-        \nentering the corresponding number: \n"))
-        print(user_input)
         try:
-            print(user_input)
+            user_input = check_is_numeric(input(f"Please indicate which operation you would like to perform by\
+            \nentering the corresponding number: \n"))
             int_option = int(user_input)
             if lower_bound <= int_option <= upper_bound:
                 break
@@ -95,13 +97,14 @@ def Startup_instructions():
                 print(help_messages.help_text1)
                 input("Press Enter to see more help text")
                 print(help_messages.help_text2)
-            elif user_input.split().len() == 2: 
-                if user_input.split()[0].lower == "help" and int(user_input.split()[1]):
-                    print("You have chosen help on Option {user_input.split()[1]}")
-                    help(user_input.split()[1])
-                else:
-                    print(f"Your number must be a positive integer or 0. Negative and\
-                    \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
+            elif len(user_input.split()) == 2:
+                if user_input.split()[0].lower() == "help":
+                    try:
+                        print(f"You have chosen help on Option {user_input.split()[1]}")
+                        help(int(user_input.split()[1]))
+                    except:
+                        print(f"Your number must be a positive integer or 0. Negative and\
+                        \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
             else:
                 print(f"Your number must be a positive integer or 0. Negative and\
                 \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
@@ -110,7 +113,9 @@ def Startup_instructions():
 
 
 def general_help():
-    print(help_messages.help_text_option0)
+    print(help_messages.help_text1)
+    input("Press Enter to continue reading the general help text ...")
+    print(help_messages.help_text1)
 
 
 def help(option_no):
@@ -156,8 +161,6 @@ def help(option_no):
         \nfollowed by a space, followed by the number of the option for which you\
         \nwant help (e.g. 'help 6' for help on Option 6)")
     
-    
-    Startup_instructions()
 
 def run_main_if_clause(taken, planned):
     
@@ -186,7 +189,7 @@ def run_main_if_clause(taken, planned):
     
     print("Press Enter to go back to the main menu")
     input()
-    Startup_instructions()
+    main_menu()
 
 def create_year():
     """
@@ -234,7 +237,6 @@ def create_year():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def plan_cutting_campaign():
@@ -282,7 +284,6 @@ def plan_cutting_campaign():
 
     print("Press Enter to continue ...")
     input()
-    startup_instructions()
 
 
 def record_cuttings_taken():
@@ -308,7 +309,6 @@ def record_cuttings_taken():
 
     print("Press Enter to continue ...")
     input()
-    startup_instructions()
 
 
 def record_potted_cuttings():
@@ -346,7 +346,6 @@ def record_potted_cuttings():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def plan_grafting_campaign():
@@ -412,7 +411,6 @@ def plan_grafting_campaign():
     
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def record_grafts():
@@ -489,7 +487,6 @@ def record_grafts():
     
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def record_loss():
@@ -582,7 +579,6 @@ def record_loss():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def record_gain():
@@ -665,7 +661,6 @@ def record_gain():
     
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def hold_back():
@@ -750,7 +745,6 @@ def hold_back():
 
     print("Press )any key to continue ...")
     input()
-    Startup_instructions()
 
 
 def bring_forward():
@@ -832,7 +826,6 @@ def bring_forward():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def add_new_cultivar():
@@ -845,13 +838,12 @@ def add_new_cultivar():
 
     print("Press Enter to continue ...")
     input()
-    Startup_instructions()
 
 
 def execute_option(input):
     """
     Executes the option typed in by the user
-    on condition it's a valid number.
+    on condition it's valid.
     """
 
     print("_____________________________________________________________________________")
@@ -934,4 +926,6 @@ def detailed_help(input):
     else:
         print("Please enter a valid integer between 0 and 11")
 
-Startup_instructions()
+startup_instructions()
+
+main_menu()

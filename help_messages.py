@@ -36,7 +36,7 @@ help_text2 = "Type the number of the operation you wish to perform.\
     \n\n###############################################################################\
     \n"
 
-intro_text1 = "\n##########################################################################\
+intro_text = "\n##########################################################################\
     \n\n                            W I T C H - H A Z E L\
     \n\
     \nWelcome to witch-hazel, your simple app for planning your production of\
@@ -56,7 +56,9 @@ intro_text1 = "\n###############################################################
     \n\
     \n_____________________________________________________________________________"
 
-intro_text2 = "\n\
+menu_title = "\n\n                            W I T C H - H A Z E L"
+
+menu_text = "\n\
     \nWhat would you like to do?\
     \nChoose from among the following operations:\
     \n\n0. Help\
@@ -84,7 +86,7 @@ help_text_option0 = "\n\n                     Option 0 -- CLOSE CURRENT YEAR/OPE
         \nhas been completed and recorded before confirming that you want to create a new year.\
         \n\nYou should run this option only once a year. We recommend doing so either on\
         \n31 December of the old current year or as early as possible in January of the new\
-        current year."
+        \ncurrent year."
 
 help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF CUTTINGS\
         \n\
