@@ -4,28 +4,29 @@ help_text1 = "\n################################################################
     \nFrom within the Heroku App environment, simply on the red 'RUN PROGRAM' button.\
     \nOn opening, the app will show you a list of the options available to\
     \nyou and ask which of them you would like to perform:\
-    \n\n0. Help\
-    \n1. Close out current year\
-    \n\n2. Plan this year's cutting campaign\
-    \n3. Record cuttings taken\
-    \n4. Record rooted cuttings potted up\
-    \n\n5. Plan grafts for this year\
-    \n\n6. Record grafts taken\
-    \n\n7. Record plant losses\
-    \n8. Record plant gains\
-    \n9. Hold plants over for one year\
-    \n10. Bring plants forward one year\
-    \n\n11. Add new cultivar"
+    \n\n0. Close out current year\
+    \n\n1. Plan this year's cutting campaign\
+    \n2. Record cuttings taken\
+    \n3. Record rooted cuttings potted up\
+    \n\n4. Plan grafts for this year\
+    \n5. Record grafts taken\
+    \n\n6. Record plant losses\
+    \n7. Record plant gains\
+    \n\n8. Hold plants over for one year\
+    \n9. Bring plants forward one year\
+    \n\n10. Add new cultivar\
+    \n11. Remove cultivar\
+    \n\n12 Report current situation"
 
 help_text2 = "Type the number of the operation you wish to perform.\
     \nThe app will guide you through the operation you have chosen to perform.\
     \nYou will need to restart the app each time you wish to run an operation.\
     \n\nLook at the README.md file for details on each of these options.\
-    \n\nIn most cases you'll be asked to enter a number. It will usually\
-    \nindicate the valid range. Negative numbers are always taken as\
-    \ninvalid. Any time you enter an invalid number, the app will give you\
-    \nanother opportunity to enter a valid one.\
-    \n\nFor some operations the App may ask you a yes or no confirmation\
+    \n\nYou'll be asked to enter a number corresponding to an option. It will\
+    \nremind you of the valid range (from 0 to 12). Negative numbers are always\
+    \ntaken as invalid. Any time you enter an invalid number, the app will give\
+    \nyou another opportunity to enter a valid one.\
+    \n\nDuring some operations the App may ask you a yes or no confirmation\
     \nquestion. Where this happens you should answer yes by typing a 'y' or 'Y'\
     \non the command line. Typing in any other symbol will be taken as a 'No',\
     \nand will result in the app returning to the main menu.\
@@ -42,7 +43,7 @@ intro_text = "\n################################################################
     \nWelcome to witch-hazel, your simple app for planning your production of\
     \ngrafted Hamamelis plants!\
     \n\
-    \nFor a summary list of the functions of witch-hazel, press Enter\
+    \nFor a summary list of the functions of witch-hazel, press Enter.\
     \n\
     \nFor a full explanation of each of the program's functions and\
     \ninstructions on how to use them, enter 'help' on the command line\
@@ -61,18 +62,19 @@ menu_title = "\n\n                            W I T C H - H A Z E L"
 menu_text = "\n\
     \nWhat would you like to do?\
     \nChoose from among the following operations:\
-    \n\n0. Help\
-    \n\n1. Create new year/Close out current year\
-    \n\n2. Plan this year's cutting campaign\
-    \n3. Record cuttings taken\
-    \n4. Record rooted cuttings potted up\
-    \n\n5. Plan grafts for this year\
-    \n6. Record grafts taken\
-    \n\n7. Record plant losses\
-    \n8. Record plant gains\
-    \n9. Hold over plants for one year\
-    \n10. Bring plants forward one year\
-    \n\n11. Add new cultivar\
+    \n\n0. Create new year/Close out current year\
+    \n\n1. Plan this year's cutting campaign\
+    \n2. Record cuttings taken\
+    \n\n3. Record rooted cuttings potted up\
+    \n\n4. Plan grafts for this year\
+    \n5. Record grafts taken\
+    \n\n6. Record plant losses\
+    \n7. Record plant gains\
+    \n\n8. Hold over plants for one year\
+    \n9.Bring plants forward one year\
+    \n\n10.  Add new cultivar\
+    \n11. Remove cultivar\
+    \n\n12. Report current situation\
     \n"
 
 help_text_option0 = "\n\n                     Option 0 -- CLOSE CURRENT YEAR/OPEN NEW YEAR\
@@ -128,7 +130,7 @@ help_text_option3 = "\n\n                     Option 3 -- RECORD CUTTINGS POTTED
         \nhave recorded as being available for potting up (i.e. the number of cuttings made,\
         \nminus any losses you have recorded since then)."
 
-help_text_option4 = "\n\n                     Option $ -- PLAN NUMBER OF GRAFTS\
+help_text_option4 = "\n\n                     Option 4 -- PLAN NUMBER OF GRAFTS\
         \n\
         \nOption 4 lets you record the number of grafts you plan to make for each cultivar\
         \nof Hamamelis in the current year. Later, when you use Option 5 to record\

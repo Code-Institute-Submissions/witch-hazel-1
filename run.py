@@ -23,29 +23,33 @@ mature_rootstocks = int(rootstock.acell('e1').value)
 
 rootstock_data = rootstock.get_all_values()
 grafts_data = grafts_year_zero.get_all_values()
-Plants_data = plants.get_all_values()
+plants_data = plants.get_all_values()
 
-def check_is_numeric(user_input, min=0, max=10000, not_a_number_blurb=" is not a number. Please enter a number between ", 
+def exit_program():
+    print("Exiting the Witch-Hazel app ...")
+    sys.exit(0)
+
+def check_is_numeric(user_input, mini=0, maxi=10000, not_a_number_blurb=" is not a number. Please enter a number between ", 
         not_in_range_blurb="That number is out of range. Please enter a number between "):
     try:
         number = int(user_input)
-        if min <= number <= max:
+        if mini <= number <= maxi:
             return number
         else:
-            return check_is_numeric(input(f"{not_in_range_blurb}{min} and {max}:"), min, max)
+            return check_is_numeric(input(f"{not_in_range_blurb}{mini} and {maxi}:"), mini, maxi)
     except:
-        if user_input.lower()=='exit':
-            exit()
-        elif user_input.lower()=='help':
-            return "help"
+        if user_input=='':
+            return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:"), mini, maxi)
+        elif user_input.lower()=='exit' or user_input.lower()=='help':
+            return user_input.lower()
         elif user_input.lower().split()[0]=='help':
             try:
-                if min <= int(user_input.lower().split()[1]) <= max:
+                if mini <= int(user_input.lower().split()[1]) <= maxi:
                     return user_input
             except:
-                return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"), min, max)
+                return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:"), mini, maxi)
         else:
-            return check_is_numeric(input(f"{user_input}{not_a_number_blurb}{min} and {max}:"), min, max)
+            return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:"), min, maxi)
 
 def Get_survival_rate(start_num, end_num):
     if int(start_num) == 0:
@@ -58,48 +62,52 @@ def Get_survival_rate(start_num, end_num):
 cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted)
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
+lower_bound = 0
+upper_bound = 12
+
 def startup_instructions():
     """
     Welcomes the user to the app.
     Presents general info on it.
     """
 
-    lower_bound = 0
-    upper_bound = 11
-
     print(help_messages.intro_text)
     input("Press Enter to continue ...")
+    print('\r')
     print(help_messages.menu_text)
 
 def main_menu():
     """
-    The program's main menu on startup.
+    The program's main menu on startup and after every option or help message.
     """
 
     print(help_messages.menu_title)
     print(help_messages.menu_text)
+
     while True:
+        
         try:
             user_input = check_is_numeric(input(f"Please indicate which operation you would like to perform by\
-            \nentering the corresponding number: \n"))
-            int_option = int(user_input)
-            if lower_bound <= int_option <= upper_bound:
+            \nentering the corresponding number (between {lower_bound} and {upper_bound}): \n"), lower_bound, upper_bound)
+            if lower_bound <= int(user_input) <= upper_bound:
                 break
             else:
                 print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
                 \n{upper_bound}. Please enter a valid number: ")
         except ValueError:
-            if user_input.lower() == 'exit':
-                print("Exiting witch-hazel app")
-                exit()
-            elif user_input.lower() == "help":
+            if user_input == 'exit':
+                exit_program()
+
+            elif user_input == "help":
                 print("You have chosen the general help function.")
                 print(help_messages.help_text1)
                 input("Press Enter to see more help text")
+                print("\r")
                 print(help_messages.help_text2)
             elif len(user_input.split()) == 2:
                 if user_input.split()[0].lower() == "help":
                     try:
+                        print("\r")
                         print(f"You have chosen help on Option {user_input.split()[1]}")
                         help(int(user_input.split()[1]))
                     except:
@@ -109,7 +117,7 @@ def main_menu():
                 print(f"Your number must be a positive integer or 0. Negative and\
                 \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
 
-    execute_option(int_option)
+    execute_option(user_input)
 
 
 def general_help():
@@ -152,15 +160,72 @@ def help(option_no):
     elif option_no == 10:
         print(help_messages.help_text_option10)
 
-        Bring_forward()
     elif option_no == 11:
         print(help_messages.help_text_option11)
-        Add_new_cultivar()
+
+    elif option_no == 12:
+        print(help_messages.help_text_option12)
+
     else:
         print("For help on a particular option in the app, please type 'help'\
         \nfollowed by a space, followed by the number of the option for which you\
         \nwant help (e.g. 'help 6' for help on Option 6)")
+    input
     
+
+def execute_option(input):
+    """
+    Executes the option typed in by the user
+    on condition it's valid.
+    """
+
+    print("_____________________________________________________________________________")
+    print(" ")
+    if input == "help":
+        print("You've chosen the general HELP function.")
+        general_help()
+    elif input == 0:
+        print("You've chosen to close out the current year and open a new one.")
+        create_year()
+    elif input == 1:
+        print("You've chosen to plan this year's cutting campaign.")
+        plan_cutting_campaign()
+    elif input == 2:
+        print("You've chosen to record having taken some cuttings.")
+        record_cuttings_taken()
+    elif input == 3:
+        print("You've chosen to record potting up some rooted cuttings.")
+        record_potted_cuttings()
+    elif input == 4:
+        print("You've chosen to plan your grafting campaign.")
+        plan_grafting_campaign()
+    elif input == 5:
+        print("You've chosen to record a number of new grafts.")
+        record_grafts()
+    elif input == 6:
+        print("You've chosen to record the loss of a number of plants.")
+        record_loss()
+    elif input == 7:
+        print("You've chosen to record the acquisition of a number of plants.")
+        record_gain()
+    elif input == 8:
+        print("You've chosen to hold a number of grafted plants back a year.")
+        hold_back()
+    elif input == 9:
+        print("You've chosen to bring a number of grafted plants forward a year.")
+        bring_forward()
+    elif input == 10:
+        print("Sorry! This functionality has not yet been implemented.")
+        add_new_cultivar()
+    elif input == 11:
+        print("Sorry! This functionality has not yet been implemented.")
+        remove_cultivar()
+    elif input == 12:
+        print("Sorry! This functionality has not yet been implemented.")
+        show_current_situation()
+    else:
+        print("Please enter a valid integer between 0 and 12")
+
 
 def run_main_if_clause(taken, planned):
     
@@ -190,6 +255,7 @@ def run_main_if_clause(taken, planned):
     print("Press Enter to go back to the main menu")
     input()
     main_menu()
+
 
 def create_year():
     """
@@ -237,7 +303,7 @@ def create_year():
 
     print("Press Enter to continue ...")
     input()
-
+     
 
 def plan_cutting_campaign():
     """
@@ -288,7 +354,7 @@ def plan_cutting_campaign():
 
 def record_cuttings_taken():
     """
-    Option 3:
+    Option 2:
     Lets user record cuttings.
     Ideally used daily during the cuttings campaign (in Autumn).
     """
@@ -313,7 +379,7 @@ def record_cuttings_taken():
 
 def record_potted_cuttings():
     """
-    Option 4:
+    Option 3:
     Lets user record progress in potting up the successfully rooted cuttings
     (taken the previous Autumn).
     Ideally used daily during the potting campaign (in the Spring).
@@ -350,7 +416,7 @@ def record_potted_cuttings():
 
 def plan_grafting_campaign():
     """
-    Option 5:
+    Option 4:
     Lets user add a planned number of grafts for each cultivar.
     Should be used in late winter (February or March).
     Shows the number of rootstocks ready for grafting and the number left.
@@ -415,7 +481,7 @@ def plan_grafting_campaign():
 
 def record_grafts():
     """
-    Option 6:
+    Option 5:
     Lets user record the number of grafts taken for a chosen cultivar.
     Should be used in late winter; at grafting time.
     Shows the total for rootstocks ready for grafting and the number left.
@@ -491,7 +557,7 @@ def record_grafts():
 
 def record_loss():
     """
-    Option 7:
+    Option 6:
     Lets user record losses in stocks for any cultivar in any year.
     Works for both rooted cuttings and grafted cultivars.
     May be used throughout the year.
@@ -583,7 +649,7 @@ def record_loss():
 
 def record_gain():
     """
-    Option 8:
+    Option 7:
     Essentially the opposite of Option 7.
     """
     # Did we acquire new_rootstocks ...?
@@ -665,7 +731,7 @@ def record_gain():
 
 def hold_back():
     """
-    Option 9:
+    Option 8:
     Essentially a Option 7 with a twist.
     Results in the given number of the chosen cultivar from year n
     being removed and then added to year n-1.
@@ -749,7 +815,7 @@ def hold_back():
 
 def bring_forward():
     """
-    Option 10:
+    Option 9:
     The same as Option 9, but in the opposite direction.
     Results in the given number of cultivars from year n being removed
     and then added to year n+1.
@@ -830,7 +896,7 @@ def bring_forward():
 
 def add_new_cultivar():
     """
-    Option 11:
+    Option 10:
     Adds new cultivar to the list of Hamamelis plants grown in the nursery.
     """
     print("This functionality has not yet been implemented.\
@@ -840,92 +906,29 @@ def add_new_cultivar():
     input()
 
 
-def execute_option(input):
+def remove_cultivar():
     """
-    Executes the option typed in by the user
-    on condition it's valid.
+    Option 11:
+    Removes a cultivar from the list of Hamamelis plants grown in the nursery.
     """
+    print("This functionality has not yet been implemented.\
+    \nPlease watch this space!")
 
-    print("_____________________________________________________________________________")
-    print(" ")
-    if input == "help":
-        print("You've chosen the general HELP function.")
-        general_help()
-    elif input == 0:
-        print("You've chosen to close out the current year and open a new one.")
-        create_year()
-    elif input == 1:
-        print("You've chosen to plan this year's cutting campaign.")
-        plan_cutting_campaign()
-    elif input == 2:
-        print("You've chosen to record having taken some cuttings.")
-        record_cuttings_taken()
-    elif input == 3:
-        print("You've chosen to record potting up some rooted cuttings.")
-        record_potted_cuttings()
-    elif input == 4:
-        print("You've chosen to plan your grafting campaign.")
-        p()
-    elif input == 5:
-        print("You've chosen to record a number of new grafts.")
-        record_grafts()
-    elif input == 6:
-        print("You've chosen to record the loss of a number of plants.")
-        record_loss()
-    elif input == 7:
-        print("You've chosen to record the acquisition of a number of plants.")
-        record_gain()
-    elif input == 8:
-        print("You've chosen to hold a number of grafted plants back a year.")
-        hold_back()
-    elif input == 9:
-        print("You've chosen to bring a number of grafted plants forward a year.")
-        bring_forward()
-    elif input == 10:
-        print("Sorry! This functionality has not yet been implemented.")
-        add_new_cultivar()
-    elif input == 11:
-        print("Sorry! This functionality has not yet been implemented.")
-        show_current_situation()
-    else:
-        print("Please enter a valid integer between 0 and 11")
+    print("Press Enter to continue ...")
+    input()
 
-def detailed_help(input):
-    """
-    Gives detailed information on the function indicated by the user
-    """
 
-    if input == "help 0":
-        print("Typing 'help' from the main menu takes you into the general Help function, which\
-        \ngives you summary details on each of the eleven functions of the App.")
-        input("Would you like to go to the general Help function now?")
-    if input == "help 0":
-        print(help_messages.help_text_option0)
-    elif input == "help 1":
-        print(help_messages.help_text_option1)
-    elif input == "help 2":
-        print(help_messages.help_text_option2)
-    elif input == "help 3":
-        print(help_messages.help_text_option3)
-    elif input == "help 4":
-        print(help_messages.help_text_option4)
-    elif input == "help 5":
-        print(help_messages.help_text_option5)
-    elif input == "help 6":
-        print(help_messages.help_text_option6)
-    elif input == "help 7":
-        print(help_messages.help_text_option7)
-    elif input == "help 8":
-        print(help_messages.help_text_option8)
-    elif input == "help 9":
-        print(help_messages.help_text_option9)
-        Bring_forward()
-    elif operation == "help 10":
-        print(help_messages.help_text_option10)
-        Add_new_cultivar()
-    else:
-        print("Please enter a valid integer between 0 and 11")
+def show_current_situation():
+    """
+    Option 12:
+    Prints the current situation for hamamelis plants grown in the nursery.
+    """
+    print("This functionality has not yet been implemented.\
+    \nPlease watch this space!")
+
+    print("Press Enter to continue ...")
+    input()
+
 
 startup_instructions()
-
 main_menu()
