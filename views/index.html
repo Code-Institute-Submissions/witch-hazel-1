@@ -8,13 +8,13 @@
 </style>
 
 <body>
-    <button onclick="window.location.reload()">Run Program</button>
+    <button onclick="window.location.reload()">Run Witch-Hazel</button>
     <div id="terminal"></div>
 
     <script>
         var term = new Terminal({
             cols: 80,
-            rows: 24
+            rows: 32
         });
         term.open(document.getElementById('terminal'));
         term.writeln('Running startup command: python3 run.py');
