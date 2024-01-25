@@ -99,7 +99,6 @@ def main_menu():
                 exit_program()
 
             elif user_input == "help":
-                print("You have chosen the general help function.")
                 print(help_messages.help_text1)
                 input("Press Enter to see more help text")
                 print("\r")
