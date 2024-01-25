@@ -78,15 +78,16 @@ help_text_option0 = "\n\n                Option 0 -- CLOSE CURRENT YEAR/OPEN NEW
         \nstatistics on the work you've already planned and recorded as completed\
         \nfor that year, and asks you if you're sure you want to close out that\
         \nyear and create a new year.\
-        \nIf you confirm, it will close out the year and create a new set of\
+        \n\nIf you confirm, it will close out the year and create a new set of\
         \nrecords for the new current year, which will be the previous year plus\
-        \n one.\
+        \none.\
         \n\nBe very careful all your planning is done and all your work for the\
         \ncurrent year has been completed and recorded before confirming that you\
         \nwant to create a new year.\
         \n\nYou should run this option only once a year. We recommend doing so\
         \neither on 31 December of the old current year or as early as possible\
-        \nin January of the new current year."
+        \nin January of the new current year.\
+        \n"
 
 help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF CUTTINGS\
         \n\
@@ -99,7 +100,8 @@ help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF CUTTING
         \nyou planned in the previous session and asks you to confirm whether you\
         \nwant to change this number. If you confirm and enter a new number, this\
         \nnew entry will REPLACE the previous number. It will not be summed\
-        \ntogether with the old number!"
+        \ntogether with the old number!\
+        \n"
 
 help_text_option2 = "\n\n                     Option 2 -- RECORD CUTTINGS TAKEN\
         \n\
@@ -110,11 +112,12 @@ help_text_option2 = "\n\n                     Option 2 -- RECORD CUTTINGS TAKEN\
         \n\nYou can run Option 2 as often as you like, though we recommend running\
         \nit every time you've completed a session of cutting taking, while the\
         \nnumber of cuttings you've taken in that session is still fresh in your\
-        \n mind.\
+        \nmind.\
         \n\nEach time you record a number of cuttings made, that number is added to\
         \nthe previous total.\
         \n\nThe App will tell you when you've reached (or exceeded) the number of\
-        \ncuttings you planned to make (using Option 1)."
+        \ncuttings you planned to make (using Option 1).\
+        \n"
 
 help_text_option3 = "\n\n                     Option 3 -- RECORD CUTTINGS POTTED UP\
         \n\
@@ -130,7 +133,8 @@ help_text_option3 = "\n\n                     Option 3 -- RECORD CUTTINGS POTTED
         \nis added to the previous total.\
         \n\nThe App will warn you when you've reached (or exceeded) the number of\
         \ncuttings you have recorded as being available for potting up (i.e. the\
-        \nnumber of cuttings made, minus any losses you have recorded since then)."
+        \nnumber of cuttings made, minus any losses you have recorded since then).\
+        \n"
 
 help_text_option4 = "\n\n                     Option 4 -- PLAN NUMBER OF GRAFTS\
         \n\
@@ -147,7 +151,8 @@ help_text_option4 = "\n\n                     Option 4 -- PLAN NUMBER OF GRAFTS\
         \ntell you how many grafts you planned in the previous session and asks\
         \nyou to confirm whether you want to change this number. If you confirm\
         \nand enter a new number, this new entry will REPLACE the previous\
-        \nnumber. It will not be summed together with the old number!"
+        \nnumber. It will not be summed together with the old number!\
+        \n"
 
 help_text_option5 = "\n\n                     Option 5 -- RECORD GRAFTS MADE\
         \n\
@@ -166,7 +171,8 @@ help_text_option5 = "\n\n                     Option 5 -- RECORD GRAFTS MADE\
         \n\nEach time you record a number of grafts made for a particular cultivar,\
         \nthat number is added to the previous total for that cultivar.\
         \n\nThe App will tell you when you've reached (or exceeded) the number of\
-        \ngrafts you planned to make for that cultivar (using Option 4)."
+        \ngrafts you planned to make for that cultivar (using Option 4).\
+        \n"
 
 help_text_option6 = "\n\n                     Option 6 -- RECORD GRAFTS LOST\
         \n\
@@ -180,7 +186,8 @@ help_text_option6 = "\n\n                     Option 6 -- RECORD GRAFTS LOST\
         \ndisposing of dead or irreversibly damaged plants.\
         \n\nThe App will not allow you to record losses greater than the total stock\
         \nof the affected cultivar and age. It will let you know when stocks of\
-        \nthe affected plants reach zero."
+        \nthe affected plants reach zero.\
+        \n"
 
 help_text_option7 = "\n\n                     Option 7 -- RECORD GRAFTS ACQUIRED\
         \n\
@@ -193,7 +200,8 @@ help_text_option7 = "\n\n                     Option 7 -- RECORD GRAFTS ACQUIRED
         \n\nWe recommend running this option as soon as you can after acquiring new\
         \nplants.\
         \n\nThe App will let you know when stocks of the affected plants reach the\
-        \noriginally planned number."
+        \noriginally planned number.\
+        \n"
 
 help_text_option8 = "\n\n                     Option 8 -- HOLD PLANTS BACK\
         \n\
@@ -213,7 +221,8 @@ help_text_option8 = "\n\n                     Option 8 -- HOLD PLANTS BACK\
         \n\nThe App will not let you know hold back more of the affected plants than\
         \nthere are in stock.\
         \n\nWe recommend recording such changes as soon as you have physically moved\
-        \nthe affected plants to the appropriate section of the nursery."
+        \nthe affected plants to the appropriate section of the nursery.\
+        \n"
 
 help_text_option9 = "\n\n                     Option 9 -- BRING PLANTS FORWARD\
         \n\
@@ -233,7 +242,8 @@ help_text_option9 = "\n\n                     Option 9 -- BRING PLANTS FORWARD\
         \n\nThe App will not let you know hold back more of the affected plants than\
         \nthere are in stock.\
         \n\nWe recommend recording such changes as soon as you have physically moved\
-        \nthe affected plants to the appropriate section of the nursery."
+        \nthe affected plants to the appropriate section of the nursery.\
+        \n"
 
 help_text_option10 = "\n\n                     Option 10 -- ADD NEW CULTIVAR\
         \n\
