@@ -13,6 +13,9 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('hamamelis')
 
+CURSOR_UP_ONE = '\x1b[1A'
+ERASE_LINE = '\x1b[2K'
+
 rootstock = SHEET.worksheet('rootstock')
 grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
@@ -73,8 +76,8 @@ def startup_instructions():
 
     print(help_messages.intro_text)
     input("Press Enter to continue ...")
-    print('\r')
-    print(help_messages.menu_text)
+    print(CURSOR_UP_ONE + ERASE_LINE)
+    main_menu()
 
 def main_menu():
     """
@@ -87,8 +90,8 @@ def main_menu():
     while True:
         
         try:
-            user_input = check_is_numeric(input(f"Please indicate which operation you would like to perform by\
-            \nentering the corresponding number (between {lower_bound} and {upper_bound}): \n"), lower_bound, upper_bound)
+            user_input = check_is_numeric(input(f"Please choose an option by entering its number (between {lower_bound} and {upper_bound}):\
+            \n(Type 'HELP' or 'HELP [n]' for help [on a particular function], or 'EXIT' to quit.)\n"), lower_bound, upper_bound)
             if lower_bound <= int(user_input) <= upper_bound:
                 break
             else:
@@ -97,18 +100,15 @@ def main_menu():
         except ValueError:
             if user_input == 'exit':
                 exit_program()
-
             elif user_input == "help":
-                print(help_messages.help_text1)
-                input("Press Enter to see more help text")
-                print("\r")
-                print(help_messages.help_text2)
+                general_help()
             elif len(user_input.split()) == 2:
                 if user_input.split()[0].lower() == "help":
                     try:
-                        print("\r")
+                        print(CURSOR_UP_ONE + ERASE_LINE)
                         print(f"You have chosen help on Option {user_input.split()[1]}")
-                        help(int(user_input.split()[1]))
+                        print(CURSOR_UP_ONE + ERASE_LINE)
+                        option_help(int(user_input.split()[1]))
                     except:
                         print(f"Your number must be a positive integer or 0. Negative and\
                         \ndecimal-point numbers, text and special characters, etc. are not allowed:\n")
@@ -120,12 +120,19 @@ def main_menu():
 
 
 def general_help():
+    """
+    General help messages on how to use the app print to screen one after another
+    """
     print(help_messages.help_text1)
-    input("Press Enter to continue reading the general help text ...")
-    print(help_messages.help_text1)
+    input("Press Enter to see more general help text")
+    print(CURSOR_UP_ONE + ERASE_LINE)
+    print(help_messages.help_text2)
 
 
-def help(option_no):
+def option_help(option_no):
+    """
+    Specific help messages for each option
+    """
     if option_no==0:
         print(help_messages.help_text_option0)
 
@@ -180,25 +187,22 @@ def execute_option(input):
 
     print("_____________________________________________________________________________")
     print(" ")
-    if input == "help":
-        print("You've chosen the general HELP function.")
-        general_help()
-    elif input == 0:
+    if input == 0:
         print("You've chosen to close out the current year and open a new one.")
         create_year()
-    elif input == 1:
+    elif input == 3:
         print("You've chosen to plan this year's cutting campaign.")
         plan_cutting_campaign()
-    elif input == 2:
+    elif input == 4:
         print("You've chosen to record having taken some cuttings.")
         record_cuttings_taken()
-    elif input == 3:
+    elif input == 5:
         print("You've chosen to record potting up some rooted cuttings.")
         record_potted_cuttings()
-    elif input == 4:
+    elif input == 1:
         print("You've chosen to plan your grafting campaign.")
         plan_grafting_campaign()
-    elif input == 5:
+    elif input == 2:
         print("You've chosen to record a number of new grafts.")
         record_grafts()
     elif input == 6:
@@ -306,7 +310,7 @@ def create_year():
 
 def plan_cutting_campaign():
     """
-    Option 1:
+    Option 3:
     Helps plan cuttings task
     """
     planned_cuttings = int(rootstock.acell('b1').value)
@@ -353,7 +357,7 @@ def plan_cutting_campaign():
 
 def record_cuttings_taken():
     """
-    Option 2:
+    Option 4:
     Lets user record cuttings.
     Ideally used daily during the cuttings campaign (in Autumn).
     """
@@ -378,7 +382,7 @@ def record_cuttings_taken():
 
 def record_potted_cuttings():
     """
-    Option 3:
+    Option 5:
     Lets user record progress in potting up the successfully rooted cuttings
     (taken the previous Autumn).
     Ideally used daily during the potting campaign (in the Spring).
@@ -415,7 +419,7 @@ def record_potted_cuttings():
 
 def plan_grafting_campaign():
     """
-    Option 4:
+    Option 1:
     Lets user add a planned number of grafts for each cultivar.
     Should be used in late winter (February or March).
     Shows the number of rootstocks ready for grafting and the number left.
@@ -480,7 +484,7 @@ def plan_grafting_campaign():
 
 def record_grafts():
     """
-    Option 5:
+    Option 2:
     Lets user record the number of grafts taken for a chosen cultivar.
     Should be used in late winter; at grafting time.
     Shows the total for rootstocks ready for grafting and the number left.
@@ -930,4 +934,3 @@ def show_current_situation():
 
 
 startup_instructions()
-main_menu()

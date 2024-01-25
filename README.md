@@ -384,7 +384,9 @@ This section is work in progress.
 
 <!-- TOC --><a name="credits"></a>
 ## Credits
+https://discuss.python.org/
 https://www.w3schools.com/
 https://www.digitalocean.com/
 https://stackoverflow.com/
+
 This section is work in progress.

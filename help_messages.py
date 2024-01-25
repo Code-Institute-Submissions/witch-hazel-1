@@ -15,12 +15,13 @@ help_text1 = "\n                             WITCH-HAZEL HELP\
     \n9. Bring plants forward one year\
     \n10. Add new cultivar\
     \n11. Remove cultivar\
-    \n12. Report current situation"
+    \n12. Report current situation\
+    \n"
 
-help_text2 = "If you type in the number of the operation you wish to perform,\
-    \nthe app will guide you through the operation you have chosen to perform.\
-    \n\nLook at the README.md file for further details on each of these options.\
-    \n\nThe App will tell you the range of numbers to choose from (0 to 12).\
+help_text2 = "Type in the number of the operation you wish to perform,\
+    \nthe app will guide the process.\
+    \n\nLook at the README.md file for further details on each operation.\
+    \n\nThe App will tell you the range of numbers you can choose from (0 to 12).\
     \nAny time you enter an invalid number (including a negative number), the app\
     \nwill give you another opportunity to enter a valid one.\
     \n\nDuring some operations the App may ask you a yes or no confirmation\
@@ -28,9 +29,8 @@ help_text2 = "If you type in the number of the operation you wish to perform,\
     \non the command line. Typing in any other symbol will be taken as a 'No',\
     \nand will result in the app returning to the main menu.\
     \n\nTo get detailed Help on any specific function, type 'HELP' followed\
-    \nby a space, followed by the number of the function on which you want\
+    \nby a space and then the number of the function on which you want\
     \ndetailed help. You can do this from anywhere in the App.\
-    \n\n###############################################################################\
     \n"
 
 intro_text = "\n##########################################################################\
@@ -58,15 +58,15 @@ menu_title = "\n                            W I T C H - H A Z E L"
 menu_text = "\nWhat would you like to do?\
     \nChoose from among the following operations:\
     \n\n0. Create new year/Close out current year\
-    \n1. Plan this year's cutting campaign\
-    \n2. Record cuttings taken\
+    \n1. Plan grafts for this year\
+    \n2. Record grafts taken\
     \n3. Record rooted cuttings potted up\
-    \n4. Plan grafts for this year\
-    \n5. Record grafts taken\
+    \n4. Plan this year's cutting campaign\
+    \n5. Record cuttings taken\
     \n6. Record plant losses\
     \n7. Record plant gains\
-    \n8. Hold over plants for one year\
-    \n9. Bring plants forward one year\
+    \n8. Hold over grafted plants for one year\
+    \n9. Bring grafted plants forward one year\
     \n10. Add new cultivar\
     \n11. Remove cultivar\
     \n12. Report current situation\
@@ -89,7 +89,7 @@ help_text_option0 = "\n\n                Option 0 -- CLOSE CURRENT YEAR/OPEN NEW
         \nin January of the new current year.\
         \n"
 
-help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF CUTTINGS\
+help_text_option4 = "\n\n                     Option 4 -- PLAN NUMBER OF CUTTINGS\
         \n\
         \nOption 1 lets you record the number of cuttings for future rootstocks\
         \nthat you plan to make for the current year. Later, when you use Option 2\
@@ -103,7 +103,7 @@ help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF CUTTING
         \ntogether with the old number!\
         \n"
 
-help_text_option2 = "\n\n                     Option 2 -- RECORD CUTTINGS TAKEN\
+help_text_option5 = "\n\n                     Option 5 -- RECORD CUTTINGS TAKEN\
         \n\
         \nOption 2 lets you record the number of cuttings you have taken since you\
         \nlast ran that Option (or, if you are running the Option for the first\
@@ -136,42 +136,42 @@ help_text_option3 = "\n\n                     Option 3 -- RECORD CUTTINGS POTTED
         \nnumber of cuttings made, minus any losses you have recorded since then).\
         \n"
 
-help_text_option4 = "\n\n                     Option 4 -- PLAN NUMBER OF GRAFTS\
+help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF GRAFTS\
         \n\
-        \nOption 4 lets you record the number of grafts you plan to make for each\
-        \ncultivar of Hamamelis in the current year. Later, when you use Option 5\
+        \nOption 1 lets you record the number of grafts you plan to make for each\
+        \ncultivar of Hamamelis in the current year. Later, when you use Option 2\
         \nto record the grafts you've actually taken for the chosen cultivar\
         \n(which you can do as often as you like), the App will let you know when\
         \nyou've made the number of that cultivar you originally planned to make\
         \nin the current year.\
-        \n\nWhen you choose Option 4, the App will output the list of cultivars\
+        \n\nWhen you choose Option 1, the App will show you the list of cultivars\
         \nrecorded in your data and ask you choose the number of the cultivar\
         \nwhose grafting program you wish to plan for the year.\
-        \n\nIf you run Option 4 a second time for the same cultivar, the App will\
+        \n\nIf you run Option 1 a second time for the same cultivar, the App will\
         \ntell you how many grafts you planned in the previous session and asks\
         \nyou to confirm whether you want to change this number. If you confirm\
         \nand enter a new number, this new entry will REPLACE the previous\
         \nnumber. It will not be summed together with the old number!\
         \n"
 
-help_text_option5 = "\n\n                     Option 5 -- RECORD GRAFTS MADE\
+help_text_option2 = "\n\n                     Option 2 -- RECORD GRAFTS MADE\
         \n\
-        \nOption 5 lets you record the number of grafts of your chosen cultivar\
-        \nyou have taken since you last ran that Option for that cultivar (or, if\
+        \nOption 2 lets you record the number of grafts of your chosen cultivar\
+        \nyou have taken since you last ran that option for that cultivar (or, if\
         \nyou are running the option for the first time in the current year, the\
         \nnumber of grafts you have taken so far of that graft in the current\
         \nyear).\
-        \n\nWhen you choose Option 5, the App will output the list of cultivars\
+        \n\nWhen you choose Option 2, the App will output the list of cultivars\
         \nrecorded in your data and ask you choose the number of the cultivar for\
         \nwhich you want to record new grafts.\
-        \n\nYou can run Option 5 as often as you like for any cultivar, though we\
+        \n\nYou can run Option 2 as often as you like for any cultivar, though we\
         \nrecommend running it every time you've completed a session of grafting,\
         \nwhile the number of grafts you've taken in that session is still fresh\
         \nin your mind.\
         \n\nEach time you record a number of grafts made for a particular cultivar,\
         \nthat number is added to the previous total for that cultivar.\
         \n\nThe App will tell you when you've reached (or exceeded) the number of\
-        \ngrafts you planned to make for that cultivar (using Option 4).\
+        \ngrafts you planned to make for that cultivar (using Option 1).\
         \n"
 
 help_text_option6 = "\n\n                     Option 6 -- RECORD GRAFTS LOST\
