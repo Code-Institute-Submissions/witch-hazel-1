@@ -72,20 +72,21 @@ menu_text = "\nWhat would you like to do?\
     \n12. Report current situation\
     \n"
 
-help_text_option0 = "\n\n                     Option 0 -- CLOSE CURRENT YEAR/OPEN NEW YEAR\
+help_text_option0 = "\n\n                Option 0 -- CLOSE CURRENT YEAR/OPEN NEW YEAR\
         \n\
         \nOption 0 tells you what the App's current year is, gives you detailed\
         \nstatistics on the work you've already planned and recorded as completed\
-        \nfor that year, and asks you if you're sure you want to close out that year\
-        \nand create a new year.\
-        \nIf you confirm, it will close out the year and create a new set of records\
-        \nfor the new current year, which will be the previous year plus one.\
+        \nfor that year, and asks you if you're sure you want to close out that\
+        \nyear and create a new year.\
+        \nIf you confirm, it will close out the year and create a new set of\
+        \nrecords for the new current year, which will be the previous year plus\
+        \n one.\
         \n\nBe very careful all your planning is done and all your work for the\
         \ncurrent year has been completed and recorded before confirming that you\
         \nwant to create a new year.\
-        \n\nYou should run this option only once a year. We recommend doing so either\
-        \non 31 December of the old current year or as early as possible in January\
-        \n of the new current year."
+        \n\nYou should run this option only once a year. We recommend doing so\
+        \neither on 31 December of the old current year or as early as possible\
+        \nin January of the new current year."
 
 help_text_option1 = "\n\n                     Option 1 -- PLAN NUMBER OF CUTTINGS\
         \n\
@@ -104,11 +105,12 @@ help_text_option2 = "\n\n                     Option 2 -- RECORD CUTTINGS TAKEN\
         \n\
         \nOption 2 lets you record the number of cuttings you have taken since you\
         \nlast ran that Option (or, if you are running the Option for the first\
-        \ntime in the current year, the number of cuttings you have taken so far in\
-        \nthe current year).\
+        \ntime in the current year, the number of cuttings you have taken so far\
+        \nin the current year).\
         \n\nYou can run Option 2 as often as you like, though we recommend running\
-        \nit every time you've completed a session of cutting taking, while the number\
-        \nof cuttings you've taken in that session is still fresh in your mind.\
+        \nit every time you've completed a session of cutting taking, while the\
+        \nnumber of cuttings you've taken in that session is still fresh in your\
+        \n mind.\
         \n\nEach time you record a number of cuttings made, that number is added to\
         \nthe previous total.\
         \n\nThe App will tell you when you've reached (or exceeded) the number of\
@@ -116,10 +118,10 @@ help_text_option2 = "\n\n                     Option 2 -- RECORD CUTTINGS TAKEN\
 
 help_text_option3 = "\n\n                     Option 3 -- RECORD CUTTINGS POTTED UP\
         \n\
-        \nOption 3 lets you record the number of rooted cuttings you have potted up\
-        \nsince you last ran that Option (or, if you are running the Option for the\
-        \nfirst time in the current year, the number of rooted cuttings you have\
-        \npotted up so far n the current year).\
+        \nOption 3 lets you record the number of rooted cuttings you have potted\
+        \nup since you last ran that Option (or, if you are running the Option for\
+        \nthe first time in the current year, the number of rooted cuttings you\
+        \nhave potted up so far in the current year).\
         \n\nYou can run Option 3 as often as you like, though we recommend running\
         \nit every time you've completed a session of potting up rooted cuttings,\
         \nwhile the number you've potted up in that session is still fresh in your\
@@ -127,38 +129,39 @@ help_text_option3 = "\n\n                     Option 3 -- RECORD CUTTINGS POTTED
         \n\nEach time you record some rooted cuttings being potted up, that number\
         \nis added to the previous total.\
         \n\nThe App will warn you when you've reached (or exceeded) the number of\
-        \ncuttings you have recorded as being available for potting up (i.e. the number\
-        \nof cuttings made, minus any losses you have recorded since then)."
+        \ncuttings you have recorded as being available for potting up (i.e. the\
+        \nnumber of cuttings made, minus any losses you have recorded since then)."
 
 help_text_option4 = "\n\n                     Option 4 -- PLAN NUMBER OF GRAFTS\
         \n\
         \nOption 4 lets you record the number of grafts you plan to make for each\
         \ncultivar of Hamamelis in the current year. Later, when you use Option 5\
-        \nto record the grafts you've actually taken for the chosen cultivar (which\
-        \nyou can do as often as you like), the App will let you know when you've\
-        \nmade the number of that cultivar you originally planned to make in the\
-        \ncurrent year.\
+        \nto record the grafts you've actually taken for the chosen cultivar\
+        \n(which you can do as often as you like), the App will let you know when\
+        \nyou've made the number of that cultivar you originally planned to make\
+        \nin the current year.\
         \n\nWhen you choose Option 4, the App will output the list of cultivars\
-        \nrecorded in your data and ask you choose the number of the cultivar whose\
-        \ngrafting program you wish to plan for the year.\
+        \nrecorded in your data and ask you choose the number of the cultivar\
+        \nwhose grafting program you wish to plan for the year.\
         \n\nIf you run Option 4 a second time for the same cultivar, the App will\
         \ntell you how many grafts you planned in the previous session and asks\
-        \nyou to confirm whether you want to change this number. If you confirm and\
-        \nenter a new number, this new entry will REPLACE the previous number.\
-        \nIt will not be summed together with the old number!"
+        \nyou to confirm whether you want to change this number. If you confirm\
+        \nand enter a new number, this new entry will REPLACE the previous\
+        \nnumber. It will not be summed together with the old number!"
 
 help_text_option5 = "\n\n                     Option 5 -- RECORD GRAFTS MADE\
         \n\
-        \nOption 5 lets you record the number of grafts of your chosen cultivar you\
-        \nhave taken since you last ran that Option for that cultivar (or, if you\
-        \nare running the option for the first time in the current year, the number\
-        \nof grafts you have taken so far of that graft in the current year).\
+        \nOption 5 lets you record the number of grafts of your chosen cultivar\
+        \nyou have taken since you last ran that Option for that cultivar (or, if\
+        \nyou are running the option for the first time in the current year, the\
+        \nnumber of grafts you have taken so far of that graft in the current\
+        \nyear).\
         \n\nWhen you choose Option 5, the App will output the list of cultivars\
         \nrecorded in your data and ask you choose the number of the cultivar for\
         \nwhich you want to record new grafts.\
         \n\nYou can run Option 5 as often as you like for any cultivar, though we\
         \nrecommend running it every time you've completed a session of grafting,\
-        \n while the number of grafts you've taken in that session is still fresh\
+        \nwhile the number of grafts you've taken in that session is still fresh\
         \nin your mind.\
         \n\nEach time you record a number of grafts made for a particular cultivar,\
         \nthat number is added to the previous total for that cultivar.\
@@ -176,17 +179,17 @@ help_text_option6 = "\n\n                     Option 6 -- RECORD GRAFTS LOST\
         \n\nWe recommend running this option as soon as you can after noting and\
         \ndisposing of dead or irreversibly damaged plants.\
         \n\nThe App will not allow you to record losses greater than the total stock\
-        \nof the affected cultivar and age. It will let you know when stocks of the\
-        \naffected plants reach zero."
+        \nof the affected cultivar and age. It will let you know when stocks of\
+        \nthe affected plants reach zero."
 
 help_text_option7 = "\n\n                     Option 7 -- RECORD GRAFTS ACQUIRED\
         \n\
-        \nOption 7 lets you record any acquisitions of grafted plants you may make.\
-        \nIt first asks you to identify the cultivar you have purchased or otherwise\
-        \nacquired and then the age of that cultivar (1 for year-one plants, 2 for\
-        \nyear-two and so on).\
-        \n\nThe number you enter will then be added to the numbers of plants recorded\
-        \nas being in stock for that cultivar and that age.\
+        \nOption 7 lets you record any acquisitions of grafted plants you may\
+        \nmake. It first asks you to identify the cultivar you have purchased\
+        \nor otherwise acquired and then the age of that cultivar (1 for year-one\
+        \nplants, 2 for year-two and so on).\
+        \n\nThe number you enter will then be added to the numbers of plants\
+        \nrecorded as being in stock for that cultivar and that age.\
         \n\nWe recommend running this option as soon as you can after acquiring new\
         \nplants.\
         \n\nThe App will let you know when stocks of the affected plants reach the\
@@ -194,18 +197,19 @@ help_text_option7 = "\n\n                     Option 7 -- RECORD GRAFTS ACQUIRED
 
 help_text_option8 = "\n\n                     Option 8 -- HOLD PLANTS BACK\
         \n\
-        \nA grafted plant assigned a particular age, is not necessarily of that age.\
-        \nThe best way of putting it would be to say that Year-Two plants are plants\
-        \nof the size and quality typical of plants in their second year of growth\
-        \nafter grafting. Any plants that have grown more slowly or faster during\
-        \nthe year may need to be reclassified to reflect their progress. Options\
-        \n8 and 9 allow you to do this.\
-        \n\nOption 8 allows you to hold back slower plants for a year, so that a number\
-        \nof Year-Three plants, for example, are held back to Year Two.\
-        \n\nIt first asks you to identify the cultivar you want to hold back and then\
-        \nthe age of that cultivar (1 for Year-One grafted plants, 2 for Year-Two plants\
-        \nand so on).\
-        \n\nThe number you indicate of affected plants will be held back by one year.\
+        \nA grafted plant assigned a particular age is not necessarily of that age.\
+        \nThe best way of putting it would be to say that Year-Two plants are\
+        \nplants of the size and quality typical of plants in their second year of\
+        \ngrowth after grafting. Any plants that have grown more slowly or faster\
+        \nduring the year may need to be reclassified to reflect their progress.\
+        \nOptions 8 and 9 allow you to do this.\
+        \n\nOption 8 allows you to hold back slower plants for a year, so that a\
+        \nnumber of Year-Three plants, for example, are held back to Year Two.\
+        \n\nIt first asks you to identify the cultivar you want to hold back and\
+        \nthen the age of that cultivar (1 for Year-One grafted plants, 2 for\
+        \nYear-Two plants and so on).\
+        \n\nThe number you indicate of affected plants will be held back by one\
+        \nyear.\
         \n\nThe App will not let you know hold back more of the affected plants than\
         \nthere are in stock.\
         \n\nWe recommend recording such changes as soon as you have physically moved\
@@ -213,17 +217,18 @@ help_text_option8 = "\n\n                     Option 8 -- HOLD PLANTS BACK\
 
 help_text_option9 = "\n\n                     Option 9 -- BRING PLANTS FORWARD\
         \n\
-        \nA grafted plant assugned a particular age, is not necessarily of that age.\
-        \nThe best way of putting it would be to say that Year-Two plants are plants\
-        \nof the size and quality typical of plants in their second year of growth\
-        \nafter grafting. Any plants that have grown more slowly or faster during the\
-        \nyear may need to be reclassified to reflect their progress. Options 8 and 9\
-        \nallow you to do this.\
-        \n\nOption 9 allows you to bring slower plants forward by a year, so that a\
-        \nnumber of Year-Three plants, for example, are brought forward to Year Four.\
+        \nA grafted plant assigned a particular age is not necessarily of that age.\
+        \nThe best way of putting it would be to say that Year-Two plants are\
+        \nplants of the size and quality typical of plants in their second year\
+        \nof growth after grafting. Any plants that have grown more slowly or faster\
+        \nduring the year may need to be reclassified to reflect their progress.\
+        \nOptions 8 and 9 allow you to do this.\
+        \n\nOption 9 allows you to bring faster-growing plants forward by a year,\
+        \nso that a number of Year-Three plants, for example, are brought forward\
+        \nto Year Four.\
         \n\nIt first asks you to identify the cultivar you want to bring forward and\
-        \nthen the age of that cultivar (1 for Year-One grafted plants, 2 for Year-Two\
-        \nplants and so on).\
+        \nthen the age of that cultivar (1 for Year-One grafted plants, 2 for\
+        \nYear-Two plants and so on).\
         \n\nThe affected plants will be brought forward by one year.\
         \n\nThe App will not let you know hold back more of the affected plants than\
         \nthere are in stock.\
