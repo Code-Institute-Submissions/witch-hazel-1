@@ -19,40 +19,61 @@ ERASE_LINE = '\x1b[2K'
 rootstock = SHEET.worksheet('rootstock')
 grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
+completed = SHEET.worksheet('completed')
 
-cuttings_taken = int(rootstock.acell('c1').value)
-rootstocks_potted = int(rootstock.acell('d1').value)
-mature_rootstocks = int(rootstock.acell('e1').value)
+cuttings_taken = int(rootstock.acell('c2').value)
+rootstocks_potted = int(rootstock.acell('d2').value)
+mature_rootstocks = int(rootstock.acell('e2').value)
+
 
 rootstock_data = rootstock.get_all_values()
 grafts_data = grafts_year_zero.get_all_values()
 plants_data = plants.get_all_values()
+completed_data = completed.get_all_values()
 
 def exit_program():
     print("Exiting the Witch-Hazel app ...")
     sys.exit(0)
 
+def completed_for_year(affected_cell, affected_task):
+    if input(f"Have you completed the '{affected_task}' task for the year? (type 'y' for 'yes' or 'n' for 'no'): \n").lower() =='y':
+        completed.update_acell(affected_cell, 'y')
+        print(f"You have completed the '{affected_task}' task for the year! You can reopen the task if you wish to make any changes\
+        \nuntil you close out the year.")
+    else:
+        print(f"You have not yet completed the task {affected_task} for the year. You can come by later and modify the current figure.")
+    
+
 def check_is_numeric(user_input, mini=0, maxi=10000, not_a_number_blurb=" is not a number. Please enter a number between ", 
         not_in_range_blurb="That number is out of range. Please enter a number between "):
     try:
         number = int(user_input)
+        print(number)
         if mini <= number <= maxi:
+            print("In if clause within try block")
             return number
         else:
-            return check_is_numeric(input(f"{not_in_range_blurb}{mini} and {maxi}:"), mini, maxi)
+            print("In else clause within try block")
+            return check_is_numeric(input(f"{not_in_range_blurb}{mini} and {maxi}: \n"), mini, maxi)
     except:
         if user_input=='':
-            return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:"), mini, maxi)
+            print("In if clause within except block")
+            return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:\n"), mini, maxi)
         elif user_input.lower()=='exit' or user_input.lower()=='help':
+            print("In 1st elif clause within except block")
             return user_input.lower()
         elif user_input.lower().split()[0]=='help':
+            print("In 2nd elif clause within except block")
             try:
+                print("In inner try block")
                 if mini <= int(user_input.lower().split()[1]) <= maxi:
                     return user_input
             except:
-                return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:"), mini, maxi)
+                print("In inner except block")
+                return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:\n"), mini, maxi)
         else:
-            return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:"), min, maxi)
+            print("In outer else block")
+            return check_is_numeric(input(f"'{user_input}'{not_a_number_blurb}{mini} and {maxi}:\n"), mini, maxi)
 
 def Get_survival_rate(start_num, end_num):
     if int(start_num) == 0:
@@ -66,7 +87,7 @@ cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted)
 potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
 lower_bound = 0
-upper_bound = 12
+upper_bound = 9
 
 def startup_instructions():
     """
@@ -91,12 +112,13 @@ def main_menu():
         
         try:
             user_input = check_is_numeric(input(f"Please choose an option by entering its number (between {lower_bound} and {upper_bound}):\
-            \n(Type 'HELP' or 'HELP [n]' for help [on a particular function], or 'EXIT' to quit.)\n"), lower_bound, upper_bound)
+            \n(Type 'HELP' or 'HELP [n]' for help [on a particular function], or\
+            \n'EXIT' to quit.):\n"), lower_bound, upper_bound)
             if lower_bound <= int(user_input) <= upper_bound:
                 break
             else:
-                print(f"Invalid input. Your number must be a whole number between {lower_bound} and\
-                \n{upper_bound}. Please enter a valid number: ")
+                check_is_numeric(input(f"Invalid input. Your number must be a whole number between {lower_bound} and\
+                \n{upper_bound}. Please enter a valid number: \n"))
         except ValueError:
             if user_input == 'exit':
                 exit_program()
@@ -163,15 +185,6 @@ def option_help(option_no):
     elif option_no == 9:
         print(help_messages.help_text_option9)
 
-    elif option_no == 10:
-        print(help_messages.help_text_option10)
-
-    elif option_no == 11:
-        print(help_messages.help_text_option11)
-
-    elif option_no == 12:
-        print(help_messages.help_text_option12)
-
     else:
         print("For help on a particular option in the app, please type 'help'\
         \nfollowed by a space, followed by the number of the option for which you\
@@ -187,24 +200,21 @@ def execute_option(input):
 
     print("_____________________________________________________________________________")
     print(" ")
-    if input == 0:
-        print("You've chosen to close out the current year and open a new one.")
-        create_year()
-    elif input == 3:
-        print("You've chosen to plan this year's cutting campaign.")
-        plan_cutting_campaign()
-    elif input == 4:
-        print("You've chosen to record having taken some cuttings.")
-        record_cuttings_taken()
-    elif input == 5:
-        print("You've chosen to record potting up some rooted cuttings.")
-        record_potted_cuttings()
-    elif input == 1:
+    if input == 1:
         print("You've chosen to plan your grafting campaign.")
         plan_grafting_campaign()
     elif input == 2:
         print("You've chosen to record a number of new grafts.")
         record_grafts()
+    elif input == 3:
+        print("You've chosen to record potting up some rooted cuttings.")
+        record_potted_cuttings()
+    elif input == 4:
+        print("You've chosen to plan this year's cutting campaign.")
+        plan_cutting_campaign()
+    elif input == 5:
+        print("You've chosen to record having taken some cuttings.")
+        record_cuttings_taken()
     elif input == 6:
         print("You've chosen to record the loss of a number of plants.")
         record_loss()
@@ -217,17 +227,11 @@ def execute_option(input):
     elif input == 9:
         print("You've chosen to bring a number of grafted plants forward a year.")
         bring_forward()
-    elif input == 10:
-        print("Sorry! This functionality has not yet been implemented.")
-        add_new_cultivar()
-    elif input == 11:
-        print("Sorry! This functionality has not yet been implemented.")
-        remove_cultivar()
-    elif input == 12:
-        print("Sorry! This functionality has not yet been implemented.")
-        show_current_situation()
+    elif input == 0:
+        create_year()
     else:
-        print("Please enter a valid integer between 0 and 12")
+        print(f"Please enter a valid integer between {lower_bound} and {upper_bound}")
+    main_menu()
 
 
 def run_main_if_clause(taken, planned):
@@ -242,7 +246,7 @@ def run_main_if_clause(taken, planned):
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
         taken += check_is_numeric(input(f"How many cuttings have you now taken in addition to the ones\
         \nyou've already recorded: \n"))
-        rootstock.update_acell('c1', taken)
+        rootstock.update_acell('c2', taken)
         if taken >= planned:
             print(f"Congratulations! You have achieved the planned number of cuttings: \
             \n{taken} cuttings taken out of {planned} planned!")
@@ -259,164 +263,6 @@ def run_main_if_clause(taken, planned):
     input()
     main_menu()
 
-
-def create_year():
-    """
-    Option 0:
-    This function adds the rows necessary to create a new year and copies the
-    row for stocks of this year's grafts from the
-    grafts-year-zero to the plants worksheet. It puts the current year out of
-    reach of the relevant seasonal planning and work tasks.
-    """
-    rootstock_year = rootstock.acell('a1').value
-    new_rootstock_year = int(rootstock_year) + 1
-
-    print(f"The last year created was {rootstock_year}")
-    cuttings_last_year = rootstock.acell('c2').value
-    if input(f"Would you like to create a record for {new_rootstock_year}?\
-    \nType 'y' for yes and 'n' for no: \n").lower() == 'y':
-        print(f"\nInfo: You took {cuttings_taken} cuttings last year.\
-        \nYou now have {mature_rootstocks} maturing rootstocks in stock.")
-        num_cuttings = check_is_numeric(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
-        \n(Enter 0 if you want to plan cutting numbers later): \n"))
-        values = [new_rootstock_year, num_cuttings, 0, 0, 0]
-        rootstock.insert_row(values)
-        rootstock.update_acell('e3', 0)
-        print(f"Year {new_rootstock_year} created. {num_cuttings} cuttings planned\
-        \nfor this year.")
-        if num_cuttings == 0:
-            print("You've chosen to plan your cutting campaign later!")
-
-        year_zero_stocks = grafts_year_zero.get('c4:h4')[0]
-
-        year_zero_stocks_int = [int(value) for value in year_zero_stocks]
-        plants.insert_rows([year_zero_stocks_int], 2)
-
-        graft_starting_values = [
-            [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0],
-            [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0],
-            [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0],
-            ]
-
-        grafts_year_zero.insert_rows(graft_starting_values, 2)
-
-    else:
-        print(f"The year {new_rootstock_year} has not been created.\
-        \nThe current year is still {rootstock_year}")
-
-    print("Press Enter to continue ...")
-    input()
-     
-
-def plan_cutting_campaign():
-    """
-    Option 3:
-    Helps plan cuttings task
-    """
-    planned_cuttings = int(rootstock.acell('b1').value)
-    last_year_cuttings = int(rootstock.acell('c2').value)
-    last_year_rooted_cuttings = int(rootstock.acell('d2').value)
-    this_year_cuttings_taken = int(rootstock.acell('c1').value)
-    current_year = int(rootstock.acell('a1').value)
-    if int(planned_cuttings) > 0:
-        if input(f"So far you have planned to take {planned_cuttings} cuttings for {current_year}! Would you like replace that number with a new one?\
-        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            
-            planned_cuttings = check_is_numeric(input(f"You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
-            \nThe present planned figure for this year is {planned_cuttings}.\
-            \nEnter a new figure for planned cuttings for this year: \n"))
-            if planned_cuttings <= this_year_cuttings_taken:
-                if input(f"You have already taken {this_year_cuttings_taken} cuttings this year. This is more than your new planned figure!\
-                \nAre you sure you want to replace the planned figure with this one?\
-                \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-                    rootstock.update_acell('b1', planned_cuttings)
-                    print("Planned number of cuttings successfully changed.\
-                    \nCuttings campaign planning session completed")
-            else:
-                rootstock.update_acell('b1', planned_cuttings)
-                print("Planned number of cuttings successfully changed.\
-                \nCuttings campaign planning session completed")
-        else:
-            print("Plan cuttings action cancelled.\
-            \nNo changes have been made to the data.")
-    else:
-        if input(f"Would you like to plan the number of cuttings you intend to take this season?\
-        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            planned_cuttings = check_is_numeric(input(f"Please enter the number of cuttings\
-            \nthat you want to take this year: \n"))
-            rootstock.update_acell('b1', planned_cuttings)
-            print("Planned number of cuttings successfully changed.\
-            \nCuttings campaign planning session completed")
-        else:
-            print("Plan cuttings action cancelled.\
-            \nNo changes have been made to the data.")
-
-    print("Press Enter to continue ...")
-    input()
-
-
-def record_cuttings_taken():
-    """
-    Option 4:
-    Lets user record cuttings.
-    Ideally used daily during the cuttings campaign (in Autumn).
-    """
-
-    cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_planned = int(rootstock.acell('b1').value)
-    cuttings_rooted = int(rootstock.acell('d1').value)
-    if cuttings_rooted > 0:
-        if input("You have already begun potting up cuttings for this year.\
-        \nAre you sure you want to take cuttings at this time?\
-        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            Run_main_if_clause(cuttings_taken, cuttings_planned)
-        else:
-            print("Record new cuttings taken action cancelled.\
-            \nNo changes have been made to the data.")
-    else:
-        Run_main_if_clause(cuttings_taken, cuttings_planned)
-
-    print("Press Enter to continue ...")
-    input()
-
-
-def record_potted_cuttings():
-    """
-    Option 5:
-    Lets user record progress in potting up the successfully rooted cuttings
-    (taken the previous Autumn).
-    Ideally used daily during the potting campaign (in the Spring).
-    """
-    cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_potted = int(rootstock.acell('d1').value)
-    new_rootstocks = int(rootstock.acell('e1').value)
-    if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
-    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-        newly_potted = check_is_numeric(input(f"How many cuttings have you now potted up in addition\
-        \nto the ones already recorded: \n"))
-        if cuttings_potted + newly_potted > cuttings_taken:
-            print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll have potted up more cuttings than you took in the Autumn.\
-            \nThat is not normally possible!\
-            \nIf you're sure that the total number of newly potted rootstocks is in fact {newly_potted + new_rootstocks}, \
-            \nthen you must first change the figure for cuttings (Option 3) before continuing!\
-            \nRecord new cuttings potted action cancelled.\
-            \nNo changes have been made to the data.")
-        else:
-            cuttings_potted += newly_potted
-            new_rootstocks += newly_potted
-            rootstock.update_acell('d1', cuttings_potted)
-            rootstock.update_acell('e1', new_rootstocks)
-            print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}!\
-            \nThat means you now have {new_rootstocks} immature rootstocks available for grafting next year\
-            \n(minus any losses in the meantime).")
-    else:
-        print("Record new cuttings potted action cancelled.\
-        \nNo changes have been made to the data.")
-
-    print("Press Enter to continue ...")
-    input()
-
-
 def plan_grafting_campaign():
     """
     Option 1:
@@ -425,7 +271,7 @@ def plan_grafting_campaign():
     Shows the number of rootstocks ready for grafting and the number left.
     Warns the user when they're planning to use more rootstocks than they have.
     """
-    rootstocks_available = int(rootstock.acell('e2').value)
+    rootstocks_available = int(rootstock.acell('e3').value)
 
     row_values = grafts_year_zero.row_values(1)
     # Find the column to stop at (first column that contains no data)
@@ -471,8 +317,9 @@ def plan_grafting_campaign():
         new_planned_value = check_is_numeric(input(f"Type in the new planned value\
         \nfor {cultivars[cultivar_value - 1]}: \n"))
         grafts_year_zero.update_acell(cell_address, new_planned_value)
-        print(f"Planned number of grafts for {cultivars[cultivar_value - 1]} successfully changed.\
-            \nCuttings campaign planning session completed")
+        print(f"Planned number of grafts for {cultivars[cultivar_value - 1]} successfully changed.")
+        print()
+        completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", f"planning_grafts for {cultivars[cultivar_value - 1]}")
 
     else:
         print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
@@ -556,6 +403,132 @@ def record_grafts():
     
     print("Press Enter to continue ...")
     input()
+
+
+def record_potted_cuttings():
+    """
+    Option 3:
+    Lets user record progress in potting up the successfully rooted cuttings
+    (taken the previous Autumn).
+    Ideally used daily during the potting campaign (in the Spring).
+    """
+    cuttings_taken = int(rootstock.acell('c1').value)
+    cuttings_potted = int(rootstock.acell('d1').value)
+    new_rootstocks = int(rootstock.acell('e1').value)
+    if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
+    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+        newly_potted = check_is_numeric(input(f"How many cuttings have you now potted up in addition\
+        \nto the ones already recorded: \n"))
+        if cuttings_potted + newly_potted > cuttings_taken:
+            print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll have potted up more cuttings than you took in the Autumn.\
+            \nThat is not normally possible!\
+            \nIf you're sure that the total number of newly potted rootstocks is in fact {newly_potted + new_rootstocks}, \
+            \nthen you must first change the figure for cuttings (Option 3) before continuing!\
+            \nRecord new cuttings potted action cancelled.\
+            \nNo changes have been made to the data.")
+        else:
+            cuttings_potted += newly_potted
+            new_rootstocks += newly_potted
+            rootstock.update_acell('d1', cuttings_potted)
+            rootstock.update_acell('e1', new_rootstocks)
+            print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}!\
+            \nThat means you now have {new_rootstocks} immature rootstocks available for grafting next year\
+            \n(minus any losses in the meantime).")
+    else:
+        print("Record new cuttings potted action cancelled.\
+        \nNo changes have been made to the data.")
+
+    print("Press Enter to continue ...")
+    input()
+
+def run_cuttings_plan(cuttings):
+        rootstock.update_acell('b2', cuttings)
+        print("Number of cuttings planned for this year successfully changed.")
+        completed_for_year('b2', "plan cutting numbers")
+
+def  cancel_cuttings_plan():
+    print("Plan cuttings action cancelled.\
+        \nNo changes have been made to the data.")
+
+def check_is_complete(cell, task):
+    complete = completed.acell(cell).value.lower()
+    if complete == 'y':
+        if input(f"The task '{task}' has been closed for the year. Would you like to reopen it? (type 'y' for yes or 'n' for no):\n").lower() == 'y':
+            completed.update_acell(cell, 'y')
+            return False
+        else:
+            print(f"You have decided not to re-open the '{task}' task, which has been closed for this year\
+            \nNo change has been made to your data.")
+            return True
+    else:
+        return False
+
+def plan_cutting_campaign():
+    """
+    Option 4:
+    Helps plan cuttings task
+    """
+    planned_cuttings = int(rootstock.acell('b2').value)
+    last_year_cuttings = int(rootstock.acell('c3').value)
+    last_year_rooted_cuttings = int(rootstock.acell('d3').value)
+    this_year_cuttings_taken = int(rootstock.acell('c2').value)
+    current_year = int(rootstock.acell('a2').value)
+    if check_is_complete('b2', 'planning cuttings') == False:
+        if int(planned_cuttings) > 0:
+            user_confirmation = input(f"So far you have planned to take {planned_cuttings} cuttings for {current_year}! Would you like replace that number with a new one?\
+                    \nType 'y' for yes or 'n' for no: \n").lower()
+            planned_cuttings_string = f"\nThe present planned figure for this year is {planned_cuttings}."
+            text_segment = "new "
+        else:
+            user_confirmation = input(f"Would you like to plan the number of cuttings you intend to take this season?\
+                \nType 'y' for yes or 'n' for no: \n").lower()
+            planned_cuttings_string = ""
+            text_segment = ""
+        if user_confirmation == 'y':
+            planned_cuttings = check_is_numeric(input(f"You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
+            {planned_cuttings_string}\
+            \nEnter a {text_segment}figure for planned cuttings for this year: \n"))
+            if planned_cuttings <= this_year_cuttings_taken:
+                user_confirmation = input(f"You have already taken {this_year_cuttings_taken} cuttings this year. This is more than your new planned figure!\
+                \nAre you sure you want to replace the planned figure with this one?\
+                \nType 'y' for yes or 'n' for no: \n").lower()
+                if user_confirmation == 'y':
+                    run_cuttings_plan(planned_cuttings)
+                else:
+                    cancel_cuttings_plan()
+            else:
+                run_cuttings_plan(planned_cuttings)
+        else:
+            cancel_cuttings_plan()
+
+    print("Press Enter to continue ...")
+    input()
+
+
+def record_cuttings_taken():
+    """
+    Option 5:
+    Lets user record cuttings.
+    Ideally used daily during the cuttings campaign (in Autumn).
+    """
+
+    cuttings_taken = int(rootstock.acell('c1').value)
+    cuttings_planned = int(rootstock.acell('b1').value)
+    cuttings_rooted = int(rootstock.acell('d1').value)
+    if cuttings_rooted > 0:
+        if input("You have already begun potting up cuttings for this year.\
+        \nAre you sure you want to take cuttings at this time?\
+        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+            Run_main_if_clause(cuttings_taken, cuttings_planned)
+        else:
+            print("Record new cuttings taken action cancelled.\
+            \nNo changes have been made to the data.")
+    else:
+        run_main_if_clause(cuttings_taken, cuttings_planned)
+
+    print("Press Enter to continue ...")
+    input()
+
 
 
 def record_loss():
@@ -729,7 +702,7 @@ def record_gain():
     print("Acquisition recorded successfully.")
     
     print("Press Enter to continue ...")
-    input()
+    input('')
 
 
 def hold_back():
@@ -812,8 +785,8 @@ def hold_back():
 
     print("Plants held back successfully.")
 
-    print("Press )any key to continue ...")
-    input()
+    print("Press Enter to continue ...")
+    input('')
 
 
 def bring_forward():
@@ -894,43 +867,58 @@ def bring_forward():
     print("Plants brought forward successfully.")
 
     print("Press Enter to continue ...")
-    input()
+    input('')
 
 
-def add_new_cultivar():
+def create_year():
     """
-    Option 10:
-    Adds new cultivar to the list of Hamamelis plants grown in the nursery.
+    Option 0:
+    This function adds the rows necessary to create a new year and copies the
+    row for stocks of this year's grafts from the
+    grafts-year-zero to the plants worksheet. It puts the current year out of
+    reach of the relevant seasonal planning and work tasks.
     """
-    print("This functionality has not yet been implemented.\
-    \nPlease watch this space!")
+    rootstock_year = rootstock.acell('a2').value
+    new_rootstock_year = int(rootstock_year) + 1
+
+    print(f"The last year created was {rootstock_year}")
+    cuttings_last_year = rootstock.acell('c3').value
+    if input(f"Would you like to create a record for {new_rootstock_year}?\
+    \nType 'y' for yes and 'n' for no: \n").lower() == 'y':
+        print(f"\nInfo: You took {cuttings_taken} cuttings last year.\
+        \nYou now have {mature_rootstocks} maturing rootstocks in stock.")
+        num_cuttings = check_is_numeric(input(f"How many cuttings would you like to plan for {new_rootstock_year}? \
+        \n(Enter 0 if you want to plan cutting numbers later): \n"))
+        values = [new_rootstock_year, num_cuttings, 0, 0, 0]
+        rootstock.insert_row(values, 2)
+        rootstock.update_acell('e3', 0)
+        print(f"Year {new_rootstock_year} created. {num_cuttings} cuttings planned\
+        \nfor this year.")
+        if num_cuttings == 0:
+            print("You've chosen to plan your cutting campaign later!")
+
+        year_zero_stocks = grafts_year_zero.get('c4:h4')[0]
+
+        year_zero_stocks_int = [int(value) for value in year_zero_stocks]
+        plants.insert_rows([year_zero_stocks_int], 2)
+
+        graft_starting_values = [
+            [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0],
+            [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0],
+            [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0],
+            ]
+
+        grafts_year_zero.insert_rows(graft_starting_values, 2)
+
+    else:
+        print(f"The year {new_rootstock_year} has not been created.\
+        \nThe current year is still {rootstock_year}")
 
     print("Press Enter to continue ...")
-    input()
+    input('')
 
 
-def remove_cultivar():
-    """
-    Option 11:
-    Removes a cultivar from the list of Hamamelis plants grown in the nursery.
-    """
-    print("This functionality has not yet been implemented.\
-    \nPlease watch this space!")
-
-    print("Press Enter to continue ...")
-    input()
-
-
-def show_current_situation():
-    """
-    Option 12:
-    Prints the current situation for hamamelis plants grown in the nursery.
-    """
-    print("This functionality has not yet been implemented.\
-    \nPlease watch this space!")
-
-    print("Press Enter to continue ...")
-    input()
-
-
+"""
+Program runs from here
+"""
 startup_instructions()

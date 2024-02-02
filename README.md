@@ -154,10 +154,37 @@ The time used dealing with this problem at the last minute may have affected som
 
 <!-- TOC --><a name="the-programs-workflow"></a>
 ## The program's workflow:
+After considerable debate, it was decided to order the various tasks to be done in the program to match the tasks as they arose during the calendar year. One of the other candidate orderings was to follow the logical flow of what was actually done to individual plants, from planning the campaign to cuttings of _H. Virginiana_, through carrying out that plan in the autumn, through potting up rooted cuttings the following spring, then the planning of the grafting campaign and then doing the actual grafting of scions onto the rootstocks the following late winter, followed by all the ongoing maintenance tasks required to keep the grafted plants healthy and in order until ready for sale. Another option was to begin each twelve-month period in the autumn, when the owners first begin to plan their cutting campaign.
+
+Though beginning the workflow at the start of every calendar year and ordering app tasks like real-world seasonal nursery tasks added a little complexity to the design of the program, the reason for doing so was two-fold:
+- Early winter (around the Christmas holiday time), being the quiet time for the couple, was the best time for them to check on the work they had done over the year and to ensure that it was properly recorded in the App.
+- The couple could more easily tick off tasks done in the order in which they were done, thus making sure the data for each year was complete before closing out the year and beginning a new year.
+
+Thus the program opens with the task of planning the grafting campaign (for each cultivar), going through each subsequent seasonal task in calendar order, following these with the non-seasonal maintenance tasks of the nursery and finishing with the final step of closing out the calendar year and preparing the spreadsheet for the data to be input in the following year.
 
 <!-- TOC --><a name="seasonal-tasks-in-order"></a>
 ### Seasonal tasks in order
-Typically towards the autumn of every year, the owners will want to close out the figures they have entered over the previous year, begin a new year and start work on planning their campaign of taking H. Virginiana cuttings. They begin this task by running the app and choosing option ``1`` (``Create new year/Close out current year``). This function adds the required new lines for the new current year on each worksheet, and copies the data on graft stocks for the old current year to date from the ``grafts-year-zero`` worksheet to the ``plants`` worksheet. This has the effect of putting the data for the previous year out of reach of the seasonal tasks.
+
+Here, then are the seasonal tasks as they appear in the main (and only) menu of the program, along with their data dependencies.
+1. plan grafting tasks (dependent on the mature rootstocks available and on the cultivars listed in the system) (January or February)
+2. record grafts made (cross-checked against rootstocks and broken down by cultivar) (February to April)
+3. pot up rooted cuttings (no planning needed: numbers depend on the number of cuttings taken in the previous season that have successfully rooted) (April to June)
+4. plan cutting campaign (depends on projected needs; there is rarely an issue with the amount of material or space available suitable for taking cuttings) (August to September)
+5. take cuttings (October and November)
+
+They are followed by the non-seasonal tasks:
+6. recording rootstock losses (losses before gains simply because losses are more likely)
+7. recording rootstock gains
+8. recording grafted plant losses (by cultivar and year)
+9. recording grafted plant gains (by cultivar and year)
+10. moving grafted plants forward a year (by cultivar and source year)
+11. moving grafted plants back a year (by cultivar and source year)
+
+And finally, it's time for
+0. closing out the year and preparing the data format for the next year (checks that all processes are closed)
+
+
+Typically towards the autumn of every year, the owners will want to close out the figures they have entered over the previous year, begin a new year and start work on planning their campaign of taking _H. Virginiana_ cuttings. They begin this task by running the app and choosing option ``1`` (``Create new year/Close out current year``). This function adds the required new lines for the new current year on each worksheet, and copies the data on graft stocks for the old current year to date from the ``grafts-year-zero`` worksheet to the ``plants`` worksheet. This has the effect of putting the data for the previous year out of reach of the seasonal tasks.
 
 Also within the ``Create new year/Close out current year`` function, users can choose either to enter the figure for cuttings that they anticipate taking this year or opt to leave that job for later.
 
@@ -236,6 +263,19 @@ run.py:428:80: E501 line too long (82 > 79 characters)
 ```
 
 In reality there are at least a dozen warnings relating to lines that are too long, but they do not affect the Heroku pseudo-terminal and do not appear to affect the readability of the code. I corrected them, saw that the caused bugs in the presentation, and even in the running of the code itself, and reversed them (one by one).
+
+### Unresolved issues
+Occasionally during testing the app fails to open, giving users the following 503 error:
+```
+Traceback (most recent call last):
+  File "/workspace/witch-hazel/run.py", line 14, in <module>
+    SHEET = GSPREAD_CLIENT.open('hamamelis')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  [...]
+gspread.exceptions.APIError: {'code': 503, 'message': 'The service is currently unavailable.', 'status': 'UNAVAILABLE'}
+```
+
+It's clear that this is due to a transient third-party issue. I put together a try/except clause to deal with this issue elegantly. The custom error messages simply asks the user to try again, since in my experience such issues are almost always extremely transient, lasting no more than a second or two.
 
 <!-- TOC --><a name="app-robustness"></a>
 ## App robustness
@@ -388,5 +428,6 @@ https://discuss.python.org/
 https://www.w3schools.com/
 https://www.digitalocean.com/
 https://stackoverflow.com/
+https://www.programiz.com/python-programming
 
 This section is work in progress.
