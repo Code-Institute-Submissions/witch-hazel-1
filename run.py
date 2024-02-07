@@ -234,7 +234,7 @@ def execute_option(input):
     main_menu()
 
 
-def run_main_if_clause(taken, planned):
+def complete_cuttings_taken_record(taken, planned):
     
     if taken >= planned:
         print(f"You have already reached the number of cuttings you planned to take this year: \
@@ -255,6 +255,8 @@ def run_main_if_clause(taken, planned):
             \nof {planned}!")
 
         print("Cuttings campaign record added successfully.")
+        print(f"{taken} out of {planned}")
+        run_cuttings_session(taken)
     else:
         print("Cuttings taken action cancelled.\
         \nNo changes have been made to the data.")
@@ -412,9 +414,9 @@ def record_potted_cuttings():
     (taken the previous Autumn).
     Ideally used daily during the potting campaign (in the Spring).
     """
-    cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_potted = int(rootstock.acell('d1').value)
-    new_rootstocks = int(rootstock.acell('e1').value)
+    cuttings_taken = int(rootstock.acell('c2').value)
+    cuttings_potted = int(rootstock.acell('d2').value)
+    new_rootstocks = int(rootstock.acell('e2').value)
     if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
     \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
         newly_potted = check_is_numeric(input(f"How many cuttings have you now potted up in addition\
@@ -442,13 +444,18 @@ def record_potted_cuttings():
     input()
 
 def run_cuttings_plan(cuttings):
-        rootstock.update_acell('b2', cuttings)
-        print("Number of cuttings planned for this year successfully changed.")
-        completed_for_year('b2', "plan cutting numbers")
+    rootstock.update_acell('b2', cuttings)
+    print("Number of cuttings planned for this year successfully changed.")
+    completed_for_year('b2', 'plan cutting numbers')
 
 def  cancel_cuttings_plan():
     print("Plan cuttings action cancelled.\
         \nNo changes have been made to the data.")
+
+def run_cuttings_session(cuttings):
+    rootstock.update_acell('c2', cuttings)
+    print("Successfully added to number of cuttings taken so far in this campaign.")
+    completed_for_year('b3', 'record cuttings taken')
 
 def check_is_complete(cell, task):
     complete = completed.acell(cell).value.lower()
@@ -508,27 +515,27 @@ def plan_cutting_campaign():
 def record_cuttings_taken():
     """
     Option 5:
-    Lets user record cuttings.
+    Lets the user record cuttings actually taken.
     Ideally used daily during the cuttings campaign (in Autumn).
     """
-
-    cuttings_taken = int(rootstock.acell('c1').value)
-    cuttings_planned = int(rootstock.acell('b1').value)
-    cuttings_rooted = int(rootstock.acell('d1').value)
-    if cuttings_rooted > 0:
-        if input("You have already begun potting up cuttings for this year.\
-        \nAre you sure you want to take cuttings at this time?\
-        \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            Run_main_if_clause(cuttings_taken, cuttings_planned)
+    if check_is_complete('b3', 'taking cuttings') == False:
+        print(check_is_complete('b3', 'taking cuttings'))
+        cuttings_taken = int(rootstock.acell('c2').value)
+        cuttings_planned = int(rootstock.acell('b2').value)
+        cuttings_rooted = int(rootstock.acell('d2').value)
+        if cuttings_rooted > 0:
+            if input("You have already begun potting up cuttings for this year.\
+            \nAre you sure you want to take cuttings at this time?\
+            \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+                complete_cuttings_taken_record(cuttings_taken, cuttings_planned)
+            else:
+                print("Record new cuttings taken action cancelled.\
+                \nNo changes have been made to the data.")
         else:
-            print("Record new cuttings taken action cancelled.\
-            \nNo changes have been made to the data.")
-    else:
-        run_main_if_clause(cuttings_taken, cuttings_planned)
+            complete_cuttings_taken_record(cuttings_taken, cuttings_planned)
 
     print("Press Enter to continue ...")
     input()
-
 
 
 def record_loss():
