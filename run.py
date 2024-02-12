@@ -360,7 +360,6 @@ def record_grafts():
     # Converts the strings in the planned numbers list into integers
     # to make it possible to sum them together.
     planned_numbers = [int(x) for x in planned_numbers]
-    total_planned = sum(planned_numbers)
     grafts_this_year = grafts_year_zero.get(grafted_range)[0]
     grafts_this_year = [int(x) for x in grafts_this_year]
     total_grafted = sum(grafts_this_year)
@@ -383,8 +382,8 @@ def record_grafts():
     address_rootstocks = 'f2'
     grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
     planned_this_cultivar = planned_numbers[cultivar_value -1]
-    print(f"You have chosen to record grafts of {cultivars[cultivar_value - 1]}")
-    print(f"")
+    print(f"You have chosen to record grafts of {cultivars[cultivar_value - 1]}\
+    \n")
     print (f"You have planned to make {planned_this_cultivar} of this cultivar.")
     if grafts_this_cultivar > 0:
         confirm_string = f"You have already made {grafts_this_cultivar} grafts of this cultivar.\
@@ -395,9 +394,8 @@ def record_grafts():
     if input(confirm_string).lower() == 'y':
         newly_made_grafts = parse_user_input(input(f"Type in the number of new grafts you have made of {cultivars[cultivar_value - 1]}: \n"))
         grafts_this_cultivar += newly_made_grafts
-        rootstock.update_acell(address_rootstocks,
-                            int(rootstock.acell(address_rootstocks).value) -
-                            newly_made_grafts)
+        grafts_year_zero.update_acell(address_grafts, int(grafts_this_cultivar))
+        print()
         print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
             \nThe new total of grafts made this year for this cultivar is {grafts_this_cultivar}.\
             \nYou originally planned to make {planned_this_cultivar}.\
