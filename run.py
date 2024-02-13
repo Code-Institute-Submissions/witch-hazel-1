@@ -49,7 +49,7 @@ def completed_for_year(affected_cell, affected_task):
         \nYou can reopen the task if you wish to make any changes until you close out the year.\
         \n")
     else:
-        print(f"You have not yet completed the task {affected_task} for the year.\
+        print(f"You have not yet completed the task '{affected_task}' for the year.\
         \nYou can come by later and modify the current figure.")
     
 
@@ -264,8 +264,8 @@ def plan_grafting_campaign():
     Shows the number of rootstocks ready for grafting and the number left.
     Warns the user when they're planning to use more rootstocks than they have.
     """
-    rootstocks_available = int(rootstock.acell('g3').value)
-    rootstocks_in_stock = int(rootstock.acell('f3').value)
+    rootstocks_available = int(rootstock.acell('g4').value)
+    rootstocks_in_stock = int(rootstock.acell('f4').value)
     task_string ="planning grafts"
 
     row_values = grafts_year_zero.row_values(1)
@@ -283,8 +283,8 @@ def plan_grafting_campaign():
     cultivars = grafts_year_zero.get(name_range)[0]
     planned_numbers = grafts_year_zero.get(planned_range)[0]
     """
-    Converts the strings in the planned numbers list into integers
-    to make it possible to sum them together.
+    Converts planned number strings into integers
+    and adds them together.
     """
     planned_numbers = [int(x) for x in planned_numbers]
     total_planned = sum(planned_numbers)
@@ -297,7 +297,7 @@ def plan_grafting_campaign():
     for cultivar in cultivars:
         count += 1
         print(f"{count}. {cultivar}")
-    
+
     print("")
 
     cultivar_value = parse_user_input(input("Please enter the number of the cultivar for which you want to plan grafting\
@@ -338,8 +338,8 @@ def record_grafts():
     Shows the total for rootstocks ready for grafting and the number left.
     Warns the user when they've used more rootstocks than they actually have.
     """
-    rootstocks_in_stock = int(rootstock.acell('f3').value)
-    rootstocks_available = int(rootstock.acell('g3').value)
+    rootstocks_in_stock = int(rootstock.acell('f4').value)
+    rootstocks_available = int(rootstock.acell('g4').value)
     task_string = "record grafts"
 
 
@@ -378,32 +378,33 @@ def record_grafts():
 
     cultivar_value = parse_user_input(input("Please enter the cultivar number of the new grafts you want to record\
     \n(see the cultivars listed above): \n"), 1, count)
-    address_grafts = f"{chr(ord('c') + cultivar_value - 1)}3"
-    address_rootstocks = 'f2'
-    grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
-    planned_this_cultivar = planned_numbers[cultivar_value -1]
-    print(f"You have chosen to record grafts of {cultivars[cultivar_value - 1]}\
-    \n")
-    print (f"You have planned to make {planned_this_cultivar} of this cultivar.")
-    if grafts_this_cultivar > 0:
-        confirm_string = f"You have already made {grafts_this_cultivar} grafts of this cultivar.\
-        \nWould you like to add to this value? Type 'y' for yes or 'n' for no: \n"
-    else:
-        confirm_string = "You have not yet made any grafts of this cultivar.\
-        \nWould you like record some grafts now? Type 'y' for yes or 'n' for no: \n"
-    if input(confirm_string).lower() == 'y':
-        newly_made_grafts = parse_user_input(input(f"Type in the number of new grafts you have made of {cultivars[cultivar_value - 1]}: \n"))
-        grafts_this_cultivar += newly_made_grafts
-        grafts_year_zero.update_acell(address_grafts, int(grafts_this_cultivar))
-        print()
-        print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
-            \nThe new total of grafts made this year for this cultivar is {grafts_this_cultivar}.\
-            \nYou originally planned to make {planned_this_cultivar}.\
-            \nSuccessfully completed record of new grafts made.")
-        completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}3", f"{task_string} for {cultivars[cultivar_value - 1]}")
-    else:
-        print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
-        \nNo changes have been made to the data.")
+    if check_is_complete(f"{chr(ord('c') + cultivar_value - 1)}3", f"{task_string} for {cultivars[cultivar_value-1]}") == False:
+        address_grafts = f"{chr(ord('c') + cultivar_value - 1)}3"
+        address_rootstocks = 'f3'
+        grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
+        planned_this_cultivar = planned_numbers[cultivar_value -1]
+        print(f"You have chosen to record grafts of {cultivars[cultivar_value - 1]}\
+        \n")
+        print (f"You have planned to make {planned_this_cultivar} of this cultivar.")
+        if grafts_this_cultivar > 0:
+            confirm_string = f"You have already made {grafts_this_cultivar} grafts of this cultivar.\
+            \nWould you like to add to this value? Type 'y' for yes or 'n' for no: \n"
+        else:
+            confirm_string = "You have not yet made any grafts of this cultivar.\
+            \nWould you like record some grafts now? Type 'y' for yes or 'n' for no: \n"
+        if input(confirm_string).lower() == 'y':
+            newly_made_grafts = parse_user_input(input(f"Type in the number of new grafts you have made of {cultivars[cultivar_value - 1]}: \n"))
+            grafts_this_cultivar += newly_made_grafts
+            grafts_year_zero.update_acell(address_grafts, int(grafts_this_cultivar))
+            print()
+            print(f"Number of grafts made for {cultivars[cultivar_value - 1]} successfully changed.\
+                \nThe new total of grafts made this year for this cultivar is {grafts_this_cultivar}.\
+                \nYou originally planned to make {planned_this_cultivar}.\
+                \nSuccessfully completed record of new grafts made.")
+            completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}3", f"{task_string} for {cultivars[cultivar_value - 1]}")
+        else:
+            print(f"Plan grafts action for {cultivars[cultivar_value - 1]} cancelled.\
+            \nNo changes have been made to the data.")
     
     print("Press Enter to continue ...")
     input()
@@ -416,35 +417,39 @@ def record_potted_cuttings():
     (taken the previous Autumn).
     Ideally used daily during the potting campaign (in the Spring).
     """
-    cuttings_taken = int(rootstock.acell('c2').value)
-    cuttings_potted = int(rootstock.acell('d2').value)
-    new_rootstocks = int(rootstock.acell('f2').value)
+    cuttings_taken = int(rootstock.acell('c3').value)
+    cuttings_potted = int(rootstock.acell('d3').value)
+    new_rootstocks = int(rootstock.acell('f3').value)
 
     if check_is_complete('c3', "potting rooted cuttings") == False:
-
-        if input(f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
-            \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
-            newly_potted = parse_user_input(input(f"How many cuttings have you now potted up in addition\
-            \nto the ones already recorded: \n"))
+        if cuttings_potted > 0:
+            confirm_string = f"So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
+            \nType 'y' for yes or 'n' for no: \n"
+            qualifier_clause = " in addition to the ones\
+            \nyou have already recorded"
+        else:
+            confirm_string = f"You have not yet potted up any cuttings! Would you like to record some newly potted cuttings now?\
+            \nType 'y' for yes or 'n' for no: \n"
+            qualifier_clause = ""
+        if input(confirm_string).lower() == 'y':
+            newly_potted = parse_user_input(input(f"How many cuttings have you now potted up{qualifier_clause}?\n"))
             if cuttings_potted + newly_potted > cuttings_taken:
-                print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll have potted up more cuttings than you took in the Autumn.\
-                \nThat is not normally possible!\
-                \nIf you're sure that the total number of newly potted rootstocks is in fact {newly_potted + new_rootstocks}, \
-                \nthen you must first change the figure for cuttings (Option 3) before continuing!\
-                \nRecord new cuttings potted action cancelled.\
-                \nNo changes have been made to the data.")
+                print(f"If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll\
+                \nhave potted up more cuttings than you took in the Autumn ({cuttings_taken}).\
+                \nThat is not possible. The absolute maximum number you can pot up in this session is {cuttings_taken - cuttings_potted}.\
+                \nAction cancelled. No changes have been made to the data.")
             else:
                 cuttings_potted += newly_potted
-                new_rootstocks += newly_potted
-                rootstock.update_acell('d2', cuttings_potted)
-                rootstock.update_acell('f2', new_rootstocks)
-                print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken}!\
-                \nThat means you now have {new_rootstocks} immature rootstocks available for grafting next year\
-                \n(minus any losses in the meantime).")
-            completed_for_year('c3', 'pot up rooted cuttings')
+                rootstock.update_acell('d3', cuttings_potted)
+                print(f"You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken} (minus\
+                \nany that have failed to root)!\
+                \nYou will use them as rootstocks during the grafting campaign next season (once\
+                \nthey have established themselves in their pots).")
+                completed_for_year('c3', 'pot up rooted cuttings')
         else:
             print("Record new cuttings potted action cancelled.\
             \nNo changes have been made to the data.")
+            completed_for_year('c3', 'pot up rooted cuttings')
 
     print("Press Enter to continue ...")
     input()
@@ -466,9 +471,9 @@ def run_cuttings_session(cuttings):
 def check_is_complete(cell, task):
     complete = completed.acell(cell).value.lower()
     if complete == 'y':
-        if input(f"The task '{task}' has been closed for the year.\
+        if input(f"\nThe task '{task}' has been closed for the year.\
         \nWould you like to reopen it? (type 'y' for yes or 'n' for no):\n").lower() == 'y':
-            completed.update_acell(cell, 'y')
+            completed.update_acell(cell, 'n')
             return False
         else:
             print(f"You have decided not to re-open the '{task}' task, which has been closed for this year\
