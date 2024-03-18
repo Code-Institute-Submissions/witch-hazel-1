@@ -36,24 +36,24 @@ help_text1 = "\n                               WITCH-HAZEL HELP\
     \n"
 
 help_text2 = "  Type in the number of the operation you wish to perform,\
-    \nthe app will guide the process.\
-    \n\nLook at the README.md file for further details on each operation.\
-    \n\nThe App will tell you the range of numbers you can choose from (0 to 12).\
-    \nAny time you enter an invalid number (including a negative number), the app\
-    \nwill give you another opportunity to enter a valid one.\
-    \n\nDuring some operations the App may ask you a yes or no confirmation\
+    \n  the app will guide the process.\
+    \n\n  Look at the README.md file for further details on each operation.\
+    \n\n  The App will tell you the range of numbers you can choose from (0 to 12).\
+    \n  Any time you enter an invalid number (including a negative number), the app\
+    \n  will give you another opportunity to enter a valid one.\
+    \n\n  During some operations the App may ask you a yes or no confirmation\
     \nquestion. Where this happens you should answer yes by typing a 'y' or 'Y'\
     \non the command line. Typing in any other symbol will be taken as a 'No',\
     \nand will result in the app returning to the main menu.\
     \n\nTo get detailed Help on any specific function, type 'HELP' followed\
-    \nby a space and then the number of the function on which you want\
-    \ndetailed help. You can do this from anywhere in the App.\
+    \nby a space and then the number of the function on which\
+    \n you want detailed help. You can do this from anywhere in the App.\
     \n"
 
 
 menu_title = "\n                            W I T C H - H A Z E L"
 
-menu_text = "\nWhat would you like to do?\
+menu_text = "\n  What would you like to do?\
     \n  Choose from among the following operations:\
     \n\
     \n    1. Plan grafts for this year\
