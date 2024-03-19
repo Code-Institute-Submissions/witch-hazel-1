@@ -338,7 +338,7 @@ def plan_grafting_campaign():
 
         if planned_numbers[cultivar_value - 1] > 0:
             info_string = f"{INDENT}So far, you have planned to make {planned_numbers[cultivar_value - 1]} grafts of this cultivar.\
-            \n{INDENT}Would you like to replace this value? Type 'y' for yes or 'n' for no: \n"{INDENT}
+            \n{INDENT}Would you like to replace this value? Type 'y' for yes or 'n' for no: \n"
         else:
             info_string = f"{INDENT}You have not yet planned to make any grafts of this cultivar.\
             \n{INDENT}Would you like to do so now? Type 'y' for yes or 'n' for no: \n"
