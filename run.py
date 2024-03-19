@@ -1,5 +1,5 @@
 import gspread
-import help_messages
+import help_texts
 from google.oauth2.service_account import Credentials
 import sys
 
@@ -16,6 +16,7 @@ SHEET = GSPREAD_CLIENT.open('hamamelis')
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
 INDENT = '  '
+Y_OR_N_TEXT = "Type 'y' for yes or 'n' for no:"
 
 rootstock = SHEET.worksheet('rootstock')
 grafts_year_zero = SHEET.worksheet('grafts-year-zero')
@@ -112,7 +113,7 @@ def startup_instructions():
     Presents general info on it.
     """
 
-    print(help_messages.intro_text)
+    print(help_texts.intro_text)
     input(f"{INDENT}Press Enter to continue ...")
     print(CURSOR_UP_ONE + ERASE_LINE)
     main_menu()
@@ -122,8 +123,8 @@ def main_menu():
     The program's main menu on startup and after every option or help message.
     """
 
-    print(help_messages.menu_title)
-    print(help_messages.menu_text)
+    print(help_texts.menu_title)
+    print(help_texts.menu_text)
 
     while True:
         user_input = parse_user_input(input(f"{INDENT}Please choose an option by entering its number (between {lower_bound} and {upper_bound}):\
@@ -137,9 +138,9 @@ def general_help():
     """
     General help messages on how to use the app print to screen one after another
     """
-    print(help_messages.help_text1)
+    print(help_texts.help_text1)
     input(f"{INDENT}Press Enter to see more general help text")
-    print(help_messages.help_text2)
+    print(help_texts.help_text2)
     main_menu()
 
 
@@ -148,34 +149,34 @@ def option_help(option_no):
     Specific help messages for each option
     """
     if option_no==0:
-        print(help_messages.help_text_option0)
+        print(help_texts.help_text_option0)
 
     elif option_no == 1:
-        print(help_messages.help_text_option1)
+        print(help_texts.help_text_option1)
 
     elif option_no == 2:
-        print(help_messages.help_text_option2)
+        print(help_texts.help_text_option2)
 
     elif option_no == 3:
-        print(help_messages.help_text_option3)
+        print(help_texts.help_text_option3)
 
     elif option_no == 4:
-        print(help_messages.help_text_option4)
+        print(help_texts.help_text_option4)
 
     elif option_no == 5:
-        print(help_messages.help_text_option5)
+        print(help_texts.help_text_option5)
 
     elif option_no == 6:
-        print(help_messages.help_text_option6)
+        print(help_texts.help_text_option6)
 
     elif option_no == 7:
-        print(help_messages.help_text_option7)
+        print(help_texts.help_text_option7)
 
     elif option_no == 8:
-        print(help_messages.help_text_option8)
+        print(help_texts.help_text_option8)
 
     elif option_no == 9:
-        print(help_messages.help_text_option9)
+        print(help_texts.help_text_option9)
 
     else:
         print(f"{INDENT}For help on a particular option in the app, please type 'help'\
@@ -236,12 +237,12 @@ def complete_cuttings_taken_record(taken, planned):
             info_string = f"{INDENT}So far you have taken {taken} cuttings this year!\
             \n{INDENT}You have planned to take a total of {planned} cuttings for this year."
             input_string = f"{INDENT}Would you like to add additional cuttings taken now?\
-            \n{INDENT}Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}{Y_OR_N_TEXT} \n"
         else:
             info_string = f"{INDENT}You have not yet taken any cuttings this year!\
             \n{INDENT}You have planned to take a total of {planned} cuttings for this year."
             input_string = f"{INDENT}Would you like enter some cuttings taken now?\
-            \n{INDENT}Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}{Y_OR_N_TEXT} \n"
 
     if input(input_string).lower() == 'y':
         taken += parse_user_input(input(f"{INDENT}How many cuttings have you now taken in addition to the ones\
@@ -338,10 +339,12 @@ def plan_grafting_campaign():
 
         if planned_numbers[cultivar_value - 1] > 0:
             info_string = f"{INDENT}So far, you have planned to make {planned_numbers[cultivar_value - 1]} grafts of this cultivar.\
-            \n{INDENT}Would you like to replace this value? Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}Would you like to replace this value? \
+            \n{Y_OR_N_TEXT} \n"
         else:
             info_string = f"{INDENT}You have not yet planned to make any grafts of this cultivar.\
-            \n{INDENT}Would you like to do so now? Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}Would you like to do so now?\
+            \n{Y_OR_N_TEXT} \n"
         if input(info_string).lower() == 'y':
             new_planned_value = parse_user_input(input(f"{INDENT}Type in the new planned value for {current_cultivar}: \n"))
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
@@ -419,10 +422,12 @@ def record_grafts():
         print (f"{INDENT}You have planned to make {planned_this_cultivar} of this cultivar.")
         if grafts_this_cultivar > 0:
             confirm_string = f" You have already made {grafts_this_cultivar} grafts of this cultivar.\
-            \n{INDENT}Would you like to add to this value? Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}Would you like to add to this value?\
+            \n{Y_OR_N_TEXT}\n"
         else:
             confirm_string = f"{INDENT}You have not yet made any grafts of this cultivar.\
-            \n{INDENT}Would you like record some grafts now? Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}Would you like record some grafts now?\
+            \n{Y_OR_N_TEXT}\n"
         if input(confirm_string).lower() == 'y':
             newly_made_grafts = parse_user_input(input(f"{INDENT}Type in the number of new grafts you have made of {current_cultivar}: \n"))
             grafts_this_cultivar += newly_made_grafts
@@ -456,12 +461,12 @@ def record_potted_cuttings():
     if check_is_complete('c3', "potting rooted cuttings") == False:
         if cuttings_potted > 0:
             confirm_string = f"{INDENT}So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
-            \n{INDENT}Type 'y' for yes or 'n' for no: \n"
+            \n{Y_OR_N_TEXT}\n"
             qualifier_clause = " in addition to the ones\
             \n{INDENT}you have already recorded"
         else:
             confirm_string = f"{INDENT}You have not yet potted up any cuttings! Would you like to record some newly potted cuttings now?\
-            \n{INDENT}Type 'y' for yes or 'n' for no: \n"
+            \n{INDENT}{Y_OR_N_TEXT}\n"
             qualifier_clause = ""
         if input(confirm_string).lower() == 'y':
             newly_potted = parse_user_input(input(f"{INDENT}How many cuttings have you now potted up{qualifier_clause}?\n"))
@@ -516,12 +521,12 @@ def plan_cutting_campaign():
     if check_is_complete('b2', task) == False:
         if int(planned_cuttings) > 0:
             user_confirmation = input(f"{INDENT}So far you have planned to take {planned_cuttings} cuttings for {current_year}! Would you like replace that number with a new one?\
-                    \n{INDENT}Type 'y' for yes or 'n' for no: \n").lower()
+                    \n{Y_OR_N_TEXT}\n").lower()
             planned_cuttings_string = f"\n{INDENT}The present planned figure for this year is {planned_cuttings}."
             text_segment = "new "
         else:
             user_confirmation = input(f"{INDENT}Would you like to plan the number of cuttings you intend to take this season?\
-                \n{INDENT}Type 'y' for yes or 'n' for no: \n").lower()
+                \n{Y_OR_N_TEXT}\n").lower()
             planned_cuttings_string = ""
             text_segment = ""
         if user_confirmation == 'y':
@@ -531,7 +536,7 @@ def plan_cutting_campaign():
             if planned_cuttings <= this_year_cuttings_taken:
                 user_confirmation = input(f"{INDENT}You have already taken {this_year_cuttings_taken} cuttings this year. This is more than your new planned figure!\
                 \n{INDENT}Are you sure you want to replace the planned figure with this one?\
-                \n{INDENT}Type 'y' for yes or 'n' for no: \n").lower()
+                \n{Y_OR_N_TEXT}\n").lower()
                 if user_confirmation == 'y':
                     run_cuttings_plan(planned_cuttings)
                 else:
@@ -575,7 +580,7 @@ def record_loss():
     """
     # Did we lose new_rootstocks?
     if input(f"{INDENT}Would you like to record a loss of new rootstocks?\
-    \nType 'y' for yes or 'n' for no: \n").lower() == 'y':
+    \n{Y_OR_N_TEXT}\n").lower() == 'y':
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
@@ -664,7 +669,7 @@ def record_gain():
     """
     # Did we acquire new_rootstocks ...?
     if input(f"{INDENT}Would you like to record an acquisition of new rootstocks?\
-    \n{INDENT}Type 'y' for yes or 'n' for no: \n").lower() == 'y':
+    \n{Y_OR_N_TEXT}\n").lower() == 'y':
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
@@ -914,7 +919,7 @@ def create_year():
     print(f"{INDENT}The last year created was {rootstock_year}")
     cuttings_last_year = rootstock.acell('c3').value
     if input(f"{INDENT}Would you like to create a record for {new_rootstock_year}?\
-    \n{INDENT}Type 'y' for yes and 'n' for no: \n").lower() == 'y':
+    \n{Y_OR_N_TEXT}\n").lower() == 'y':
         print(f"\n{INDENT}Info: You took {cuttings_taken} cuttings last year.\
         \n{INDENT}You now have {mature_rootstocks} maturing rootstocks in stock.")
         num_cuttings = parse_user_input(input(f"{INDENT}How many cuttings would you like to plan for {new_rootstock_year}? \
@@ -933,12 +938,20 @@ def create_year():
         plants.insert_rows([year_zero_stocks_int], 2)
 
         graft_starting_values = [
-            [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0],
-            [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0],
-            [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0],
+            [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0, '=SUM(C2:H2)'],
+            [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0, '=SUM(C3:H3)'],
+            [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0, '=SUM(C4:H4)'],
+            [new_rootstock_year, 'lost', 0, 0, 0, 0, 0, 0, '=SUM(C5:H5)'],
             ]
 
         grafts_year_zero.insert_rows(graft_starting_values, 2)
+
+        done_starting_values = [
+            ['planning', 'n', '-','n','n','n','n','n', 'n', '=IF(COUNTIF(A2:I2, "y") = 7, "y","n")'],
+            ['production', 'n', 'n','n','n','n','n','n', 'n', '=IF(COUNTIF(A3:I3, "y") = 8, "y","n")'],
+        ]
+
+        completed.overwrite_
 
     else:
         print(f"{INDENT}The year {new_rootstock_year} has not been created.\
