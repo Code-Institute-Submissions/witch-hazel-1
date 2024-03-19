@@ -669,7 +669,7 @@ def record_gain():
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
         print(f"At the last count there were {total_rootstocks} \
-        \N{INDENT}new rootstocks in the nursery")
+        \n{INDENT}new rootstocks in the nursery")
 
         while True:
             number_gained = input(f"{INDENT}How many rootstocks have\
