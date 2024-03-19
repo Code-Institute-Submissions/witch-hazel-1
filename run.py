@@ -673,7 +673,7 @@ def record_gain():
 
         while True:
             number_gained = input(f"{INDENT}How many rootstocks have\
-            \N{INDENT}been acquired since then? \n")
+            \n{INDENT}been acquired since then? \n")
             try:
                 number_gained = int(number_gained)
                 break
@@ -681,9 +681,8 @@ def record_gain():
                 print(f"{INDENT}Your number must be a positive integer or 0.\
                 \n{INDENT}Negative and decimal-point numbers, text and special characters, \
                 \n{INDENT}etc. are not allowed: ")
-N
-        rootstock.update_acell(address_affected,
-                               total_rootstocks + number_gained)
+
+        rootstock.update_acell(address_affected,total_rootstocks + number_gained)
         print(f"{INDENT}Acquisition of {number_gained} new rootstocks recorded.\
         \n{INDENT}You now have a stock of {rootstock.acell(address_affected).value}\
         \n{INDENT}new rootstocks.")
@@ -926,7 +925,7 @@ def create_year():
         print(f"{INDENT}Year {new_rootstock_year} created. {num_cuttings} cuttings planned\
         \n{INDENT}for this year.")
         if num_cuttings == 0:
-            print({INDENT}You've chosen to plan your cutting campaign later!")
+            print(f"{INDENT}You've chosen to plan your cutting campaign later!")
 
         year_zero_stocks = grafts_year_zero.get('c4:h4')[0]
 
