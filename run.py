@@ -63,7 +63,7 @@ When all tasks are closed out, you can create a new year (Option 0)
 
 def completed_for_year(affected_cell, affected_task):
     if input(f"{config.INDENT}{msgs.AFFECTED_TASK_COMPLETED}\
-    \n{config.INDENT}{input_texts.Y_OR_N_TEXT}: \n").lower() ==commands.YES:
+    \n{config.INDENT}{input_texts.Y_OR_N_TEXT}: \n").lower() == commands.YES:
         completed.update_acell(affected_cell, 'y')
         print(msgs.task_completed(affected_task))
     else:
@@ -259,9 +259,9 @@ def complete_cuttings_taken_record(taken, planned):
 
         print(msgs.CUTTINGS_SUCCESSFUL)
         print(msgs.a_out_of_b(taken, planned))
-        run_cuttings_session(taken)
+        run_cuttings_session(taken, task_string)
     else:
-        print(msgs.CANCEL_TAKE_CUTTINGS)
+        print(msgs.CUTTINGS_CANCELLED)
     
     print(BACK_TO_MENU)
     input()
@@ -317,25 +317,25 @@ def plan_grafting_campaign():
     # List out the cultivars you have in your data in an ordered list.
     list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR), 1, count)
+    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_P), 1, count)
     current_cultivar = cultivars[cultivar_value-1]
     address_current_cultivar  = f"{chr(ord('c') + cultivar_value - 1)}2"
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}2"
     task_string = plan_for(current_cultivar)
 
-    if check_is_complete(task_check_complete_address, f"{task_string}") == False:
+    if check_is_complete(task_check_complete_address, task_string) == False:
         print(msgs.planned_for(current_cultivar))
         print(msgs.rootstocks_unplanned(rootstocks_in_stock,rootstocks_available + planned_numbers[cultivar_value - 1])) 
 
         if planned_numbers[cultivar_value - 1] > 0:
-            info_msg = replace_value(planned_numbers[cultivar_value - 1]) 
+            info_msg = replace_graft_value(planned_numbers[cultivar_value - 1]) 
         else:
-            info_msg = msgs.NO_GRAFTS_YET_TAKEN
+            info_msg = msgs.NO_GRAFTS_YET_PLANNED
         if input(info_msg).lower() == commands.YES:
             new_planned_value = parse_user_input(input(input_texts.new_planned_value(current_cultivar)))
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
             print(msgs.planned_grafts_changed(current_cultivar, new_planned_value))
-            completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", f"{task_string}")
+            completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", task_string)
 
         else:
             print(msgs.task_cancelled(task_string, current_cultivar))
@@ -384,46 +384,33 @@ def record_grafts():
     
     list_cultivars(cultivars)
 
-    print(f"\n{config.INDENT}For which cultivar have you made grafts?\n")
-
-    cultivar_value = parse_user_input(input(f"{config.INDENT}Please enter the cultivar number of the new grafts you want to record\
-    \n{config.INDENT}(see the cultivars listed above): \n"), 1, count)
+    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_M), 1, count)
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}3"
     current_cultivar = cultivars[cultivar_value - 1]
     address_current_cultivar = f"{chr(ord('c') + cultivar_value - 1)}3"
-    task_string = f"make grafts for {current_cultivar}"
+    task_string = msgs.make_grafts(current_cultivar)
     address_rootstocks = 'f3'
 
-    if check_is_complete(task_check_complete_address, f"{task_string}") == False:
+    if check_is_complete(task_check_complete_address, task_string) == False:
         grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
         planned_this_cultivar = planned_numbers[cultivar_value -1]
-        print(f"{config.INDENT}You have chosen to record grafts of {current_cultivar}\
-        \n")
-        print (f"{config.INDENT}You have planned to make {planned_this_cultivar} of this cultivar.")
+        print(msg.cultivar_chosen(current_cultivar))
+        print(msgs.cultivar_grafts_planned(planned_this_cultivar))
         if grafts_this_cultivar > 0:
-            confirm_string = f" You have already made {grafts_this_cultivar} grafts of this cultivar.\
-            \n{config.INDENT}Would you like to add to this value?\
-            \n{input_texts.Y_OR_N_TEXT}\n"
+            confirm_string = grafts_made(grafts_this_cultivar)
         else:
-            confirm_string = f"{config.INDENT}You have not yet made any grafts of this cultivar.\
-            \n{config.INDENT}Would you like record some grafts now?\
-            \n{input_texts.Y_OR_N_TEXT}\n"
+            confirm_string = msgs.NO_GRAFTS_YET_MADE
         if input(confirm_string).lower() == commands.YES:
-            newly_made_grafts = parse_user_input(input(f"{config.INDENT}Type in the number of new grafts you have made of {current_cultivar}: \n"))
+            newly_made_grafts = parse_user_input(input(input_texts.grafts_now_made(current_cultivar)))
             grafts_this_cultivar += newly_made_grafts
             grafts_year_zero.update_acell(address_current_cultivar, int(grafts_this_cultivar))
-            print()
-            print(f"{config.INDENT}Number of grafts made for {current_cultivar} successfully changed.\
-                \n{config.INDENT}The new total of grafts made this year for this cultivar is {grafts_this_cultivar}.\
-                \n{config.INDENT}You originally planned to make {planned_this_cultivar}.\
-                \n{config.INDENT}Successfully completed record of new grafts made.")
-            completed_for_year(task_check_complete_address, f"{task_string}")
+            print(msgs.grafts_successfully_made(current_cultivar, grafts_this_cultivar, planned_this_cultivar))
+            completed_for_year(task_check_complete_address, task_string)
         else:
-            print(f"{config.INDENT}Plan grafts action for {current_cultivar} cancelled.\
-            \n{config.INDENT}No changes have been made to the data.")
+            print(msgs.grafts_cancelled(current_cultivar))
             completed_for_year(task_check_complete_address, task_string)
     
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(ENTER_TO_CONTINUE)
     input()
 
 
@@ -437,53 +424,44 @@ def record_potted_cuttings():
     cuttings_taken = int(rootstock.acell('c3').value)
     cuttings_potted = int(rootstock.acell('d3').value)
     new_rootstocks = int(rootstock.acell('f3').value)
+    task_string = msgs.POT_ROOTED
 
-    if check_is_complete('c3', "potting rooted cuttings") == False:
+    if check_is_complete('c3', task_string) == False:
         if cuttings_potted > 0:
-            confirm_string = f"{config.INDENT}So far you have potted up {cuttings_potted} cuttings! Would you like to add to that number?\
-            \n{input_texts.Y_OR_N_TEXT}\n"
-            qualifier_clause = f" in addition to the ones\
-            \n{config.INDENT}you have already recorded"
+            confirm_string = input_texts.add_potted(cuttings_potted)
+            qualifier_clause = msgs.IN_ADDITION
         else:
-            confirm_string = f"{config.INDENT}You have not yet potted up any cuttings! Would you like to record some newly potted cuttings now?\
-            \n{config.INDENT}{input_texts.Y_OR_N_TEXT}\n"
+            confirm_string = input_texts.RECORD_POTTED
             qualifier_clause = ""
         if input(confirm_string).lower() == commands.YES:
-            newly_potted = parse_user_input(input(f"{config.INDENT}How many cuttings have you now potted up{qualifier_clause}?\n"))
+            newly_potted = parse_user_input(input(input_texts.how_many_potted(qualifier_clause)))
             if cuttings_potted + newly_potted > cuttings_taken:
-                print(f"{config.INDENT}If {newly_potted} is added to the existing figure of newly rooted cuttings ({new_rootstocks}), then you'll\
-                \n{config.INDENT}have potted up more cuttings than you took in the Autumn ({cuttings_taken}).\
-                \n{config.INDENT}That is not possible. The absolute maximum number you can pot up in this session is {cuttings_taken - cuttings_potted}.\
-                \n{config.INDENT}Action cancelled. No changes have been made to the data.")
+                print(more_potted_than_taken(newly_potted, new_rootstocks, cuttings_taken, cuttings_potted))
+                
             else:
                 cuttings_potted += newly_potted
                 rootstock.update_acell('d3', cuttings_potted)
-                print(f"{config.INDENT}You have now potted up a total of {cuttings_potted} cuttings out of a total of {cuttings_taken} (minus\
-                \n{config.INDENT}any that have failed to root)!\
-                \n{config.INDENT}You will use them as rootstocks during the grafting campaign next season (once\
-                \n{config.INDENT}they have established themselves in their pots).")
-                completed_for_year('c3', 'pot up rooted cuttings')
+                print(potted_up(cuttings_potted, cuttings_taken))
+                completed_for_year('c3', task_string)
         else:
-            print(f"{config.INDENT}Record new cuttings potted action cancelled.\
-            \n{config.INDENT}No changes have been made to the data.")
-            completed_for_year('c3', 'pot up rooted cuttings')
+            print(msgs.POTTING_CANCELLED)
+            completed_for_year('c3', task_string)
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input()
 
-def run_cuttings_plan(cuttings):
+def run_cuttings_plan(cuttings, task):
     rootstock.update_acell('b2', cuttings)
-    print(f"{config.INDENT}Number of cuttings planned for this year successfully changed.")
-    completed_for_year('b2', 'plan cutting numbers')
+    print(msgs.PLANNED_CUTTINGS_CHANGED)
+    completed_for_year('b2', task)
 
 def  cancel_cuttings_plan():
-    print(f"{config.INDENT}Plan cuttings action cancelled.\
-        \nNo changes have been made to the data.")
+    print(msgs.PLAN_CUTTINGS_CANCELLED)
 
-def run_cuttings_session(cuttings):
+def run_cuttings_session(cuttings, task):
     rootstock.update_acell('c2', cuttings)
-    print(f"{config.INDENT}Successfully added to number of cuttings taken so far in this campaign.")
-    completed_for_year('b3', 'record cuttings taken')
+    print(msgs.ADDED_CUTTINGS)
+    completed_for_year('b3', task)
 
 
 
@@ -497,37 +475,31 @@ def plan_cutting_campaign():
     last_year_rooted_cuttings = int(rootstock.acell('d3').value)
     this_year_cuttings_taken = int(rootstock.acell('c2').value)
     current_year = int(rootstock.acell('a2').value)
-    task = 'planning cuttings'
+    task_string = msgs.PLAN_CUTTINGS
     if check_is_complete('b2', task) == False:
         if int(planned_cuttings) > 0:
-            user_confirmation = input(f"{config.INDENT}So far you have planned to take {planned_cuttings} cuttings for {current_year}! Would you like replace that number with a new one?\
-                    \n{input_texts.Y_OR_N_TEXT}\n").lower()
-            planned_cuttings_string = f"\n{config.INDENT}The present planned figure for this year is {planned_cuttings}."
-            text_segment = "new "
+            user_confirmation = input(input_texts.replace_value(planned_cuttings, current_year))
+            planned_cuttings_string = msgs.planned_cuttings(planned_cuttings)
+            text_segment = msgs.NEW
         else:
-            user_confirmation = input(f"{config.INDENT}Would you like to plan the number of cuttings you intend to take this season?\
-                \n{input_texts.Y_OR_N_TEXT}\n").lower()
+            user_confirmation = input(input_texts.PLAN_CUTTINGS).lower()
             planned_cuttings_string = ""
             text_segment = ""
         if user_confirmation == commands.YES:
-            planned_cuttings = parse_user_input(input(f"{config.INDENT}You took {last_year_cuttings} cuttings last year, resulting in {last_year_rooted_cuttings} successfully rooted cuttings.\
-            {planned_cuttings_string}\
-            \n{config.INDENT}Enter a {text_segment}figure for planned cuttings for this year: \n"))
+            planned_cuttings = parse_user_input(input(input_texts.enter_planned_cuttings(last_year_cuttings, last_year_rooted_cuttings, planned_cuttings_string, text_segment)))
             if planned_cuttings <= this_year_cuttings_taken:
-                user_confirmation = input(f"{config.INDENT}You have already taken {this_year_cuttings_taken} cuttings this year. This is more than your new planned figure!\
-                \n{config.INDENT}Are you sure you want to replace the planned figure with this one?\
-                \n{input_texts.Y_OR_N_TEXT}\n").lower()
+                user_confirmation = input(input_texts.replace_value_confirm(this_year_cuttings_taken)).lower()
                 if user_confirmation == commands.YES:
-                    run_cuttings_plan(planned_cuttings)
+                    run_cuttings_plan(planned_cuttings, task_string)
                 else:
                     cancel_cuttings_plan()
             else:
-                run_cuttings_plan(planned_cuttings)
+                run_cuttings_plan(planned_cuttings, task_string)
         else:
             cancel_cuttings_plan()
             completed_for_year('B2', task)
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input()
 
 
@@ -537,15 +509,17 @@ def record_cuttings_taken():
     Lets the user record cuttings actually taken.
     Ideally used daily during the cuttings campaign (in Autumn).
     """
-    if check_is_complete('b3', 'taking cuttings') == False:
+    task_string = msgs.TAKING_CUTTINGS
+
+    if check_is_complete('b3', task_string) == False:
         cuttings_taken = int(rootstock.acell('c2').value)
         cuttings_planned = int(rootstock.acell('b2').value)
         cuttings_rooted = int(rootstock.acell('d2').value)
-        complete_cuttings_taken_record(cuttings_taken, cuttings_planned)
+        complete_cuttings_taken_record(cuttings_taken, cuttings_planned, task_string)
 
-    completed_for_year('B2', task)
+    completed_for_year('B2', task_string)
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input()
 
 
@@ -559,31 +533,26 @@ def record_loss():
     up those of them that have rooted successfully.
     """
     # Did we lose new_rootstocks?
-    if input(f"{config.INDENT}Would you like to record a loss of new rootstocks?\
-    \n{input_texts.Y_OR_N_TEXT}\n").lower() == commands.YES:
+    if input(input_texts.LOSS_OF_ROOTSTOCKS).lower() == commands.YES:
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
-        print(f"{config.INDENT}At the last count there were {total_rootstocks} new rootstocks in the nursery")
+        print(msgs.total_rootstocks(total_rootstocks))
 
         while True:
-            number_lost = input("How many rootstocks have been lost since then? \n")
+            number_lost = input(msgs.HOW_MANY_LOST)
             try:
                 number_lost = int(number_lost)
                 if 0 <= number_lost <= total_rootstocks:
                     break
                 else:
-                    print(f"{config.INDENT}You can't have lost more rootstocks than you actually had in the nursery!\
-                    \n{config.INDENT}Please enter an integer between 0 and\
-                    {total_rootstocks}: ")
+                    print(too_many_rootstocks_lost(total_rootstocks))
             except ValueError:
-                print(f"{config.INDENT}Your number must be a positive integer or 0. Negative and decimal-point numbers,\
-                \n{config.INDENT}text and special characters, etc. are not allowed: ")
+                print(error_msgs.POSITIVE_INT)
 
         rootstock.update_acell(address_affected,
                                total_rootstocks - number_lost)
-        print(f"{config.INDENT}Loss of {number_lost} new rootstocks recorded.\
-        \n{config.INDENT}You now have a stock of {rootstock.acell(address_affected).value} new rootstocks.")
+        print(msgs.rootstock_loss_recorded(number_lost, rootstock.acell(address_affected).value))
     else:
         """
         If what's been lost is grafted plants
@@ -600,42 +569,35 @@ def record_loss():
         cultivars = plants.get(name_range)[0]
 
         # List the names of the cultivars in the data in an ordered list.
-        print(f"{config.INDENT}For which cultivar would you like record a loss?")
+        print(msgs.LOST_WHICH_CULTIVAR)
         list_cultivars(cultivars)
 
-        cultivar_value = parse_user_input(input(f"{config.INDENT}Please enter the cultivar number for which you want to record a loss\
-        \n{config.INDENT}(see the cultivars listed above): \n"))
-        affected_year = parse_user_input(input(f"{config.INDENT}Please enter the age of the plants for which you want to record a loss\
-        \n{config.INDENT}(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"))
+        cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_LOST))
+        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_LOST))
         current_cultivar = cultivars[cultivar_value - 1]
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
-        print(f"{config.INDENT}You have chosen to register a loss of {current_cultivar} of age year-{affected_year}.\
-        \n{config.INDENT}There are currently {current_number} plants of that category\
-        \n{config.INDENT}recorded in the system.")
+        print(msgs.loss_chosen(current_cultivar, affected_year, current_number))
         while True:
-            number_lost = input(f"{config.INDENT}How many plants of that category have been lost since then? \n")
+            number_lost = input(input_texts.HOW_MANY_LOST)
             try:
                 number_lost = int(number_lost)
                 if 0 <= number_lost <= current_number:
                     break
                 else:
-                    print(f"{config.INDENT}You can't have lost more plants of this category than you actually had in the nursery!\
-                    \n{config.INDENT}Please enter an integer between 0 and {current_number}.")
+                    print(error_msgs.too_many_plants_lost(current_number))
             except ValueError:
-                print(f"{config.INDENT}Your number must be a positive integer or 0.\
-                \n{config.INDENT}Negative and decimal-point numbers, text and special characters, etc. \
-                \n{config.INDENT}are not allowed: ")
+                print(error_msgs.POSITIVE_INT)
+
         current_number -= number_lost
         plants.update_acell(address_affected, current_number)
-        print(f"{config.INDENT}Loss of {number_lost} {current_cultivar} of year-{affected_year} recorded.\
-        \n{config.INDENT}You now have a remaining stock of {plants.acell(address_affected).value} plants of that category.")
+        print(msgs.plants_lost_recorded(number_lost, current_cultivar, affected_year, plants.acell(address_affected).value))
 
         # number_lost
-    print(f"{config.INDENT}Loss recorded successfully.")
+    print(msgs.LOSS_RECORDED)
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input()
 
 
@@ -645,29 +607,22 @@ def record_gain():
     Essentially the opposite of Option 7.
     """
     # Did we acquire new_rootstocks ...?
-    if input(f"{config.INDENT}Would you like to record an acquisition of new rootstocks?\
-    \n{input_texts.Y_OR_N_TEXT}\n").lower() == commands.YES:
+    if input(input_texts.GAIN_OF_ROOTSTOCKS).lower() == commands.YES:
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
-        print(f"At the last count there were {total_rootstocks} \
-        \n{config.INDENT}new rootstocks in the nursery")
+        print(total_rootstocks(total_rootstocks))
 
         while True:
-            number_gained = input(f"{config.INDENT}How many rootstocks have\
-            \n{config.INDENT}been acquired since then? \n")
+            number_gained = input(input_texts.HOW_MANY_ROOTSTOCKS_GAINED)
             try:
                 number_gained = int(number_gained)
                 break
             except ValueError:
-                print(f"{config.INDENT}Your number must be a positive integer or 0.\
-                \n{config.INDENT}Negative and decimal-point numbers, text and special characters, \
-                \n{config.INDENT}etc. are not allowed: ")
+                print(error_msgs.POSITIVE_INT)
 
         rootstock.update_acell(address_affected,total_rootstocks + number_gained)
-        print(f"{config.INDENT}Acquisition of {number_gained} new rootstocks recorded.\
-        \n{config.INDENT}You now have a stock of {rootstock.acell(address_affected).value}\
-        \n{config.INDENT}new rootstocks.")
+        print(msgs.rootstock_gain_recorded(number_gained, rootstock.acell(address_affected).value))
     else:
         """
         If what's been gained is grafted plants
@@ -684,20 +639,17 @@ def record_gain():
         cultivars = plants.get(name_range)[0]
 
         # List the cultivars in the data in an ordered list.
-        print(f"{config.INDENT}For which cultivar would you like record an acquisition?")
+        print(msgs.GAINED_WHICH_CULTIVA)
         list_cultivars(cultivars)
 
-        cultivar_value = parse_user_input(input(f"{config.INDENT}Please enter the cultivar number for which you want to enter an acquisition\
-        \n{config.INDENT}(see the cultivars listed above): \n"), 1, count)
-        affected_year = parse_user_input(input(f"{config.INDENT}Please enter the age of the plants for which you want to enter an acquisition\
-        \n{config.INDENT}(typing '1' for year-one plants, '2' for year-two plants, and so on): \n"), 1, 5)
+        cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_GAINED), 1, count)
+        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_GAINED), 1, 5)
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
         current_cultivar = cultivars[cultivar_value - 1]
         current_number = int(plants.acell(address_affected).value)
-        print(f"{config.INDENT}You have chosen to register an acquisition of {current_cultivar} of age year-{affected_year}.\
-        \n{config.INDENT}There are currently {current_number} plants of that category recorded in the system.")
+        print(msgs.gain_chosen(current_cultivar, affected_year, current_number))
         while True:
-            number_gained = input(f"{config.INDENT}How many plants of that category have been acquired since the last recorded entry? \n")
+            number_gained = input(input_texts.HOW_MANY_GAINED)
             try:
                 number_gained = int(number_gained)
                 break
@@ -705,13 +657,12 @@ def record_gain():
                 print(error_msgs.POSITIVE_INT)
         current_number += number_gained
         plants.update_acell(address_affected, current_number)
-        print(f"{config.INDENT}Acquisition of {number_gained} {current_cultivar} of year-{affected_year} recorded.\
-        \n{config.INDENT}You currently have a stock of {plants.acell(address_affected).value} plants of that category.")
+        print(msgs.plants_gain_recorded(number_gained, current_cultivar,affected_year, plants.acell(address_affected).value))
 
         # number_lost
-    print(f"{config.INDENT}Acquisition recorded successfully.")
+    print(msgs.GAIN_RECORDED)
     
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input('')
 
 
@@ -724,27 +675,22 @@ def hold_back():
     """
 
     # List out the cultivars in the data in an ordered list.
-    print(f"{config.INDENT}For which cultivar would you like hold back plants?")
+    print(msgs.HOLD_WHICH_CULTIVAR)
     list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(f"{config.INDENT}Please enter the cultivar number for which you want to hold plants back (see\
-    \n{config.INDENT}the cultivars listed above): \n"))
+    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_HOLD))
     while True:
-        affected_year = parse_user_input(input(f"{config.INDENT}Please enter the age of the plants that you want to hold back (typing '2'\
-        \n{config.INDENT}for year-two plants or '3' for year-three plants, and so on): \n"))
+        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_HOLD))
         try:
             affected_year = int(affected_year)
             if affected_year > 1:
                 break
             elif affected_year == 1:
-                print(f"{config.INDENT}Year-one plants cannot be held back. Enter 2 or higher. But remember there's\
-                \n{config.INDENT}no point in entering an age greater than the age of the nursery.")
+                print(msgs.NO_HOLD_YEAR_ONE)
             else:
-                print(f"{config.INDENT}Please enter an integer between 2 and the age of the nursery.")
+                print(msgs.ENTER_HOLD_YEAR)
         except ValueError:
-            print(f"{config.INDENT}Your number must be an integer greater than 2 and less than the age of the\
-            \n{config.INDENT}nursery. Negative and decimal-point numbers, text and special characters, etc.\
-            \n{config.INDENT}are not allowed: ")
+            print(error_msgs.POSITIVE_INT)
 
     current_cultivar = cultivars[cultivar_value - 1]
     from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
@@ -752,34 +698,27 @@ def hold_back():
 
     current_number_from = int(plants.acell(from_address_affected).value)
     current_number_to = int(plants.acell(to_address_affected).value)
-    print(f"{config.INDENT}You have chosen to hold back {current_cultivar} plants of age year-{affected_year}.\
-    \n{config.INDENT}There are currently {current_number_from} plants of that category recorded in the system.\
-    \n{config.INDENT}There are now {current_number_to} plants of that cultivar listed as being a year younger.\
-    \n{config.INDENT}The specified number of plants will be held back for a year.")
+    print(hold_chosen(current_cultivar, affected_year, current_number_from, current_number_to))
     while True:
-        number_held_back = input(f"{config.INDENT}How many plants of that category do you want to hold back a year? \n")
+        number_held_back = input(input_texts.HOW_MANY_HELD)
         try:
             number_held_back = int(number_held_back)
             if 0 <= number_held_back <= current_number_from:
                 break
             else:
-                print(f"{config.INDENT}You can't hold back more plants of this category than you actually have in the\
-                \n{config.INDENT}nursery! Please enter an integer between 0 and {current_number_from}: ")
+                print(error_msgs.too_many_plants_held(current_number_from))
         except ValueError:
-            print(f"{config.INDENT}Your number must be a positive integer or 0. Negative and decimal-point numbers,\
-            \n{config.INDENT}text and special characters, etc. are not allowed: ")
+            print(error_msgs.POSITIVE_INT)
 
     current_number_from -= number_held_back
     current_number_to += number_held_back
     plants.update_acell(from_address_affected, current_number_from)
     plants.update_acell(to_address_affected, current_number_to)
-    print(f"{config.INDENT}Successfully recorded holding back {number_held_back} {current_cultivar} plants of year-{affected_year}.\
-    \n{config.INDENT}You now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
-    \n{config.INDENT}and a total stock of {plants.acell(to_address_affected).value} of year-{affected_year - 1} plants of that cultivar.")
+    print(msgs.successfully_held(number_held_back, current_cultivar, affected_year, plants.acell(from_address_affected).value, plants.acell(to_address_affected).value))
 
-    print(f"{config.INDENT}Plants held back successfully.")
+    print(msgs.HOLD_RECORDED)
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input('')
 
 
@@ -803,24 +742,20 @@ def bring_forward():
     cultivars = plants.get(name_range)[0]
 
     # List out the cultivars in the data in an ordered list.
-    print(f"{config.INDENT}For which cultivar would you like bring plants forward?")
+    print(BRING_WHICH_CULTIVAR)
     list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(f"{config.INDENT}Please enter the cultivar number for which you want to bring plants forward\
-    \n{config.INDENT}(see the cultivars listed above): \n"))
+    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_BRING))
     while True:
-        affected_year = parse_user_input(input(f"{config.INDENT}Please enter the age of the plants for which you want to bring plants forward\
-        \n{config.INDENT}(typing '1' for year-one plants or '2' for year-two plants, and so on): \n"))
+        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_BRING))
         try:
             affected_year = int(affected_year)
             if affected_year >= 1:
                 break
             else:
-                print(f"{config.INDENT}Please enter an integer between 1 and the age of the nursery.")
+                print(msgs.ENTER_BRING_YEAR)
         except ValueError:
-            print(f"{config.INDENT}Your number must be an integer and must be at least 1, and less than the age of\
-            \n{config.INDENT}the nursery. Negative and decimal-point numbers, text and special characters, etc.\
-            \n{config.INDENT}are not allowed: ")
+            print(error_msgs.POSITIVE_INT)
 
     from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
     to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 2}"
@@ -828,35 +763,27 @@ def bring_forward():
     current_cultivar = cultivars[cultivar_value - 1]
     current_number_from = int(plants.acell(from_address_affected).value)
     current_number_to = int(plants.acell(to_address_affected).value)
-    print(f"{config.INDENT}You have chosen to bring forward {current_cultivar} plants of age year-{affected_year}.\
-    \n{config.INDENT}There are currently {current_number_from} plants of that category recorded in the system.\
-    \n{config.INDENT}There are now {current_number_to} plants of that cultivar listed as being a year older.\
-    \n{config.INDENT}The specified number of plants will be brought forward by a year.")
+    print(msgs.bring_chosen(current_cultivar, affected_year, current_number_from, current_number_to))
     while True:
-        number_brought_forward = input(f"{config.INDENT}How many plants of that category do you want to bring forward for a year? \n")
+        number_brought_forward = input(input_texts.HOW_MANY_BROUGHT)
         try:
             number_brought_forward = int(number_brought_forward)
             if 0 <= number_brought_forward <= current_number_from:
                 break
             else:
-                print(f"{config.INDENT}You can't bring forward more plants of this category than you actually have in\
-                \n{config.INDENT}the nursery!\
-                \n{config.INDENT}Please enter an integer between 0 and {current_number_from}: ")
+                print(error_msgs.too_many_plants_brought(current_number_from))
         except ValueError:
-            print(f"{config.INDENT}Your number must be a positive integer or 0. Negative and decimal-point numbers,\
-            \n{config.INDENT}text and special characters, etc. are not allowed: ")
+            print(error_msgs.POSITIVE_INT)
 
     current_number_from -= number_brought_forward
     current_number_to += number_brought_forward
     plants.update_acell(from_address_affected, current_number_from)
     plants.update_acell(to_address_affected, current_number_to)
-    print(f"{config.INDENT}Successfully recorded bringing forward {number_brought_forward} {current_cultivar} plants of year-{affected_year}.\
-    \n{config.INDENT}You now have a remaining stock of {plants.acell(from_address_affected).value} plants of that category\
-    \n{config.INDENT}and a total stock of {plants.acell(to_address_affected).value} of year-{affected_year + 1} plants of that cultivar.")
+    print(msgs.successfully_brought(number_brought_forward, current_cultivar, affected_year, plants.acell(from_address_affected).value, to_address_affected).value)
 
-    print(f"{config.INDENT}Plants brought forward successfully.")
+    print(msgs.BRING_RECORDED)
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input('')
 
 
@@ -911,7 +838,7 @@ def create_year():
         print(f"{config.INDENT}The year {new_rootstock_year} has not been created.\
         \n{config.INDENT}The current year is still {rootstock_year}")
 
-    print(f"{config.INDENT}Press Enter to continue ...")
+    print(input_texts.ENTER_TO_CONTINUE)
     input('')
 
 
