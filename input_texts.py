@@ -1,6 +1,6 @@
 import config
 
-Y_OR_N_TEXT = "Type 'y' for yes or 'n' for no:"
+Y_OR_N_TEXT = f"{config.INDENT}Type 'y' for yes or 'n' for no:\n{config.PROMPT_STRING}"
 
 CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want to plan grafting\
     \n{config.INDENT}(see the cultivars listed above): \n"
@@ -56,6 +56,9 @@ CHOOSE_YEAR_BRING = f"{config.INDENT}Please enter the age of the plants for whic
 
 HOW_MANY_BROUGHT = f"{config.INDENT}How many plants of that category do you want to bring forward for a year? \n"
 
+def completed_for_year(task):
+    return f"{config.INDENT}Have you completed the '{task}' task for the year?\
+    \n{config.INDENT}Type 'y' for 'yes' or 'n' for 'no'): \n"
 
 def new_planned_value(cultivar):
     return f"{config.INDENT}Type in the new planned value for {cultivar}: \n"
@@ -63,6 +66,10 @@ def new_planned_value(cultivar):
 def record_how_many_cuttings(taken):
     return f"{config.INDENT}How many cuttings have you now taken in addition to the ones\
         \n{config.INDENT}you've already recorded ({taken}): \n"
+
+def replace_graft_value(old_value):
+    return f"{config.INDENT}So far, you have planned to make {old_value} grafts of this cultivar.\
+            \n{config.INDENT}Would you like to replace this value? "
 
 def grafts_now_made(cultivar):
     return f"{config.INDENT}Type in the number of new grafts you have made of {cultivar}: \n"
@@ -87,6 +94,14 @@ def add_potted(cuttings_potted):
 
 def how_many_potted(qualifier):
     return f"{config.INDENT}How many cuttings have you now potted up{qualifier}?\n"
+
+def create_new_year(new_year):
+    return f"{config.INDENT}Would you like to create a record for {new_year}?\
+    \n{Y_OR_N_TEXT}\n"
+
+def how_many_cuttings(new_year):
+    return f"{config.INDENT}How many cuttings would you like to plan for {new_year}? \
+        \n{config.INDENT}(Enter 0 if you want to plan cutting numbers later): \n"
 
     
 

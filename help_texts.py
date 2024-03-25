@@ -1,4 +1,4 @@
-import config
+import config, msgs
 
 intro_text = f"\n##########################################################################\
     \n\n                            W I T C H - H A Z E L\
@@ -25,17 +25,7 @@ help_text1 = f"\n                        WITCH-HAZEL HELP\
     \n{config.INDENT}From within the Heroku App environment, simply on the red 'RUN PROGRAM' button.\
     \n{config.INDENT}On opening, the app will show you a list of the options available to\
     \n{config.INDENT}you and ask which of them you would like to perform:\
-    \n\n{config.INDENT}{config.INDENT}1. Plan grafts for this year\
-    \n{config.INDENT}{config.INDENT}2. Record grafts taken\
-    \n{config.INDENT}{config.INDENT}3. Record rooted cuttings potted up\
-    \n{config.INDENT}{config.INDENT}4. Plan this year's cutting campaign\
-    \n{config.INDENT}{config.INDENT}5. Record cuttings taken\
-    \n{config.INDENT}{config.INDENT}6. Record plant losses\
-    \n{config.INDENT}{config.INDENT}7. Record plant gains\
-    \n{config.INDENT}{config.INDENT}8. Hold grafted plants over for one year\
-    \n{config.INDENT}{config.INDENT}9. Bring grafted plants forward one year\
-    \n\n{config.INDENT}{config.INDENT}0. Close out current year\
-    \n"
+    \n{msgs.LIST_OF_OPTIONS}"
 
 help_text2 = f"{config.INDENT}Type in the number of the operation you wish to perform,\
     \n{config.INDENT}the app will guide the process.\
@@ -57,18 +47,7 @@ menu_title = f"\n                            W I T C H - H A Z E L"
 
 menu_text = f"\n{config.INDENT}What would you like to do?\
     \n{config.INDENT}Choose from among the following operations:\
-    \n\
-    \n{config.INDENT}{config.INDENT}1. Plan grafts for this year\
-    \n{config.INDENT}{config.INDENT}2. Record grafts taken\
-    \n{config.INDENT}{config.INDENT}3. Record rooted cuttings potted up\
-    \n{config.INDENT}{config.INDENT}4. Plan this year's cutting campaign\
-    \n{config.INDENT}{config.INDENT}5. Record cuttings taken\
-    \n{config.INDENT}{config.INDENT}6. Record plant losses\
-    \n{config.INDENT}{config.INDENT}7. Record plant gains\
-    \n{config.INDENT}{config.INDENT}8. Hold back grafted plants for one year\
-    \n{config.INDENT}{config.INDENT}9. Bring grafted plants forward one year\
-    \n\n{config.INDENT}{config.INDENT}0. Create new year/Close out current year\
-    \n"
+    \n\n{msgs.LIST_OF_OPTIONS}"
 
 
 help_text_option1 = f"\n\n                Option 1 -- PLAN NUMBER OF GRAFTS\

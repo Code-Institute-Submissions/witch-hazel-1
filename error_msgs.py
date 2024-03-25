@@ -28,4 +28,7 @@ def too_many_plants_brought(number_from):
     return f"{config.INDENT}You can't bring forward more plants of this category than you actually have in\
                 \n{config.INDENT}the nursery!\
                 \n{config.INDENT}Please enter an integer between 0 and {number_from}: "
+
+def a_and_b(a, b):
+    return f"{a} and {b}:\n"
                 

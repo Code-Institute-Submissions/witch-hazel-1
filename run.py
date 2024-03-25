@@ -18,6 +18,10 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('hamamelis')
 
+exiting = 'n'
+lower_bound = 0
+upper_bound = 9
+
 rootstock = SHEET.worksheet('rootstock')
 grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
@@ -37,41 +41,38 @@ cuttings_taken = int(rootstock.acell('c2').value)
 rootstocks_potted = int(rootstock.acell('d2').value)
 mature_rootstocks = int(rootstock.acell('e2').value)
 
-
 rootstock_data = rootstock.get_all_values()
 grafts_data = grafts_year_zero.get_all_values()
 plants_data = plants.get_all_values()
 completed_data = completed.get_all_values()
 
-
+# List out cultivars
 def list_cultivars(cultivar_list):
     count = 0
     for cultivar in cultivar_list:
         count += 1
-        print(f"{count}. {cultivar}")
+        print(f"{config.INDENT}{config.INDENT}{count}. {cultivar}")
+    print()
+    return count
+    
 
 
-def exit_program():
+def exit_program(num):
     print(f"{config.INDENT}{msgs.EXIT_MSG}")
-    sys.exit(0)
+    sys.exit(int(num))
 
 
 """
 This function closes out each individual task for the year.
 When all tasks are closed out, you can create a new year (Option 0)
 """
-
 def completed_for_year(affected_cell, affected_task):
-    if input(f"{config.INDENT}{msgs.AFFECTED_TASK_COMPLETED}\
-    \n{config.INDENT}{input_texts.Y_OR_N_TEXT}: \n").lower() == commands.YES:
+    if input(input_texts.completed_for_year(affected_task)).lower() == commands.YES:
         completed.update_acell(affected_cell, 'y')
         print(msgs.task_completed(affected_task))
     else:
         print(msgs.task_not_completed(affected_task))
     
-def parse_cell_data():
-    exit(0)
-
 
 """
 This recursive function does one of the following things:
@@ -92,12 +93,13 @@ def parse_user_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_ms
         if mini <= number <= maxi:
             return number
         else:
-            return parse_user_input(input(msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}",{maxi})),mini, maxi)
+            return parse_user_input(input(error_msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}", maxi)),mini, maxi)
+            
     except:
         if user_input=='':
-            return parse_user_input(input(msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}",{maxi})), mini, maxi)
+            return parse_user_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
         elif user_input.lower()==commands.EXIT:
-            exit_program()
+            exiting = 'y'
         elif user_input.lower()==commands.HELP:
             general_help()
         elif user_input.lower().split()[0]==commands.HELP:
@@ -105,32 +107,32 @@ def parse_user_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_ms
                 print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
                 option_help(int(user_input.split()[1]))
         else:
-            return parse_user_input(input(msgs.a_and_b(f"{config.INDENT}{not_a_number_blurb}{mini}",{maxi})), mini, maxi)
+            return parse_user_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
+    if exiting=='y':
+        exit_program(0)
 
-def Get_survival_rate(start_num, end_num):
-    if int(start_num) == 0:
-        return f'{config.INDENT}{error_msgs.NO_START_NUMBER}'
-    elif int(end_num) > int(start_num):
-        return f'{config.INDENT}{error_msgs.MORE_THAN_INITIAL}'
-    else:
-        return int(end_num) / int(start_num)
+# def Get_survival_rate(start_num, end_num):
+#     if int(start_num) == 0:
+#         return f'{config.INDENT}{error_msgs.NO_START_NUMBER}'
+#     elif int(end_num) > int(start_num):
+#         return f'{config.INDENT}{error_msgs.MORE_THAN_INITIAL}'
+#     else:
+#         return int(end_num) / int(start_num)
 
-cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted)
-potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
-
-lower_bound = 0
-upper_bound = 9
+# cutting_success = Get_survival_rate(cuttings_taken, rootstocks_potted)
+# potting_success = Get_survival_rate(rootstocks_potted, mature_rootstocks)
 
 def startup_instructions():
     """
     Welcomes the user to the app.
-    Presents general info on it.
+    Presents general info on it purpose and functions.
     """
 
     print(help_texts.intro_text)
-    input(f"{config.INDENT}{msgs.ANY_KEY_MSG}")
+    input(f"{config.INDENT}{input_texts.ENTER_TO_CONTINUE}")
     print(config.CURSOR_UP_ONE + config.ERASE_LINE)
     main_menu()
+
 
 def main_menu():
     """
@@ -148,10 +150,10 @@ def main_menu():
 
 def general_help():
     """
-    General help messages on how to use the app print to screen one after another
+    General help messages on how to use the app print to screen one after another.
     """
     print(help_texts.help_text1)
-    input(f"{config.INDENT}{msgs.MORE_GEN_HELP}")
+    print(f"{config.INDENT}{msgs.MORE_GEN_HELP}")
     print(help_texts.help_text2)
     main_menu()
 
@@ -315,28 +317,30 @@ def plan_grafting_campaign():
     print(msgs.WHICH_CULTIVAR_P)
 
     # List out the cultivars you have in your data in an ordered list.
-    list_cultivars(cultivars)
+    count = list_cultivars(cultivars)
 
     cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_P), 1, count)
     current_cultivar = cultivars[cultivar_value-1]
     address_current_cultivar  = f"{chr(ord('c') + cultivar_value - 1)}2"
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}2"
-    task_string = plan_for(current_cultivar)
+    task_string = msgs.plan_for(current_cultivar)
 
     if check_is_complete(task_check_complete_address, task_string) == False:
         print(msgs.planned_for(current_cultivar))
         print(msgs.rootstocks_unplanned(rootstocks_in_stock,rootstocks_available + planned_numbers[cultivar_value - 1])) 
 
         if planned_numbers[cultivar_value - 1] > 0:
-            info_msg = replace_graft_value(planned_numbers[cultivar_value - 1]) 
+            info_msg = input_texts.replace_graft_value(planned_numbers[cultivar_value - 1]) 
         else:
             info_msg = msgs.NO_GRAFTS_YET_PLANNED
-        if input(info_msg).lower() == commands.YES:
+        user_input = input(info_msg).lower()
+        if user_input == commands.YES:
             new_planned_value = parse_user_input(input(input_texts.new_planned_value(current_cultivar)))
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
             print(msgs.planned_grafts_changed(current_cultivar, new_planned_value))
             completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", task_string)
-
+        elif user_input == commands.EXIT:
+            exit_program(0)
         else:
             print(msgs.task_cancelled(task_string, current_cultivar))
             completed_for_year(task_check_complete_address, task_string)
@@ -378,11 +382,11 @@ def record_grafts():
     grafts_this_year = [int(x) for x in grafts_this_year]
     total_grafted = sum(grafts_this_year)
 
-    print(WHICH_CULTIVAR_M)
+    print(msgs.WHICH_CULTIVAR_M)
+    
     # List out the names of the cultivars you have in your data
     # in an ordered list.
-    
-    list_cultivars(cultivars)
+    count = list_cultivars(cultivars)
 
     cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_M), 1, count)
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}3"
@@ -394,7 +398,7 @@ def record_grafts():
     if check_is_complete(task_check_complete_address, task_string) == False:
         grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
         planned_this_cultivar = planned_numbers[cultivar_value -1]
-        print(msg.cultivar_chosen(current_cultivar))
+        print(msgs.cultivar_chosen(current_cultivar))
         print(msgs.cultivar_grafts_planned(planned_this_cultivar))
         if grafts_this_cultivar > 0:
             confirm_string = grafts_made(grafts_this_cultivar)
@@ -410,7 +414,7 @@ def record_grafts():
             print(msgs.grafts_cancelled(current_cultivar))
             completed_for_year(task_check_complete_address, task_string)
     
-    print(ENTER_TO_CONTINUE)
+    print(msgs.ENTER_TO_CONTINUE)
     input()
 
 
@@ -639,7 +643,7 @@ def record_gain():
         cultivars = plants.get(name_range)[0]
 
         # List the cultivars in the data in an ordered list.
-        print(msgs.GAINED_WHICH_CULTIVA)
+        print(msgs.GAINED_WHICH_CULTIVAR)
         list_cultivars(cultivars)
 
         cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_GAINED), 1, count)
@@ -798,14 +802,11 @@ def create_year():
     rootstock_year = rootstock.acell('a2').value
     new_rootstock_year = int(rootstock_year) + 1
 
-    print(f"{config.INDENT}The last year created was {rootstock_year}")
+    print(last_year(rootstock_year))
     cuttings_last_year = rootstock.acell('c3').value
-    if input(f"{config.INDENT}Would you like to create a record for {new_rootstock_year}?\
-    \n{input_texts.Y_OR_N_TEXT}\n").lower() == commands.YES:
-        print(f"\n{config.INDENT}Info: You took {cuttings_taken} cuttings last year.\
-        \n{config.INDENT}You now have {mature_rootstocks} maturing rootstocks in stock.")
-        num_cuttings = parse_user_input(input(f"{config.INDENT}How many cuttings would you like to plan for {new_rootstock_year}? \
-        \n{config.INDENT}(Enter 0 if you want to plan cutting numbers later): \n"))
+    if input(input_texts.create_new_year(new_rootstock_year)).lower() == commands.YES:
+        print(msgs.rootstocks_in_stock(cuttings_taken, mature_rootstocks))
+        num_cuttings = parse_user_input(input(input_texts.how_many_cuttings(new_rootstock_year)))
         values = [new_rootstock_year, num_cuttings, 0, 0, 0]
         rootstock.insert_row(values, 2)
         rootstock.update_acell('e3', 0)
@@ -832,11 +833,9 @@ def create_year():
             ['production', 'n', 'n','n','n','n','n','n', 'n', '=IF(COUNTIF(A3:I3, "y") = 8, "y","n")'],
         ]
 
-        completed.overwrite_
 
     else:
-        print(f"{config.INDENT}The year {new_rootstock_year} has not been created.\
-        \n{config.INDENT}The current year is still {rootstock_year}")
+        print(msgs.new_year_cancelled(new_rootstock_year, rootstock_year))
 
     print(input_texts.ENTER_TO_CONTINUE)
     input('')
