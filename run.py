@@ -67,7 +67,8 @@ This function closes out each individual task for the year.
 When all tasks are closed out, you can create a new year (Option 0)
 """
 def completed_for_year(affected_cell, affected_task):
-    if input(input_texts.completed_for_year(affected_task)).lower() == commands.YES:
+    user_input = parse_yn_input(input(input_texts.completed_for_year(affected_task)))
+    if user_input == commands.YES:
         completed.update_acell(affected_cell, 'y')
         print(msgs.task_completed(affected_task))
     else:
@@ -85,19 +86,17 @@ This recursive function does one of the following things:
   input.
 The arguments it takes are fairly self-explanatory.
 """
-
-def parse_user_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msgs.DEFAULT_NOT_A_NUMBER_BLURB, 
-        not_in_range_blurb=error_msgs.DEFAULT_NOT_IN_RANGE_BLURB):
+def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msgs.DEFAULT_NOT_A_NUMBER_BLURB, 
+    not_in_range_blurb=error_msgs.DEFAULT_NOT_IN_RANGE_BLURB):
     try:
         number = int(user_input)
         if mini <= number <= maxi:
             return number
         else:
-            return parse_user_input(input(error_msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}", maxi)),mini, maxi)
-            
+            return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}", maxi)),mini, maxi)
     except:
         if user_input=='':
-            return parse_user_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
+            return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
         elif user_input.lower()==commands.EXIT:
             exiting = 'y'
         elif user_input.lower()==commands.HELP:
@@ -107,9 +106,29 @@ def parse_user_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_ms
                 print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
                 option_help(int(user_input.split()[1]))
         else:
-            return parse_user_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
+            return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
     if exiting=='y':
         exit_program(0)
+
+
+"""
+This recursive function similar to the above, but for when yes/no (or help or exit) are the only valid answers.
+It doesn't require a try structure, which means that sys.exit(0) can be called directly.
+"""
+def parse_yn_input(user_input, not_a_yn_answer_blurb=error_msgs.DEFAULT_NOT_A_YN_ANS_BLURB):
+    answer = user_input.lower()
+    if answer == 'y' or answer == 'n':
+        return answer
+    elif user_input.lower()==commands.EXIT:
+        exit_program(0)
+    elif user_input.lower()==commands.HELP:
+        general_help()
+    elif user_input.lower().split()[0]==commands.HELP:
+        if mini <= int(user_input.lower().split()[1]) <= maxi:
+            print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
+            option_help(int(user_input.split()[1]))
+    else:
+        return parse_yn_input(input(f"{config.INDENT}'{answer}' {error_msgs.DEFAULT_NOT_A_YN_ANS_BLURB}"))
 
 # def Get_survival_rate(start_num, end_num):
 #     if int(start_num) == 0:
@@ -143,7 +162,7 @@ def main_menu():
     print(help_texts.menu_text)
 
     while True:
-        user_input = parse_user_input(input(msgs.main_menu_prompt(lower_bound, upper_bound)), lower_bound, upper_bound)
+        user_input = parse_num_input(input(msgs.main_menu_prompt(lower_bound, upper_bound)), lower_bound, upper_bound)
         if user_input:
             execute_option(user_input)
 
@@ -251,8 +270,8 @@ def complete_cuttings_taken_record(taken, planned):
             info_msg = msgs.no_cuttings_yet_taken(planned)
             prompt_string = msgs.TAKE_CUTTINGS_NOW
 
-    if input(input_string).lower() == commands.YES:
-        taken += parse_user_input(input(record_how_many_cuttings(input_texts.record_how_many_cuttings(taken))))
+    if parse_yn_input(input(input_string)) == commands.YES:
+        taken += parse_num_input(input(record_how_many_cuttings(input_texts.record_how_many_cuttings(taken))))
         rootstock.update_acell('c2', taken)
         if taken >= planned:
             print(msgs.planned_cuttings_reached(planned, taken))
@@ -272,7 +291,7 @@ def complete_cuttings_taken_record(taken, planned):
 def check_is_complete(cell, task):
     complete = completed.acell(cell).value.lower()
     if complete == 'y':
-        if input(msgs.task_closed_reopen(task)).lower() == commands.YES:
+        if parse_yn_input(input(input_texts.task_closed_reopen(task))) == commands.YES:
             print(msgs.REOPENING)
             completed.update_acell(cell, 'n')
             return False
@@ -319,7 +338,7 @@ def plan_grafting_campaign():
     # List out the cultivars you have in your data in an ordered list.
     count = list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_P), 1, count)
+    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_P), 1, count)
     current_cultivar = cultivars[cultivar_value-1]
     address_current_cultivar  = f"{chr(ord('c') + cultivar_value - 1)}2"
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}2"
@@ -332,15 +351,13 @@ def plan_grafting_campaign():
         if planned_numbers[cultivar_value - 1] > 0:
             info_msg = input_texts.replace_graft_value(planned_numbers[cultivar_value - 1]) 
         else:
-            info_msg = msgs.NO_GRAFTS_YET_PLANNED
-        user_input = input(info_msg).lower()
+            info_msg = input_texts.NO_GRAFTS_YET_PLANNED
+            user_input = parse_yn_input(input(info_msg))
         if user_input == commands.YES:
-            new_planned_value = parse_user_input(input(input_texts.new_planned_value(current_cultivar)))
+            new_planned_value = parse_num_input(input(input_texts.new_planned_value(current_cultivar)))
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
             print(msgs.planned_grafts_changed(current_cultivar, new_planned_value))
             completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", task_string)
-        elif user_input == commands.EXIT:
-            exit_program(0)
         else:
             print(msgs.task_cancelled(task_string, current_cultivar))
             completed_for_year(task_check_complete_address, task_string)
@@ -388,7 +405,7 @@ def record_grafts():
     # in an ordered list.
     count = list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_M), 1, count)
+    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_M), 1, count)
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}3"
     current_cultivar = cultivars[cultivar_value - 1]
     address_current_cultivar = f"{chr(ord('c') + cultivar_value - 1)}3"
@@ -401,11 +418,11 @@ def record_grafts():
         print(msgs.cultivar_chosen(current_cultivar))
         print(msgs.cultivar_grafts_planned(planned_this_cultivar))
         if grafts_this_cultivar > 0:
-            confirm_string = grafts_made(grafts_this_cultivar)
+            confirm_string = input_texts.grafts_made(grafts_this_cultivar)
         else:
-            confirm_string = msgs.NO_GRAFTS_YET_MADE
-        if input(confirm_string).lower() == commands.YES:
-            newly_made_grafts = parse_user_input(input(input_texts.grafts_now_made(current_cultivar)))
+            confirm_string = input_texts.NO_GRAFTS_YET_MADE
+        if parse_yn_input(input(confirm_string)) == commands.YES:
+            newly_made_grafts = parse_num_input(input(input_texts.grafts_now_made(current_cultivar)))
             grafts_this_cultivar += newly_made_grafts
             grafts_year_zero.update_acell(address_current_cultivar, int(grafts_this_cultivar))
             print(msgs.grafts_successfully_made(current_cultivar, grafts_this_cultivar, planned_this_cultivar))
@@ -414,7 +431,7 @@ def record_grafts():
             print(msgs.grafts_cancelled(current_cultivar))
             completed_for_year(task_check_complete_address, task_string)
     
-    print(msgs.ENTER_TO_CONTINUE)
+    print(input_texts.ENTER_TO_CONTINUE)
     input()
 
 
@@ -437,15 +454,14 @@ def record_potted_cuttings():
         else:
             confirm_string = input_texts.RECORD_POTTED
             qualifier_clause = ""
-        if input(confirm_string).lower() == commands.YES:
-            newly_potted = parse_user_input(input(input_texts.how_many_potted(qualifier_clause)))
+        if parse_yn_input(input(confirm_string)) == commands.YES:
+            newly_potted = parse_num_input(input(input_texts.how_many_potted(qualifier_clause)))
             if cuttings_potted + newly_potted > cuttings_taken:
                 print(more_potted_than_taken(newly_potted, new_rootstocks, cuttings_taken, cuttings_potted))
-                
             else:
                 cuttings_potted += newly_potted
                 rootstock.update_acell('d3', cuttings_potted)
-                print(potted_up(cuttings_potted, cuttings_taken))
+                print(msgs.potted_up(cuttings_potted, cuttings_taken))
                 completed_for_year('c3', task_string)
         else:
             print(msgs.POTTING_CANCELLED)
@@ -482,17 +498,17 @@ def plan_cutting_campaign():
     task_string = msgs.PLAN_CUTTINGS
     if check_is_complete('b2', task) == False:
         if int(planned_cuttings) > 0:
-            user_confirmation = input(input_texts.replace_value(planned_cuttings, current_year))
+            user_confirmation = parse_yn_input(input(input_texts.replace_value(planned_cuttings, current_year)))
             planned_cuttings_string = msgs.planned_cuttings(planned_cuttings)
             text_segment = msgs.NEW
         else:
-            user_confirmation = input(input_texts.PLAN_CUTTINGS).lower()
+            user_confirmation =parse_yn_input(input(input_texts.PLAN_CUTTINGS))
             planned_cuttings_string = ""
             text_segment = ""
         if user_confirmation == commands.YES:
-            planned_cuttings = parse_user_input(input(input_texts.enter_planned_cuttings(last_year_cuttings, last_year_rooted_cuttings, planned_cuttings_string, text_segment)))
+            planned_cuttings = parse_num_input(input(input_texts.enter_planned_cuttings(last_year_cuttings, last_year_rooted_cuttings, planned_cuttings_string, text_segment)))
             if planned_cuttings <= this_year_cuttings_taken:
-                user_confirmation = input(input_texts.replace_value_confirm(this_year_cuttings_taken)).lower()
+                user_confirmation =parse_yn_input(input(input_texts.replace_value_confirm(this_year_cuttings_taken)))
                 if user_confirmation == commands.YES:
                     run_cuttings_plan(planned_cuttings, task_string)
                 else:
@@ -537,23 +553,11 @@ def record_loss():
     up those of them that have rooted successfully.
     """
     # Did we lose new_rootstocks?
-    if input(input_texts.LOSS_OF_ROOTSTOCKS).lower() == commands.YES:
+    if parse_yn_input(input(input_texts.LOSS_OF_ROOTSTOCKS)) == commands.YES:
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
-
         print(msgs.total_rootstocks(total_rootstocks))
-
-        while True:
-            number_lost = input(msgs.HOW_MANY_LOST)
-            try:
-                number_lost = int(number_lost)
-                if 0 <= number_lost <= total_rootstocks:
-                    break
-                else:
-                    print(too_many_rootstocks_lost(total_rootstocks))
-            except ValueError:
-                print(error_msgs.POSITIVE_INT)
-
+        number_lost = parse_num_input(input(msgs.HOW_MANY_LOST), 0, total_rootstocks)
         rootstock.update_acell(address_affected,
                                total_rootstocks - number_lost)
         print(msgs.rootstock_loss_recorded(number_lost, rootstock.acell(address_affected).value))
@@ -576,8 +580,8 @@ def record_loss():
         print(msgs.LOST_WHICH_CULTIVAR)
         list_cultivars(cultivars)
 
-        cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_LOST))
-        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_LOST))
+        cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_LOST))
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_LOST))
         current_cultivar = cultivars[cultivar_value - 1]
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
 
@@ -611,7 +615,7 @@ def record_gain():
     Essentially the opposite of Option 7.
     """
     # Did we acquire new_rootstocks ...?
-    if input(input_texts.GAIN_OF_ROOTSTOCKS).lower() == commands.YES:
+    if parse_yn_input(input(input_texts.GAIN_OF_ROOTSTOCKS)) == commands.YES:
         address_affected = 'e1'
         total_rootstocks = int(rootstock.acell(address_affected).value)
 
@@ -646,8 +650,8 @@ def record_gain():
         print(msgs.GAINED_WHICH_CULTIVAR)
         list_cultivars(cultivars)
 
-        cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_GAINED), 1, count)
-        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_GAINED), 1, 5)
+        cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_GAINED), 1, count)
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_GAINED), 1, 5)
         address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
         current_cultivar = cultivars[cultivar_value - 1]
         current_number = int(plants.acell(address_affected).value)
@@ -667,7 +671,7 @@ def record_gain():
     print(msgs.GAIN_RECORDED)
     
     print(input_texts.ENTER_TO_CONTINUE)
-    input('')
+    input()
 
 
 def hold_back():
@@ -682,9 +686,9 @@ def hold_back():
     print(msgs.HOLD_WHICH_CULTIVAR)
     list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_HOLD))
+    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_HOLD))
     while True:
-        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_HOLD))
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_HOLD))
         try:
             affected_year = int(affected_year)
             if affected_year > 1:
@@ -723,7 +727,7 @@ def hold_back():
     print(msgs.HOLD_RECORDED)
 
     print(input_texts.ENTER_TO_CONTINUE)
-    input('')
+    input()
 
 
 def bring_forward():
@@ -749,9 +753,9 @@ def bring_forward():
     print(BRING_WHICH_CULTIVAR)
     list_cultivars(cultivars)
 
-    cultivar_value = parse_user_input(input(input_texts.CHOOSE_CULTIVAR_BRING))
+    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_BRING))
     while True:
-        affected_year = parse_user_input(input(input_texts.CHOOSE_YEAR_BRING))
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_BRING))
         try:
             affected_year = int(affected_year)
             if affected_year >= 1:
@@ -788,7 +792,7 @@ def bring_forward():
     print(msgs.BRING_RECORDED)
 
     print(input_texts.ENTER_TO_CONTINUE)
-    input('')
+    input()
 
 
 def create_year():
@@ -804,9 +808,9 @@ def create_year():
 
     print(last_year(rootstock_year))
     cuttings_last_year = rootstock.acell('c3').value
-    if input(input_texts.create_new_year(new_rootstock_year)).lower() == commands.YES:
+    if parse_yn_input(input(input_texts.create_new_year(new_rootstock_year))) == commands.YES:
         print(msgs.rootstocks_in_stock(cuttings_taken, mature_rootstocks))
-        num_cuttings = parse_user_input(input(input_texts.how_many_cuttings(new_rootstock_year)))
+        num_cuttings = parse_num_input(input(input_texts.how_many_cuttings(new_rootstock_year)))
         values = [new_rootstock_year, num_cuttings, 0, 0, 0]
         rootstock.insert_row(values, 2)
         rootstock.update_acell('e3', 0)
@@ -838,7 +842,7 @@ def create_year():
         print(msgs.new_year_cancelled(new_rootstock_year, rootstock_year))
 
     print(input_texts.ENTER_TO_CONTINUE)
-    input('')
+    input()
 
 
 """

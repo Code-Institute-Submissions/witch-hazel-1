@@ -13,7 +13,6 @@ RECORD_ACQ = "You've chosen to record the acquisition of a number of plants."
 HOLD_BACK = "You've chosen to hold a number of grafted plants back a year."
 BRING_FORWARD = "You've chosen to bring a number of grafted plants forward a year."
 NEW_YEAR = "You've chose to close out the year and open a new year."  # OPTION 0
-ENTER_TO_CONTINUE = "Press Enter to continue ..."
 EXIT_MSG = "Exiting the Witch-Hazel app ..."
 MORE_GEN_HELP = "Press Enter to see more general help text."
 SPECIFIC_HELP_PROMPT = f"{config.INDENT}For help on a particular option in the app, please type 'help'\
@@ -52,14 +51,6 @@ PLANNED_CUTTINGS_CHANGED = f"{config.INDENT}Number of cuttings planned for this 
 
 POTTING_CANCELLED = f"{config.INDENT}Record new cuttings potted action cancelled.\
             \n{config.INDENT}No changes have been made to the data."
-
-NO_GRAFTS_YET_PLANNED = f"{config.INDENT}You have not yet planned to make any grafts of this cultivar.\
-            \n{config.INDENT}Would you like to do so now?\
-            \n{input_texts.Y_OR_N_TEXT} \n"
-
-NO_GRAFTS_YET_MADE = f"{config.INDENT}You have not yet made any grafts of this cultivar.\
-            \n{config.INDENT}Would you like record some grafts now?\
-            \n{input_texts.Y_OR_N_TEXT}\n"
 
 NEW = "new "
 
@@ -111,13 +102,10 @@ LIST_OF_OPTIONS = f"{config.INDENT}{config.INDENT}1. Plan grafts for this year\
     \n"
 
 
-
-
-
 def main_menu_prompt(lower_bound, upper_bound):
     return f"{config.INDENT}Please choose an option by entering its number (between {lower_bound} and {upper_bound}):\
-        \n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number on which\
-        \n{config.INDENT}you want detailed help), or 'EXIT' to quit:\n"
+        \n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number\
+        \n{config.INDENT}on which you want detailed help), or 'EXIT' to quit. \n\n{config.PROMPT_STRING}"
 
 def a_out_of_b(a, b):
     return f"{a} out of {b}"
@@ -146,11 +134,6 @@ def cuttings_taken(taken, planned):
 def no_cuttings_yet_taken(planned):
     return f"{config.INDENT}You have not yet taken any cuttings this year!\
             \n{config.INDENT}You have planned to take a total of {planned} cuttings for this year."
-
-def task_closed_reopen(task):
-    return f"\n{config.INDENT}The task '{task}' has been closed for the year.\
-        \n{config.INDENT}Would you like to reopen it?\
-        \n{input_texts.Y_OR_N_TEXT}\n"
 
 def do_not_reopen(task):
     return f"{config.INDENT}You have decided not to re-open the '{task}' task, which has been closed for this year\
@@ -195,11 +178,6 @@ def cultivar_chosen(cultivar):
 def cultivar_grafts_planned(number):
     return f"{config.INDENT}You have planned to make {number} of this cultivar."
 
-def grafts_made(grafts):
-    return f" You have already made {grafts} grafts of this cultivar.\
-            \n{config.INDENT}Would you like to add to this value?\
-            \n{input_texts.Y_OR_N_TEXT}\n"
-
 def grafts_successfully_made(cultivar, grafts, planned):
     return f"{config.INDENT}Number of grafts made for {cultivar} successfully changed.\
                 \n{config.INDENT}The new total of grafts made this year for this cultivar is {grafts}.\
@@ -213,12 +191,12 @@ def planned_cuttings(planned):
 def more_potted_than_taken(newly_potted, rootstocks, taken):
     return f"{config.INDENT}If {newly_potted} is added to the existing figure of newly rooted cuttings ({rootstocks}), then you'll\
                 \n{config.INDENT}have potted up more cuttings than you took in the Autumn ({taken}).\
-                \n{config.INDENT}That is not possible. The absolute maximum number you can pot up in this session is {cuttings_taken - cuttings_potted}.\
+                \n{config.INDENT}That is not possible. The absolute maximum number you can pot up in this session is {taken - newly_potted}.\
                 \n{config.INDENT}Action cancelled. No changes have been made to the data."
 
 
 def potted_up(potted, taken):
-    return f"{config.INDENT}You have now potted up a total of {potted} cuttings out of a total of {cuttings_taken} (minus\
+    return f"{config.INDENT}You have now potted up a total of {potted} cuttings out of a total of {taken} (minus\
                 \n{config.INDENT}any that have failed to root)!\
                 \n{config.INDENT}You will use them as rootstocks during the grafting campaign next season (once\
                 \n{config.INDENT}they have established themselves in their pots)."
