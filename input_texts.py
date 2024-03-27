@@ -1,9 +1,11 @@
 import config
 
 Y_OR_N_TEXT = f"{config.INDENT}Type 'y' for yes or 'n' for no."
+MORE_GEN_HELP = f"{config.INDENT}Press Enter to see more general help text."
+BACK_TO_MENU = f"{config.INDENT}Press Enter to go back to the main menu ..."
 
-CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want to plan grafting\
-    \n{config.INDENT}(see the cultivars listed above). \
+CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want to plan\
+    \n{config.INDENT}grafting (see the cultivars listed above). \
     \n\n{config.PROMPT_STRING}"
 
 CHOOSE_CULTIVAR_M = f"{config.INDENT}Please enter the cultivar number of the new grafts you want to record\
@@ -79,6 +81,9 @@ NO_GRAFTS_YET_PLANNED = f"{config.INDENT}You have not yet planned to make any gr
     \n{config.INDENT}Would you like to do so now?\
     \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
+TAKE_MORE_CUTTINGS = f"{config.INDENT}Would you like to add additional cuttings taken now?\
+        \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
+
 def grafts_made(grafts):
     return f"{config.INDENT}You have already made {grafts} grafts of this cultivar.\
             \n{config.INDENT}Would you like to add to this value?\
@@ -92,10 +97,13 @@ def new_planned_value(cultivar):
     return f"{config.INDENT}Type in the new planned value for {cultivar}. \
         \n\n{config.PROMPT_STRING}"
 
-def record_how_many_cuttings(taken):
-    return f"{config.INDENT}How many cuttings have you now taken in addition to the ones\
-        \n{config.INDENT}you've already recorded ({taken}). \
+def record_how_many_cuttings(qualifier_clause):
+    return f"{config.INDENT}How many cuttings have you now taken{qualifier_clause}? \
         \n\n{config.PROMPT_STRING}"
+
+def cuttings_in_addition(taken):
+    return f" in addition to the ones\
+        \n{config.INDENT}you've already recorded ({taken})"
 
 def replace_graft_value(old_value):
     return f"{config.INDENT}So far, you have planned to make {old_value} grafts of this cultivar.\
@@ -103,8 +111,8 @@ def replace_graft_value(old_value):
         \n\n{config.PROMPT_STRING}"
 
 def task_closed_reopen(task):
-    return f"\n{config.INDENT}The task '{task}' has been closed for the year.\
-        \n{config.INDENT}Would you like to reopen it?\
+    return f"\n{config.INDENT}The tas '{task}' has been closed\
+        \n{config.INDENT} for the year.  Would you like to reopen it?\
         \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 def grafts_now_made(cultivar):

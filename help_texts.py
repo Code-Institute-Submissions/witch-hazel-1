@@ -30,13 +30,14 @@ help_text1 = f"\n                        WITCH-HAZEL HELP\
 help_text2 = f"{config.INDENT}Type in the number of the operation you wish to perform,\
     \n{config.INDENT}the app will guide the process.\
     \n\n{config.INDENT}Look at the README.md file for further details on each operation.\
-    \n\n{config.INDENT}The App will tell you the range of numbers you can choose from (0 to 12).\
+    \n\n{config.INDENT}The App will tell you the range of numbers you can choose from (0 to 9).\
     \n{config.INDENT}Any time you enter an invalid number (including a negative number), the app\
     \n{config.INDENT}will give you another opportunity to enter a valid one.\
     \n\n{config.INDENT}During some operations the App may ask you a yes or no confirmation\
     \n{config.INDENT}question. Where this happens you should answer yes by typing a 'y' or 'Y'\
-    \n{config.INDENT}on the command line. Typing in any other symbol will be taken as a 'No',\
-    \n{config.INDENT}and will result in the app returning to the main menu.\
+    \n{config.INDENT}on the command line or no by typing a 'n' or a 'N'.\
+    \n{config.INDENT}Typing any other value will result in an error message followed \
+    \n{config.INDENT}by a new request to answer yes or no. \
     \n\n{config.INDENT}To get detailed Help on any specific function, type 'HELP' followed\
     \n{config.INDENT}by a space and then the number of the function on which\
     \n{config.INDENT}you want detailed help. You can do this from anywhere in the App.\

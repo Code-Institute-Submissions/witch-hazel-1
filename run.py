@@ -18,7 +18,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('hamamelis')
 
-exiting = 'n'
 lower_bound = 0
 upper_bound = 9
 
@@ -88,6 +87,7 @@ The arguments it takes are fairly self-explanatory.
 """
 def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msgs.DEFAULT_NOT_A_NUMBER_BLURB, 
     not_in_range_blurb=error_msgs.DEFAULT_NOT_IN_RANGE_BLURB):
+    exiting = 'n'
     try:
         number = int(user_input)
         if mini <= number <= maxi:
@@ -148,7 +148,7 @@ def startup_instructions():
     """
 
     print(help_texts.intro_text)
-    input(f"{config.INDENT}{input_texts.ENTER_TO_CONTINUE}")
+    input(f"{input_texts.ENTER_TO_CONTINUE}")
     print(config.CURSOR_UP_ONE + config.ERASE_LINE)
     main_menu()
 
@@ -172,8 +172,9 @@ def general_help():
     General help messages on how to use the app print to screen one after another.
     """
     print(help_texts.help_text1)
-    print(f"{config.INDENT}{msgs.MORE_GEN_HELP}")
+    input(f"{input_texts.MORE_GEN_HELP}")
     print(help_texts.help_text2)
+    input(f"{input_texts.BACK_TO_MENU}")
     main_menu()
 
 
@@ -233,7 +234,7 @@ def execute_option(input):
         print(f"{config.INDENT}{msgs.POT_UP_CUTTINGS}")
         record_potted_cuttings()
     elif input == 4:
-        print(f"{config.INDENT}){msgs.PLAN_CUTTINGS}")
+        print(f"{config.INDENT}{msgs.PLAN_CUTTINGS}")
         plan_cutting_campaign()
     elif input == 5:
         print(f"{config.INDENT}{msgs.TAKE_CUTTINGS}")
@@ -258,20 +259,22 @@ def execute_option(input):
     main_menu()
 
 
-def complete_cuttings_taken_record(taken, planned):
+def complete_cuttings_taken_record(taken, planned, task):
     
     if taken >= planned:
         print(planned_cuttings_taken(taken, planned))
     else:
         if taken > 0:
             info_msg = msgs.cuttings_taken(taken, planned)
-            prompt_msg = input_texts.TAKE_MORE_CUTTINGS
+            input_string = input_texts.TAKE_MORE_CUTTINGS
+            in_addition = input_texts.cuttings_in_addition(taken)
         else:
             info_msg = msgs.no_cuttings_yet_taken(planned)
-            prompt_string = msgs.TAKE_CUTTINGS_NOW
+            input_string = msgs.TAKE_CUTTINGS_NOW
+            in_addition = ""
 
     if parse_yn_input(input(input_string)) == commands.YES:
-        taken += parse_num_input(input(record_how_many_cuttings(input_texts.record_how_many_cuttings(taken))))
+        taken += parse_num_input(input(input_texts.record_how_many_cuttings(in_addition)))
         rootstock.update_acell('c2', taken)
         if taken >= planned:
             print(msgs.planned_cuttings_reached(planned, taken))
@@ -280,11 +283,11 @@ def complete_cuttings_taken_record(taken, planned):
 
         print(msgs.CUTTINGS_SUCCESSFUL)
         print(msgs.a_out_of_b(taken, planned))
-        run_cuttings_session(taken, task_string)
+        run_cuttings_session(taken, task)
     else:
         print(msgs.CUTTINGS_CANCELLED)
     
-    print(BACK_TO_MENU)
+    print(msgs.BACK_TO_MENU)
     input()
     main_menu()
 
@@ -342,9 +345,9 @@ def plan_grafting_campaign():
     current_cultivar = cultivars[cultivar_value-1]
     address_current_cultivar  = f"{chr(ord('c') + cultivar_value - 1)}2"
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}2"
-    task_string = msgs.plan_for(current_cultivar)
+    task = msgs.plan_for(current_cultivar)
 
-    if check_is_complete(task_check_complete_address, task_string) == False:
+    if check_is_complete(task_check_complete_address, task) == False:
         print(msgs.planned_for(current_cultivar))
         print(msgs.rootstocks_unplanned(rootstocks_in_stock,rootstocks_available + planned_numbers[cultivar_value - 1])) 
 
@@ -352,15 +355,16 @@ def plan_grafting_campaign():
             info_msg = input_texts.replace_graft_value(planned_numbers[cultivar_value - 1]) 
         else:
             info_msg = input_texts.NO_GRAFTS_YET_PLANNED
-            user_input = parse_yn_input(input(info_msg))
+            
+        user_input = parse_yn_input(input(info_msg))
         if user_input == commands.YES:
             new_planned_value = parse_num_input(input(input_texts.new_planned_value(current_cultivar)))
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
             print(msgs.planned_grafts_changed(current_cultivar, new_planned_value))
-            completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", task_string)
+            completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", task)
         else:
-            print(msgs.task_cancelled(task_string, current_cultivar))
-            completed_for_year(task_check_complete_address, task_string)
+            print(msgs.task_cancelled(task, current_cultivar))
+            completed_for_year(task_check_complete_address, task)
     
     print(input_texts.ENTER_TO_CONTINUE)
     input()
@@ -409,10 +413,10 @@ def record_grafts():
     task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}3"
     current_cultivar = cultivars[cultivar_value - 1]
     address_current_cultivar = f"{chr(ord('c') + cultivar_value - 1)}3"
-    task_string = msgs.make_grafts(current_cultivar)
+    task = msgs.make_grafts(current_cultivar)
     address_rootstocks = 'f3'
 
-    if check_is_complete(task_check_complete_address, task_string) == False:
+    if check_is_complete(task_check_complete_address, task) == False:
         grafts_this_cultivar = grafts_this_year[cultivar_value - 1]
         planned_this_cultivar = planned_numbers[cultivar_value -1]
         print(msgs.cultivar_chosen(current_cultivar))
@@ -426,10 +430,10 @@ def record_grafts():
             grafts_this_cultivar += newly_made_grafts
             grafts_year_zero.update_acell(address_current_cultivar, int(grafts_this_cultivar))
             print(msgs.grafts_successfully_made(current_cultivar, grafts_this_cultivar, planned_this_cultivar))
-            completed_for_year(task_check_complete_address, task_string)
+            completed_for_year(task_check_complete_address, task)
         else:
             print(msgs.grafts_cancelled(current_cultivar))
-            completed_for_year(task_check_complete_address, task_string)
+            completed_for_year(task_check_complete_address, task)
     
     print(input_texts.ENTER_TO_CONTINUE)
     input()
@@ -445,9 +449,9 @@ def record_potted_cuttings():
     cuttings_taken = int(rootstock.acell('c3').value)
     cuttings_potted = int(rootstock.acell('d3').value)
     new_rootstocks = int(rootstock.acell('f3').value)
-    task_string = msgs.POT_ROOTED
+    task = msgs.POT_ROOTED
 
-    if check_is_complete('c3', task_string) == False:
+    if check_is_complete('c3', task) == False:
         if cuttings_potted > 0:
             confirm_string = input_texts.add_potted(cuttings_potted)
             qualifier_clause = msgs.IN_ADDITION
@@ -462,10 +466,10 @@ def record_potted_cuttings():
                 cuttings_potted += newly_potted
                 rootstock.update_acell('d3', cuttings_potted)
                 print(msgs.potted_up(cuttings_potted, cuttings_taken))
-                completed_for_year('c3', task_string)
+                completed_for_year('c3', task)
         else:
             print(msgs.POTTING_CANCELLED)
-            completed_for_year('c3', task_string)
+            completed_for_year('c3', task)
 
     print(input_texts.ENTER_TO_CONTINUE)
     input()
@@ -495,7 +499,7 @@ def plan_cutting_campaign():
     last_year_rooted_cuttings = int(rootstock.acell('d3').value)
     this_year_cuttings_taken = int(rootstock.acell('c2').value)
     current_year = int(rootstock.acell('a2').value)
-    task_string = msgs.PLAN_CUTTINGS
+    task = msgs.PLAN_CUTTINGS
     if check_is_complete('b2', task) == False:
         if int(planned_cuttings) > 0:
             user_confirmation = parse_yn_input(input(input_texts.replace_value(planned_cuttings, current_year)))
@@ -510,11 +514,11 @@ def plan_cutting_campaign():
             if planned_cuttings <= this_year_cuttings_taken:
                 user_confirmation =parse_yn_input(input(input_texts.replace_value_confirm(this_year_cuttings_taken)))
                 if user_confirmation == commands.YES:
-                    run_cuttings_plan(planned_cuttings, task_string)
+                    run_cuttings_plan(planned_cuttings, task)
                 else:
                     cancel_cuttings_plan()
             else:
-                run_cuttings_plan(planned_cuttings, task_string)
+                run_cuttings_plan(planned_cuttings, task)
         else:
             cancel_cuttings_plan()
             completed_for_year('B2', task)
@@ -529,15 +533,15 @@ def record_cuttings_taken():
     Lets the user record cuttings actually taken.
     Ideally used daily during the cuttings campaign (in Autumn).
     """
-    task_string = msgs.TAKING_CUTTINGS
+    task = msgs.TAKING_CUTTINGS
 
-    if check_is_complete('b3', task_string) == False:
+    if check_is_complete('b3', task) == False:
         cuttings_taken = int(rootstock.acell('c2').value)
         cuttings_planned = int(rootstock.acell('b2').value)
         cuttings_rooted = int(rootstock.acell('d2').value)
-        complete_cuttings_taken_record(cuttings_taken, cuttings_planned, task_string)
+        complete_cuttings_taken_record(cuttings_taken, cuttings_planned, task)
 
-    completed_for_year('B2', task_string)
+    completed_for_year('B2', task)
 
     print(input_texts.ENTER_TO_CONTINUE)
     input()

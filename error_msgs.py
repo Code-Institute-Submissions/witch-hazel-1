@@ -7,9 +7,9 @@ POSITIVE_INT = f"{config.INDENT}Your number must be a positive integer or 0.\
 
 DEFAULT_NOT_A_NUMBER_BLURB = " is not a number. Please enter a number between "
 DEFAULT_NOT_IN_RANGE_BLURB = f"{config.INDENT}That number is out of range. Please enter a number between "
-DEFAULT_NOT_A_YN_ANS_BLURB = " is not a 'y' or a 'n'. Please enter either a 'y' or a 'n'.\
+DEFAULT_NOT_A_YN_ANS_BLURB = f" is not a 'y' or a 'n'. Please enter either a 'y' or a 'n'.\
     \n\n{config.PROMPT_STRING}"
-NO_START_NUMBER = "The starting number is not recorded."
+NO_START_NUMBERy = "The starting number is not recorded."
 MORE_THAN_INITIAL = "You ended up with more units than you started with."
 
 def valid_option_number(lower_bound, upper_bound):

@@ -14,24 +14,16 @@ HOLD_BACK = "You've chosen to hold a number of grafted plants back a year."
 BRING_FORWARD = "You've chosen to bring a number of grafted plants forward a year."
 NEW_YEAR = "You've chose to close out the year and open a new year."  # OPTION 0
 EXIT_MSG = "Exiting the Witch-Hazel app ..."
-MORE_GEN_HELP = "Press Enter to see more general help text."
 SPECIFIC_HELP_PROMPT = f"{config.INDENT}For help on a particular option in the app, please type 'help'\
         \n{config.INDENT}followed by a space, followed by the number of the option for which you\
         \n{config.INDENT}want help (e.g. 'help 6' for help on Option 6)."
 
-# Option 1 messages
-
 CUTTINGS_LATER = "You've chosen to plan your cutting campaign later!"
-
-TAKE_MORE_CUTTINGS = f"{config.INDENT}Would you like to add additional cuttings taken now?\
-        \n{input_texts.Y_OR_N_TEXT} \n"
 
 CUTTINGS_CANCELLED = f"{config.INDENT}Cuttings taken action cancelled.\
         \n{config.INDENT}No changes have been made to the data."
 
 REOPENING = f"{config.INDENT}Reopening ..."
-
-BACK_TO_MENU = f"{config.INDENT}Press Enter to go back to the main menu ..."
 
 CUTTINGS_SUCCESSFUL = f"{config.INDENT}Cuttings campaign record added successfully."
 
@@ -196,8 +188,8 @@ def more_potted_than_taken(newly_potted, rootstocks, taken):
 
 
 def potted_up(potted, taken):
-    return f"{config.INDENT}You have now potted up a total of {potted} cuttings out of a total of {taken} (minus\
-                \n{config.INDENT}any that have failed to root)!\
+    return f"{config.INDENT}You have now potted up {potted} cuttings out of a total of {taken}\
+                \n{config.INDENT}(minus any that have failed to root)!\
                 \n{config.INDENT}You will use them as rootstocks during the grafting campaign next season (once\
                 \n{config.INDENT}they have established themselves in their pots)."
 
