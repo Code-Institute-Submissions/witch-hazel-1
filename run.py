@@ -33,7 +33,7 @@ first_empty_index = next((i for i,
                         len(row_values))
 last_column = chr(ord('a') + first_empty_index)
 
-name_range = f"a1:{last_column}1"  # Names of cultivars
+name_range = f"b1:{last_column}1"  # Names of cultivars
 cultivars = plants.get(name_range)[0]
 
 cuttings_taken = int(rootstock.acell('c2').value)
@@ -488,7 +488,6 @@ def run_cuttings_session(cuttings, task):
     completed_for_year('b3', task)
 
 
-
 def plan_cutting_campaign():
     """
     Option 4:
@@ -558,36 +557,40 @@ def record_loss():
     """
     # Did we lose new_rootstocks?
     if parse_yn_input(input(input_texts.LOSS_OF_ROOTSTOCKS)) == commands.YES:
-        address_affected = 'e1'
-        total_rootstocks = int(rootstock.acell(address_affected).value)
-        print(msgs.total_rootstocks(total_rootstocks))
-        number_lost = parse_num_input(input(msgs.HOW_MANY_LOST), 0, total_rootstocks)
-        rootstock.update_acell(address_affected,
-                               total_rootstocks - number_lost)
-        print(msgs.rootstock_loss_recorded(number_lost, rootstock.acell(address_affected).value))
+        address_losses = 'e3'
+        address_total = 'd3'
+        address_remaining = 'g3'
+        total_rootstocks = int(rootstock.acell(address_total).value)
+        remaining_rootstocks = int(rootstock.acell(address_remaining).value)
+        total_losses = int(rootstock.acell(address_losses).value)
+        print(msgs.total_rootstocks(remaining_rootstocks))
+        number_lost = parse_num_input(input(input_texts.HOW_MANY_LOST), 0, total_rootstocks)
+        rootstock.update_acell(address_losses, total_losses + number_lost)
+        print(msgs.rootstock_loss_recorded(number_lost, rootstock.acell(address_remaining).value))
     else:
         """
         If what's been lost is grafted plants
         First define the cultivar affected
         """
         row_values = plants.row_values(1)
+
         # Find the column to stop at (first column that contains no data).
         first_empty_index = next((i for i,
                                   val in enumerate(row_values) if not val),
                                  len(row_values))
-        last_column = chr(ord('a') + first_empty_index)
+        last_column = chr(ord('b') + first_empty_index)
 
-        name_range = f"a1:{last_column}1"  # Names of cultivars
+        name_range = f"b1:{last_column}1"  # Names of cultivars
         cultivars = plants.get(name_range)[0]
 
         # List the names of the cultivars in the data in an ordered list.
         print(msgs.LOST_WHICH_CULTIVAR)
-        list_cultivars(cultivars)
+        count = list_cultivars(cultivars)
 
-        cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_LOST))
+        cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_LOST), 1, count)
         affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_LOST))
         current_cultivar = cultivars[cultivar_value - 1]
-        address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+        address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
 
         current_number = int(plants.acell(address_affected).value)
         print(msgs.loss_chosen(current_cultivar, affected_year, current_number))
@@ -616,25 +619,21 @@ def record_loss():
 def record_gain():
     """
     Option 7:
-    Essentially the opposite of Option 7.
+    Essentially the opposite of Option 6.
     """
     # Did we acquire new_rootstocks ...?
     if parse_yn_input(input(input_texts.GAIN_OF_ROOTSTOCKS)) == commands.YES:
-        address_affected = 'e1'
-        total_rootstocks = int(rootstock.acell(address_affected).value)
+        address_gains = 'f3'
+        address_total = 'd3'
+        address_remaining = 'g3'
 
-        print(total_rootstocks(total_rootstocks))
-
-        while True:
-            number_gained = input(input_texts.HOW_MANY_ROOTSTOCKS_GAINED)
-            try:
-                number_gained = int(number_gained)
-                break
-            except ValueError:
-                print(error_msgs.POSITIVE_INT)
-
-        rootstock.update_acell(address_affected,total_rootstocks + number_gained)
-        print(msgs.rootstock_gain_recorded(number_gained, rootstock.acell(address_affected).value))
+        total_rootstocks = int(rootstock.acell(address_total).value)
+        remaining_rootstocks = int(rootstock.acell(address_remaining).value)
+        total_gains = int(rootstock.acell(address_gains).value)
+        print(msgs.total_rootstocks(remaining_rootstocks))
+        number_gained = parse_num_input(input(input_texts.HOW_MANY_GAINED), 0)
+        rootstock.update_acell(address_gains, total_gains + number_gained)
+        print(msgs.rootstock_loss_recorded(number_gained, rootstock.acell(address_remaining).value))
     else:
         """
         If what's been gained is grafted plants
@@ -645,18 +644,18 @@ def record_gain():
         first_empty_index = next((i for i,
                                   val in enumerate(row_values) if not val),
                                  len(row_values))
-        last_column = chr(ord('a') + first_empty_index)
+        last_column = chr(ord('b') + first_empty_index)
 
-        name_range = f"a1:{last_column}1"  # Names of cultivars
+        name_range = f"b1:{last_column}1"  # Names of cultivars
         cultivars = plants.get(name_range)[0]
 
         # List the cultivars in the data in an ordered list.
         print(msgs.GAINED_WHICH_CULTIVAR)
-        list_cultivars(cultivars)
+        count = list_cultivars(cultivars)
 
         cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_GAINED), 1, count)
         affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_GAINED), 1, 5)
-        address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
+        address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
         current_cultivar = cultivars[cultivar_value - 1]
         current_number = int(plants.acell(address_affected).value)
         print(msgs.gain_chosen(current_cultivar, affected_year, current_number))
@@ -681,18 +680,18 @@ def record_gain():
 def hold_back():
     """
     Option 8:
-    Essentially a Option 7 with a twist.
+    Essentially a Option 6 with a twist.
     Results in the given number of the chosen cultivar from year n
     being removed and then added to year n-1.
     """
 
     # List out the cultivars in the data in an ordered list.
     print(msgs.HOLD_WHICH_CULTIVAR)
-    list_cultivars(cultivars)
+    count = list_cultivars(cultivars)
 
-    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_HOLD))
+    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_HOLD), 1, count)
     while True:
-        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_HOLD))
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_HOLD), 1)
         try:
             affected_year = int(affected_year)
             if affected_year > 1:
@@ -705,12 +704,12 @@ def hold_back():
             print(error_msgs.POSITIVE_INT)
 
     current_cultivar = cultivars[cultivar_value - 1]
-    from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
-    to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year}"
+    from_address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
+    to_address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year}"
 
     current_number_from = int(plants.acell(from_address_affected).value)
     current_number_to = int(plants.acell(to_address_affected).value)
-    print(hold_chosen(current_cultivar, affected_year, current_number_from, current_number_to))
+    print(msgs.hold_chosen(current_cultivar, affected_year, current_number_from, current_number_to))
     while True:
         number_held_back = input(input_texts.HOW_MANY_HELD)
         try:
@@ -744,22 +743,28 @@ def bring_forward():
 
     # First define the cultivar affected
     row_values = plants.row_values(1)
+    col_values = plants.col_values(1)
     # Find the column to stop at (first column that contains no data).
-    first_empty_index = next((i for i,
+    first_empty_column = next((i for i,
                               val in enumerate(row_values) if not val),
                              len(row_values))
-    last_column = chr(ord('a') + first_empty_index)
+    first_empty_row = next((i for i, 
+                              val in enumerate(col_values) if not val),
+                              len(col_values))
+    last_column = chr(ord('a') + first_empty_column)
+    last_row = first_empty_row - 1
 
-    name_range = f"a1:{last_column}1"  # Names of cultivars
+    name_range = f"b1:{last_column}1"  # Names of cultivars
     cultivars = plants.get(name_range)[0]
 
     # List out the cultivars in the data in an ordered list.
-    print(BRING_WHICH_CULTIVAR)
-    list_cultivars(cultivars)
+    print(msgs.BRING_WHICH_CULTIVAR)
+    count = list_cultivars(cultivars)
 
-    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_BRING))
+    cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_BRING), 1, count)
+    
     while True:
-        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_BRING))
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_BRING), 1, last_row - 1)
         try:
             affected_year = int(affected_year)
             if affected_year >= 1:
@@ -769,8 +774,9 @@ def bring_forward():
         except ValueError:
             print(error_msgs.POSITIVE_INT)
 
-    from_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 1}"
-    to_address_affected = f"{chr(ord('a') + cultivar_value - 1)}{affected_year + 2}"
+
+    from_address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
+    to_address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 2}"
 
     current_cultivar = cultivars[cultivar_value - 1]
     current_number_from = int(plants.acell(from_address_affected).value)
@@ -791,7 +797,7 @@ def bring_forward():
     current_number_to += number_brought_forward
     plants.update_acell(from_address_affected, current_number_from)
     plants.update_acell(to_address_affected, current_number_to)
-    print(msgs.successfully_brought(number_brought_forward, current_cultivar, affected_year, plants.acell(from_address_affected).value, to_address_affected).value)
+    print(msgs.successfully_brought(number_brought_forward, current_cultivar, affected_year, plants.acell(from_address_affected).value, plants.acell(to_address_affected).value))
 
     print(msgs.BRING_RECORDED)
 

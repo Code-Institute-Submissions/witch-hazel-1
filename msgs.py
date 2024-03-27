@@ -56,8 +56,6 @@ TAKING_CUTTINGS = 'record cuttings taken'
 
 ADDED_CUTTINGS = f"{config.INDENT}Successfully added to the number of cuttings taken so far in this campaign."
 
-HOW_MANY_LOST = "How many rootstocks have been lost since then? \n"
-
 LOST_WHICH_CULTIVAR = f"{config.INDENT}For which cultivar would you like record a loss?"
 
 LOSS_RECORDED = f"{config.INDENT}Loss recorded successfully."
@@ -194,18 +192,18 @@ def potted_up(potted, taken):
                 \n{config.INDENT}they have established themselves in their pots)."
 
 def total_rootstocks(total):
-    return f"{config.INDENT}At the last count there were {total} new rootstocks in the nursery"
+    return f"{config.INDENT}At the last count there were {total} new rootstocks in the nursery."
 
 def rootstock_loss_recorded(number, total):
     return f"{config.INDENT}Loss of {number} new rootstocks recorded.\
         \n{config.INDENT}You now have a stock of {total} new rootstocks."
 
 def loss_chosen(cultivar, year, remaining):
-    return f"{config.INDENT}You have chosen to register a loss of {cultivar} of age year-{year}.\
+    return f"{config.INDENT}You have chosen to record a loss of {cultivar} of age Year-{year}.\
         \n{config.INDENT}There are currently {remaining} plants of that category recorded in the system."
 
 def plants_lost_recorded(lost, cultivar, year, remaining):
-    return f"{config.INDENT}Loss of {lost} {cultivar} of year-{year} recorded.\
+    return f"{config.INDENT}Loss of {lost} {cultivar} of Year-{year} recorded.\
     \n{config.INDENT}You now have a remaining stock of {remaining} plants of that category."
 
 def rootstock_gain_recorded(number, total):
@@ -218,11 +216,11 @@ def gain_chosen(cultivar, year, total):
         \n{config.INDENT}There are currently {total} plants of that category recorded in the system."
 
 def plants_gain_recorded(number, cultivar, year, total):
-    return f"{config.INDENT}Acquisition of {number} {cultivar} of year-{year} recorded.\
+    return f"{config.INDENT}Acquisition of {number} {cultivar} of Year-{year} recorded.\
         \n{config.INDENT}You currently have a stock of {total} plants of that category."
 
 def hold_chosen(cultivar, year, number_from, number_to):
-    return f"{config.INDENT}You have chosen to hold back {cultivar} plants of age year-{year}.\
+    return f"{config.INDENT}You have chosen to hold back {cultivar} plants of age Year-{year}.\
     \n{config.INDENT}There are currently {number_from} plants of that category recorded in the system.\
     \n{config.INDENT}There are now {number_to} plants of that cultivar listed as being a year younger.\
     \n{config.INDENT}The specified number of plants will be held back for a year."
@@ -230,19 +228,18 @@ def hold_chosen(cultivar, year, number_from, number_to):
 def successfully_held(number, cultivar, year, remaining, total):
     return f"{config.INDENT}Successfully recorded holding back {number} {cultivar} plants of year-{year}.\
     \n{config.INDENT}You now have a remaining stock of {remaining} plants of that category\
-    \n{config.INDENT}and a total stock of {total} of year-{year - 1} plants of that cultivar."
+    \n{config.INDENT}and a total stock of {total} of Year-{year - 1} plants of that cultivar."
 
 def bring_chosen(cultivar, year, number_from, number_to):  
-    return f"{config.INDENT}You have chosen to bring forward {cultivar} plants of age year-{year}.\
+    return f"{config.INDENT}You have chosen to bring forward {cultivar} plants of age Year-{year}.\
     \n{config.INDENT}There are currently {number_from} plants of that category recorded in the system.\
     \n{config.INDENT}There are now {number_to} plants of that cultivar listed as being a year older.\
     \n{config.INDENT}The specified number of plants will be brought forward by a year."
 
 def successfully_brought(number, cultivar, year, number_from, number_to):
-    return f"{config.INDENT}Successfully recorded bringing forward {number} {cultivar} plants of year-{year}.\
+    return f"{config.INDENT}Successfully recorded bringing forward {number} {cultivar} plants of Year-{year}.\
     \n{config.INDENT}You now have a remaining stock of {number_from} plants of that category\
-    \n{config.INDENT}and a total stock of {number_to} of year-{affected_year + 1} plants of that cultivar."
-
+    \n{config.INDENT}and a total stock of {number_to} of year-{year + 1} plants of that cultivar."
 
 def last_year(year):
     return f"{config.INDENT}The last year created was {year}"

@@ -48,7 +48,8 @@ CHOOSE_YEAR_GAINED = f"{config.INDENT}Please enter the age of the plants for whi
     \n{config.INDENT}(typing '1' for year-one plants, '2' for year-two plants, and so on). \
     \n\n{config.PROMPT_STRING}"
 
-HOW_MANY_GAINED = f"{config.INDENT}How many plants of that category have been acquired since the last recorded entry? \
+HOW_MANY_GAINED = f"{config.INDENT}How many plants of that category have been acquired since the \
+    \n{config.INDENT}last recorded entry? \
     \n\n{config.PROMPT_STRING}"
 
 CHOOSE_CULTIVAR_HOLD = f"{config.INDENT}Please enter the cultivar number for which you want to hold plants back\
@@ -83,6 +84,9 @@ NO_GRAFTS_YET_PLANNED = f"{config.INDENT}You have not yet planned to make any gr
 
 TAKE_MORE_CUTTINGS = f"{config.INDENT}Would you like to add additional cuttings taken now?\
         \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
+
+HOW_MANY_LOST = f"{config.INDENT}How many rootstocks have been lost since then? \
+    \n\n{config.PROMPT_STRING}"
 
 def grafts_made(grafts):
     return f"{config.INDENT}You have already made {grafts} grafts of this cultivar.\
