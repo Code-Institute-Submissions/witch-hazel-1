@@ -1,8 +1,8 @@
 import config
 
 Y_OR_N_TEXT = f"{config.INDENT}Type 'y' for yes or 'n' for no."
-MORE_GEN_HELP = f"{config.INDENT}Press Enter to see more general help text."
-BACK_TO_MENU = f"{config.INDENT}Press Enter to go back to the main menu ..."
+MORE_GEN_HELP = f"{config.INDENT}Press Enter to see more general help text.\n"
+BACK_TO_MENU = f"{config.INDENT}Press Enter to go back to the main menu ...\n"
 
 CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want to plan\
     \n{config.INDENT}grafting (see the cultivars listed above). \
