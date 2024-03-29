@@ -110,14 +110,11 @@ def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msg
             try:
                 help_option = int(user_input.lower().split()[1])
                 if mini <= help_option <= maxi:
-                    return user_input
+                    return user_input.lower()
                 else:
                     return error_msgs.detailed_help
             except:
                 parse_num_input(input(error_msgs.detailed_help_not_int(user_input.lower().split()[1], mini, maxi)))
-            # if mini <= int(user_input.lower().split()[1]) <= maxi:
-                # print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
-                # option_help(int(user_input.split()[1]))
         else:
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
     if exiting=='y':
@@ -126,7 +123,7 @@ def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msg
 
 """
 This recursive function similar to the above, but for when yes/no (or help or exit) are the only valid answers.
-It doesn't require a try structure, which means that sys.exit(0) can be called directly.
+It doesn't require a try structure, meaning that sys.exit(0) can be called directly from within it.
 """
 def parse_yn_input(user_input, not_a_yn_answer_blurb=error_msgs.DEFAULT_NOT_A_YN_ANS_BLURB):
     answer = user_input.lower()
@@ -139,7 +136,7 @@ def parse_yn_input(user_input, not_a_yn_answer_blurb=error_msgs.DEFAULT_NOT_A_YN
     elif user_input.lower().split()[0]==commands.HELP:
         if mini <= int(user_input.lower().split()[1]) <= maxi:
             print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
-            option_help(int(user_input.split()[1]))
+            return answer
     else:
         return parse_yn_input(input(f"{config.INDENT}'{answer}' {error_msgs.DEFAULT_NOT_A_YN_ANS_BLURB}"))
 
@@ -185,6 +182,8 @@ def general_help():
     print(help_texts.help_text1)
     input(f"{input_texts.MORE_GEN_HELP}")
     print(help_texts.help_text2)
+    input(f"{input_texts.MORE_GEN_HELP}")
+    print(help_texts.help_text3)
     input(f"{input_texts.BACK_TO_MENU}")
     main_menu()
 
