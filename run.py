@@ -89,22 +89,35 @@ def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msg
     not_in_range_blurb=error_msgs.DEFAULT_NOT_IN_RANGE_BLURB):
     exiting = 'n'
     try:
+        # Check whether the input is an integer within the set range.
+        # If it's outside the range, tell the user until they enter a number in the valid range
+        # or a help or exit message.
         number = int(user_input)
         if mini <= number <= maxi:
             return number
         else:
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}", maxi)),mini, maxi)
     except:
-        if user_input=='':
-            return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
-        elif user_input.lower()==commands.EXIT:
+        # If the input is not a number, then it must be a help string  
+        # (either 'help' or 'help [n]' -- where 'n'is within the range of 
+        # available options) or an exit command.
+        # If it's something else get the user to re-enter their input.
+        if user_input.lower()==commands.EXIT:
             exiting = 'y'
         elif user_input.lower()==commands.HELP:
             general_help()
         elif user_input.lower().split()[0]==commands.HELP:
-            if mini <= int(user_input.lower().split()[1]) <= maxi:
-                print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
-                option_help(int(user_input.split()[1]))
+            try:
+                help_option = int(user_input.lower().split()[1])
+                if mini <= help_option <= maxi:
+                    return user_input
+                else:
+                    return error_msgs.detailed_help
+            except:
+                parse_num_input(input(error_msgs.detailed_help_not_int(user_input.lower().split()[1], mini, maxi)))
+            # if mini <= int(user_input.lower().split()[1]) <= maxi:
+                # print(f"{config.INDENT}{msgs.detailed_help_choice(user_input.split()[1])}")
+                # option_help(int(user_input.split()[1]))
         else:
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
     if exiting=='y':
@@ -161,10 +174,8 @@ def main_menu():
     print(help_texts.menu_title)
     print(help_texts.menu_text)
 
-    while True:
-        user_input = parse_num_input(input(msgs.main_menu_prompt(lower_bound, upper_bound)), lower_bound, upper_bound)
-        if user_input:
-            execute_option(user_input)
+    user_input = parse_num_input(input(msgs.main_menu_prompt(lower_bound, upper_bound)), lower_bound, upper_bound)
+    execute_option(user_input)
 
 
 def general_help():
@@ -214,15 +225,18 @@ def option_help(option_no):
 
     else:
         print(msgs.SPECIFIC_HELP_PROMPT)
-    input
+    
+    print(input_texts.BACK_TO_MENU)
+    input()
     
 
 def execute_option(input):
     """
     Executes the option typed in by the user
-    on condition it's valid.
+    It assumes error handling has been done in the input parser.
+    If it's called from an input not run through an error-handling
+    parser, then an error handler will need to be added.
     """
-
     print(config.LINE_OF_UNDERSCORES)
     if input == 1:
         print(f"{config.INDENT}{msgs.PLAN_GRAFTS}")
@@ -254,8 +268,11 @@ def execute_option(input):
     elif input == 0:
         print(f"{config.INDENT}{msgs.NEW_YEAR}")
         create_year()
+    # If the parser handles errors correctly, 
+    # then the only remaining option is an
+    # an input of the form "help [n]"!
     else:
-        print(error_msgs.valid_option_number(lower_bound, upper_bound))
+        option_help(int(input.split()[1]))
     main_menu()
 
 
@@ -312,8 +329,8 @@ def plan_grafting_campaign():
     Shows the number of rootstocks ready for grafting and the number left.
     Warns the user when they're planning to use more rootstocks than they have.
     """
-    rootstocks_available = int(rootstock.acell('g4').value)
-    rootstocks_in_stock = int(rootstock.acell('f4').value)
+    rootstocks_available = int(rootstock.acell('h4').value)
+    rootstocks_in_stock = int(rootstock.acell('g4').value)
 
     row_values = grafts_year_zero.row_values(1)
     # Find the column to stop at (first column that contains no data)
@@ -349,7 +366,7 @@ def plan_grafting_campaign():
 
     if check_is_complete(task_check_complete_address, task) == False:
         print(msgs.planned_for(current_cultivar))
-        print(msgs.rootstocks_unplanned(rootstocks_in_stock,rootstocks_available + planned_numbers[cultivar_value - 1])) 
+        print(msgs.rootstocks_unplanned(rootstocks_in_stock, rootstocks_available + planned_numbers[cultivar_value - 1])) 
 
         if planned_numbers[cultivar_value - 1] > 0:
             info_msg = input_texts.replace_graft_value(planned_numbers[cultivar_value - 1]) 
@@ -564,7 +581,7 @@ def record_loss():
         remaining_rootstocks = int(rootstock.acell(address_remaining).value)
         total_losses = int(rootstock.acell(address_losses).value)
         print(msgs.total_rootstocks(remaining_rootstocks))
-        number_lost = parse_num_input(input(input_texts.HOW_MANY_LOST), 0, total_rootstocks)
+        number_lost = parse_num_input(input(input_texts.HOW_MANY_ROOTSTOCKS_LOST), 0, total_rootstocks)
         rootstock.update_acell(address_losses, total_losses + number_lost)
         print(msgs.rootstock_loss_recorded(number_lost, rootstock.acell(address_remaining).value))
     else:
@@ -595,7 +612,7 @@ def record_loss():
         current_number = int(plants.acell(address_affected).value)
         print(msgs.loss_chosen(current_cultivar, affected_year, current_number))
         while True:
-            number_lost = input(input_texts.HOW_MANY_LOST)
+            number_lost = input(input_texts.HOW_MANY_PLANTS_LOST)
             try:
                 number_lost = int(number_lost)
                 if 0 <= number_lost <= current_number:

@@ -9,12 +9,17 @@ DEFAULT_NOT_A_NUMBER_BLURB = " is not a number. Please enter a number between "
 DEFAULT_NOT_IN_RANGE_BLURB = f"{config.INDENT}That number is out of range. Please enter a number between "
 DEFAULT_NOT_A_YN_ANS_BLURB = f" is not a 'y' or a 'n'. Please enter either a 'y' or a 'n'.\
     \n\n{config.PROMPT_STRING}"
-NO_START_NUMBERy = "The starting number is not recorded."
+NO_START_NUMBER = "The starting number is not recorded."
 MORE_THAN_INITIAL = "You ended up with more units than you started with."
 
 def valid_option_number(lower_bound, upper_bound):
     return f"{config.INDENT}Please enter a valid integer between {lower_bound} and {upper_bound}.\
         \n\n{config.PROMPT_STRING}"
+
+def detailed_help_not_int(input, mini, maxi):
+    return f"{input} is not an integer! For detailed help, type as string of the form 'help [n]'\
+    \n{config.INDENT}where '[n]' represents a valid integer between {mini} and {maxi}!\
+    \n\n{config.PROMPT_STRING}"
 
 def too_many_rootstocks_lost(total):
     return f"{config.INDENT}You can't have lost more rootstocks than you actually had in the nursery!\
@@ -22,19 +27,20 @@ def too_many_rootstocks_lost(total):
         \n\n{config.PROMPT_STRING}"
 
 def too_many_plants_lost(total):
-    return f"{config.INDENT}You can't have lost more plants of this category than you actually had in the nursery!\
-                    \n{config.INDENT}Please enter an integer between 0 and {total}. \
-    \n\n{config.PROMPT_STRING}"
+    return f"{config.INDENT}You can't have lost more plants of this category than you actually\
+        \n{config.INDENT}had in the nursery!\
+        \n{config.INDENT}Please enter an integer between 0 and {total}. \
+        \n\n{config.PROMPT_STRING}"
 
 def too_many_plants_held(number_from):
-    return f"{config.INDENT}You can't hold back more plants of this category than you actually have in the\
-                \n{config.INDENT}nursery! Please enter an integer between 0 and {number_from}. \
-    \n\n{config.PROMPT_STRING}"
+    return f"{config.INDENT}You can't hold back more plants of this category than you actually have in\
+        \n{config.INDENT}the nursery! Please enter an integer between 0 and {number_from}. \
+        \n\n{config.PROMPT_STRING}"
 
 def too_many_plants_brought(number_from):
     return f"{config.INDENT}You can't bring forward more plants of this category than you actually have in\
-                \n{config.INDENT}the nursery!\
-                \n{config.INDENT}Please enter an integer between 0 and {number_from}. \
+        \n{config.INDENT}the nursery!\
+        \n{config.INDENT}Please enter an integer between 0 and {number_from}. \
     \n\n{config.PROMPT_STRING}"
 
 def a_and_b(a, b):

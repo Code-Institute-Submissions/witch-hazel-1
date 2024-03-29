@@ -85,9 +85,9 @@ Laura and Donal have asked me to provide them with a simple command line program
 - record throughout the year any losses incurred (for whatever reasons) by cultivar and age and any acquisitions (whether by purchase from a third party or via any of a number of horticultural tricks that the couple have up their sleeves)
 - show the flexibility to allow the couple to hold back particularly slow-growing specimens for another year and to reclassify plants that have grown particularly well in a particular year so that they effectively skip a year. Since they tend to do this sort of work whenever they get time throughout the year, they should be able to do this intermittently at any time of year.
 
-N.B.: They currently grow six different cultivars for sale (but might expand their range in the future if they can find attractive cultivars free of plant breeders' rights fees). The system should be easy to adjust in order to add new cultivars to the workflow.
+N.B.: They currently grow six different cultivars for sale (but might expand their range in the future if they can find attractive cultivars free of plant breeders' rights fees). The couple have told me that they have no immediate plans to increase the number of cultivars they are using and that the functionality to add a new cultivar to the list (and remove existing cultivars) can wait until a later iteration of the program.  They also feel the need to see an overview of the data on-screen is something that can happen later.
 
-"That's enough for the moment," said Laura, "once we have a system that can do those things, we'll be able to plan better. And once we've seen the benefits, we'll have a look at what might still need doing. The main thing we need right now is something that keeps our records straight, so we can analyse like with like when looking for areas where we can improve our efficiency and/or rebalance the numbers of the various cultivars we produce. We can start looking at what we still need to do both upstream and downstream of the actual production process ... maybe even in the sales area ... after we've bedded in our initial new system. And we can also have a look at applying the system to our rose production business if it looks like it might save us a bit of time and money there too. But let's not get ahead of ourselves."
+"That's enough for the moment," said Laura, "once we have a system that can do those things, we'll be able to plan better. And once we've seen the benefits, we'll have a look at what might still need doing. The main thing we need right now is something that keeps our records straight, so we canncompare like against like when looking for areas where we can improve our efficiency and/or rebalance the numbers of the various cultivars we produce. We can start looking at what we still need to do to improve the process control and overview once we've got the thing going. And then later still we can take a look processes both upstream and downstream of the actual production procedures ... maybe even in the sales area ... after we've bedded in our basic  system. We can even have a look at applying the system to our rose production business if it looks like it might save us a bit of time and money there too. But let's not get ahead of ourselves."
 
 - - -
 
@@ -102,8 +102,9 @@ N.B.: They currently grow six different cultivars for sale (but might expand the
 
 Accordingly, I prepared a series of outline flow charts in consultation with Laura and Donal on the basis of the needs they described to me. Once they'd approved the charts, I began thinking about actually programming the various functionalities.
 
-For simplicity's sake, and because I thought the data was not enormously complex, I decided to store it all on a single google spreadsheet, which I simply named 'hamamelis'. It contains three worksheets.
+For simplicity's sake, and because I thought the data was not enormously complex, I decided to store it all on a single google spreadsheet, which I simply named 'hamamelis'. It contains four worksheets.
 - rootstock
+- completed
 - grafts-year-zero
 - plants
 

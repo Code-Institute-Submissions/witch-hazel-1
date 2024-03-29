@@ -31,8 +31,8 @@ help_text2 = f"{config.INDENT}Type in the number of the operation you wish to pe
     \n{config.INDENT}the app will guide the process.\
     \n\n{config.INDENT}Look at the README.md file for further details on each operation.\
     \n\n{config.INDENT}The App will tell you the range of numbers you can choose from (0 to 9).\
-    \n{config.INDENT}Any time you enter an invalid number (including a negative number), the app\
-    \n{config.INDENT}will give you another opportunity to enter a valid one.\
+    \n{config.INDENT}Any time you enter an invalid number (including a negative number), the\
+    \n{config.INDENT}app will give you another opportunity to enter a valid one.\
     \n\n{config.INDENT}During some operations the App may ask you a yes or no confirmation\
     \n{config.INDENT}question. Where this happens you should answer yes by typing a 'y' or 'Y'\
     \n{config.INDENT}on the command line or no by typing a 'n' or a 'N'.\
