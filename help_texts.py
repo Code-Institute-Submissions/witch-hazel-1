@@ -1,6 +1,6 @@
 import config, msgs
 
-intro_text = f"\n##########################################################################\
+intro_text = f"\n{config.LINE_OF_POUNDS}\
     \n\n                            W I T C H - H A Z E L\
     \n\
     \n{config.INDENT}Welcome to witch-hazel, your simple app for planning and recording\
@@ -218,8 +218,8 @@ help_text_option9 = f"\n\n                Option 9 -- BRING PLANTS FORWARD\
         \n{config.INDENT}so that a number of Year-Three plants, for example, are brought\
         \n{config.INDENT}forward to Year Four.\
         \n\n{config.INDENT}It first asks you to identify the cultivar you want to bring forward\
-        \n{config.INDENT}and then the age of that cultivar ('1' for Year-One grafted plants, '2'\
-        \n{config.INDENT}for Year-Two plants and so on).\
+        \n{config.INDENT}and then the age of that cultivar ('1' for Year-One grafted plants,\
+        \n{config.INDENT}'2' for Year-Two plants and so on).\
         \n\n{config.INDENT}The affected plants will be brought forward by one year.\
         \n\n{config.INDENT}The App will not let you hold back more of the affected plants than\
         \n{config.INDENT}there are in stock.\

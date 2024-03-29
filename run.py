@@ -87,37 +87,44 @@ The arguments it takes are fairly self-explanatory.
 def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msgs.DEFAULT_NOT_A_NUMBER_BLURB, 
     not_in_range_blurb=error_msgs.DEFAULT_NOT_IN_RANGE_BLURB):
     exiting = 'n'
+
     try:
-        # Check whether the input is an integer within the set range.
-        # If it's outside the range, tell the user until they enter a number in the valid range
-        # or a help or exit message.
-        number = int(user_input)
+        """
+        Check whether the input is an integer within the set range.
+        If it's outside the range, tell the user until they enter a number in the valid range
+        or a help or exit message.
+        """
+        number = int(user_input.strip().lower())
         if mini <= number <= maxi:
             return number
         else:
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}", maxi)),mini, maxi)
     except:
-        # If the input is not a number, then it must be a help string  
-        # (either 'help' or 'help [n]' -- where 'n' is within the range of 
-        # available options) or an exit command.
-        # If it's something else get the user to re-enter their input.
-        if user_input == "":
+        """
+        If the input is not a number, then it must be a help string  
+        (either 'help' or 'help [n]' -- where 'n' is within the range of 
+        available options) or an exit command.
+        If it's something else get the user to re-enter their input.
+        """
+        user_input = user_input.strip().lower()
+        if user_input=="":
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)),  mini, maxi)
-        elif user_input.lower()==commands.EXIT:
+        elif user_input==commands.EXIT:
             exiting = 'y'
-        elif user_input.lower()==commands.HELP:
-            general_help()
-        elif user_input.lower().split()[0]==commands.HELP:
+        elif user_input==commands.HELP:
+            return 'help'
+        elif user_input.split()[0]==commands.HELP:
             try:
-                help_option = int(user_input.lower().split()[1])
+                help_option = int(user_input.split()[1])
                 if mini <= help_option <= maxi:
-                    return user_input.lower()
+                    return user_input
                 else:
-                    return error_msgs.detailed_help
+                    return parse_num_input(input(error_msgs.detailed_help(user_input, mini, maxi)), mini, maxi)
             except:
-                parse_num_input(input(error_msgs.detailed_help_not_int(user_input.lower().split()[1], mini, maxi)))
+                return parse_num_input(input(error_msgs.detailed_help_not_int(user_input.split()[1], mini, maxi)), mini, maxi)
         else:
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
+
     if exiting=='y':
         exit_program(0)
 
@@ -226,11 +233,11 @@ def option_help(option_no):
     else:
         print(msgs.SPECIFIC_HELP_PROMPT)
     
-    print(input_texts.BACK_TO_MENU)
+    print(config.BACK_TO_MENU)
     input()
     
 
-def execute_option(input):
+def execute_option(user_input):
     """
     Executes the option typed in by the user
     It assumes error handling has been done in the input parser.
@@ -238,41 +245,44 @@ def execute_option(input):
     parser, then an error handler will need to be added.
     """
     print(config.LINE_OF_UNDERSCORES)
-    if input == 1:
+    if user_input == 1:
         print(f"{config.INDENT}{msgs.PLAN_GRAFTS}")
         plan_grafting_campaign()
-    elif input == 2:
+    elif user_input == 2:
         print(f"{config.INDENT}{msgs.TAKE_GRAFTS}")
         record_grafts()
-    elif input == 3:
+    elif user_input == 3:
         print(f"{config.INDENT}{msgs.POT_UP_CUTTINGS}")
         record_potted_cuttings()
-    elif input == 4:
+    elif user_input == 4:
         print(f"{config.INDENT}{msgs.PLAN_CUTTINGS}")
         plan_cutting_campaign()
-    elif input == 5:
+    elif user_input == 5:
         print(f"{config.INDENT}{msgs.TAKE_CUTTINGS}")
         record_cuttings_taken()
-    elif input == 6:
+    elif user_input == 6:
         print(f"{config.INDENT}{msgs.RECORD_LOSS}")
         record_loss()
-    elif input == 7:
+    elif user_input == 7:
         print(f"{config.INDENT}{msgs.RECORD_ACQ}")
         record_gain()
-    elif input == 8:
+    elif user_input == 8:
         print(f"{config.INDENT}{msgs.HOLD_BACK}")
         hold_back()
-    elif input == 9:
+    elif user_input == 9:
         print(f"{config.INDENT}{msgs.BRING_FORWARD}")
         bring_forward()
-    elif input == 0:
+    elif user_input == 0:
         print(f"{config.INDENT}{msgs.NEW_YEAR}")
         create_year()
+    elif user_input == 'help':
+        general_help()
     # If the parser handles errors correctly, 
     # then the only remaining option is an
     # an input of the form "help [n]"!
     else:
-        option_help(int(input.split()[1]))
+        print(f"user_input: {user_input}")
+        option_help(int(user_input.split()[1]))
     main_menu()
 
 
@@ -605,7 +615,7 @@ def record_loss():
         count = list_cultivars(cultivars)
 
         cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_LOST), 1, count)
-        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_LOST))
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_LOST), 1)
         current_cultivar = cultivars[cultivar_value - 1]
         address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
 
