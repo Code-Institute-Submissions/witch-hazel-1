@@ -54,8 +54,7 @@ def list_cultivars(cultivar_list):
     print()
     return count
     
-
-
+    
 def exit_program(num):
     print(f"{config.INDENT}{config.EXIT_MSG}")
     sys.exit(int(num))
@@ -78,11 +77,11 @@ def completed_for_year(affected_cell, affected_task):
 This recursive function does one of the following things:
 - It returns a number if the user input is convertible into a non-negative integer.
 - It returns nothing and exits the program if the user input parses to "exit".
-- It returns nothing and goes to the general_help function if the user input parses to "help".
-- It returns nothing and goes to the appropriate detailed help function if the user input parses to "help [n]" (where [n] is an integer
-  between 0 and the number of options available in the program)
-- If the user input is anything else, it calls itself, asking the user to enter number within the allowable range or some other valid
-  input.
+- It returns 'help' if the user input parses to 'help'.
+- It returns 'help [n]' if the user input parses to 'help [n]' (where [n] is an integer
+  between 0 and the number of options available for the relevant function)
+- If the user input is anything else, it calls itself, asking the user to enter number 
+  within the allowable range or some other valid input.
 The arguments it takes are fairly self-explanatory.
 """
 def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msgs.DEFAULT_NOT_A_NUMBER_BLURB, 
@@ -99,10 +98,12 @@ def parse_num_input(user_input, mini=0, maxi=10000, not_a_number_blurb=error_msg
             return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}{not_in_range_blurb}{mini}", maxi)),mini, maxi)
     except:
         # If the input is not a number, then it must be a help string  
-        # (either 'help' or 'help [n]' -- where 'n'is within the range of 
+        # (either 'help' or 'help [n]' -- where 'n' is within the range of 
         # available options) or an exit command.
         # If it's something else get the user to re-enter their input.
-        if user_input.lower()==commands.EXIT:
+        if user_input == "":
+            return parse_num_input(input(error_msgs.a_and_b(f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)),  mini, maxi)
+        elif user_input.lower()==commands.EXIT:
             exiting = 'y'
         elif user_input.lower()==commands.HELP:
             general_help()
