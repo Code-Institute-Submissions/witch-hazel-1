@@ -25,7 +25,18 @@ help_text1 = f"\n                        WITCH-HAZEL HELP\
     \n{config.INDENT}From within the Heroku App environment, simply on the red 'RUN PROGRAM'\
     \n{config.INDENT}button.\
     \n\n{config.INDENT}On opening, the app will show you a list of the options available to\
-    \n{config.INDENT}you and ask which of them you would like to perform:\
+    \n{config.INDENT}you and ask which of them you would like to perform.\n\
+    \n\n{config.INDENT}The first five options lists the seasonal tasks that you will have to\
+    \n{config.INDENT}perform during the course of the calendar year (which the program lists\
+    \n{config.INDENT}in seasonal order from 1 January on.\
+    \n\n{config.INDENT}You will need to complete all of these actions before you can close\
+    \n{config.INDENT}the current year and move on to the next (Using Option 0)\
+    \n\n{config.INDENT}The second group of options are there simply to help you record the\
+    \n{config.INDENT}maintenance actions you undertake during the course of the year, allowing\
+    \n{config.INDENT}you to track changes in your stock of plants as you go.\
+    \n\n{config.INDENT}You do not need to complete any or all of these tasks to close out the\
+    \n{config.INDENT}and \move on to the next.\
+    \n\
     \n{msgs.LIST_OF_OPTIONS}"
 
 help_text2 = f"{config.INDENT}Type in the number of the operation you wish to perform,\
