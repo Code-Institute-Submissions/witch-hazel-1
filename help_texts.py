@@ -29,9 +29,9 @@ help_text1 = f"\n                        WITCH-HAZEL HELP\
     \n\
     \n{msgs.LIST_OF_OPTIONS}"
 
-help_text2 =f"\n{config.INDENT}The first five options lists the seasonal tasks that you will have to\
-    \n{config.INDENT}perform during the course of the calendar year (which the program lists\
-    \n{config.INDENT}in seasonal order from January on.\
+help_text2 =f"\n{config.INDENT}The first group of five options lists the seasonal tasks that you\
+    \n{config.INDENT}will have to perform during the course of the calendar year (which the\
+    \n{config.INDENT}program lists in seasonal order from January on).\
     \n\n{config.INDENT}You will need to complete all of these actions before you can close\
     \n{config.INDENT}the current year and move on to the next (Using Option 0)\
     \n\n{config.INDENT}The second group of options are there simply to help you record the\

@@ -57,7 +57,7 @@ def list_cultivars(cultivar_list):
 
 
 def exit_program(num):
-    print(f"{config.INDENT}{msgs.EXIT_MSG}")
+    print(f"{config.INDENT}{config.EXIT_MSG}")
     sys.exit(int(num))
 
 
