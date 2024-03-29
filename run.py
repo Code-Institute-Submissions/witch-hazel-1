@@ -180,11 +180,11 @@ def general_help():
     General help messages on how to use the app print to screen one after another.
     """
     print(help_texts.help_text1)
-    input(f"{input_texts.MORE_GEN_HELP}")
+    input(f"{config.MORE_GEN_HELP}")
     print(help_texts.help_text2)
-    input(f"{input_texts.MORE_GEN_HELP}")
+    input(f"{config.MORE_GEN_HELP}")
     print(help_texts.help_text3)
-    input(f"{input_texts.BACK_TO_MENU}")
+    input(f"{config.BACK_TO_MENU}")
     main_menu()
 
 
