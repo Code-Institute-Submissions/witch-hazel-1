@@ -158,7 +158,7 @@ def startup_instructions():
     """
 
     print(help_texts.intro_text)
-    input(f"{input_texts.ENTER_TO_CONTINUE}")
+    input(f"{config.BACK_TO_MENU}")
     print(config.CURSOR_UP_ONE + config.ERASE_LINE)
     main_menu()
 
@@ -382,7 +382,7 @@ def plan_grafting_campaign():
             print(msgs.task_cancelled(task, current_cultivar))
             completed_for_year(task_check_complete_address, task)
     
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -451,7 +451,7 @@ def record_grafts():
             print(msgs.grafts_cancelled(current_cultivar))
             completed_for_year(task_check_complete_address, task)
     
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -487,7 +487,7 @@ def record_potted_cuttings():
             print(msgs.POTTING_CANCELLED)
             completed_for_year('c3', task)
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 def run_cuttings_plan(cuttings, task):
@@ -538,7 +538,7 @@ def plan_cutting_campaign():
             cancel_cuttings_plan()
             completed_for_year('B2', task)
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -558,7 +558,7 @@ def record_cuttings_taken():
 
     completed_for_year('B2', task)
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -628,7 +628,7 @@ def record_loss():
         # number_lost
     print(msgs.LOSS_RECORDED)
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -689,7 +689,7 @@ def record_gain():
         # number_lost
     print(msgs.GAIN_RECORDED)
     
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -745,7 +745,7 @@ def hold_back():
 
     print(msgs.HOLD_RECORDED)
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -817,7 +817,7 @@ def bring_forward():
 
     print(msgs.BRING_RECORDED)
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 
@@ -867,7 +867,7 @@ def create_year():
     else:
         print(msgs.new_year_cancelled(new_rootstock_year, rootstock_year))
 
-    print(input_texts.ENTER_TO_CONTINUE)
+    print(config.BACK_TO_MENU)
     input()
 
 

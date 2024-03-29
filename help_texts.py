@@ -29,24 +29,24 @@ help_text1 = f"\n                        WITCH-HAZEL HELP\
     \n\
     \n{msgs.LIST_OF_OPTIONS}"
 
-help_text2 =f"\n\n{config.INDENT}The first five options lists the seasonal tasks that you will have to\
+help_text2 =f"\n{config.INDENT}The first five options lists the seasonal tasks that you will have to\
     \n{config.INDENT}perform during the course of the calendar year (which the program lists\
-    \n{config.INDENT}in seasonal order from 1 January on.\
+    \n{config.INDENT}in seasonal order from January on.\
     \n\n{config.INDENT}You will need to complete all of these actions before you can close\
     \n{config.INDENT}the current year and move on to the next (Using Option 0)\
     \n\n{config.INDENT}The second group of options are there simply to help you record the\
     \n{config.INDENT}maintenance actions you undertake during the course of the year, allowing\
     \n{config.INDENT}you to track changes in your stock of plants as you go.\
     \n\n{config.INDENT}You do not need to complete any or all of these tasks to close out the\
-    \n{config.INDENT}and \move on to the next.\
+    \n{config.INDENT}and move on to the next.\
     \n\n{config.INDENT}Finally, Option 0 closes out the current year and prepares the data\
     \n{config.INDENT}to allow you to start working on the next year. We recommend running it\
     \n{config.INDENT}as early as possible in the new year, before you start your first task\
     \n{config.INDENT}of the year.\
-    \n
+    \n"
 
-help_text2 = f"{config.INDENT}Type in the number of the operation you wish to perform,\
-    \n{config.INDENT}the app will guide the process.\
+help_text3 = f"{config.INDENT}Type in the number of the operation you wish to perform, the\
+    \n{config.INDENT}app will guide you through each process.\
     \n\n{config.INDENT}Look at the README.md file for further details on each operation.\
     \n\n{config.INDENT}The App will tell you the range of numbers you can choose from (0 to 9).\
     \n{config.INDENT}Any time you enter an invalid number (including a negative number), the\

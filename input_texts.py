@@ -1,8 +1,6 @@
 import config
 
 Y_OR_N_TEXT = f"{config.INDENT}Type 'y' for yes or 'n' for no."
-MORE_GEN_HELP = f"{config.INDENT}Press Enter to see more general help text.\n"
-BACK_TO_MENU = f"{config.INDENT}Press Enter to go back to the main menu ...\n"
 
 CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want to plan\
     \n{config.INDENT}grafting (see the cultivars listed above). \
@@ -11,8 +9,6 @@ CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for
 CHOOSE_CULTIVAR_M = f"{config.INDENT}Please enter the cultivar number of the new grafts you want to record\
     \n{config.INDENT}(see the cultivars listed above). \
     \n\n{config.PROMPT_STRING}"
-
-ENTER_TO_CONTINUE = f"{config.INDENT}Press Enter to continue ..."
 
 PLAN_CUTTINGS = f"{config.INDENT}Would you like to plan the number of cuttings you intend to take this season?\
     \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"

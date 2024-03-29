@@ -14,7 +14,6 @@ HOLD_BACK = "You've chosen to hold a number of grafted plants back a year."
 BRING_FORWARD = "You've chosen to bring a number of grafted plants forward a year."
 NEW_YEAR = "You've chose to close out the year and open a new year."  # OPTION 0
 
-EXIT_MSG = "Exiting the Witch-Hazel app ..."
 SPECIFIC_HELP_PROMPT = f"{config.INDENT}For help on a particular option in the app, please type 'help'\
         \n{config.INDENT}followed by a space, followed by the number of the option for which you\
         \n{config.INDENT}want help (e.g. 'help 6' for help on Option 6)."
