@@ -278,6 +278,12 @@ gspread.exceptions.APIError: {'code': 503, 'message': 'The service is currently 
 
 It's clear that this is due to a transient third-party issue. I put together a try/except clause to deal with this issue elegantly. The custom error messages simply asks the user to try again, since in my experience such issues are almost always extremely transient, lasting no more than a second or two.
 
+When running Option 0 (creating a new year), the following warning appears, apparently in response to line 875 of run.py ("rootstock.update(cell_range, column_formulae, value_input_option='USER_ENTERED')"):
+"/workspace/.pyenv_mirror/user/current/lib/python3.12/site-packages/gspread/worksheet.py:1069: UserWarning: [Deprecated][in version 6.0.0]: method signature will change to: 'Worksheet.update(value = [[]], range_name=)' arguments 'range_name' and 'values' will swap, values will be mandatory of type: 'list(list(...))'
+  warnings.warn("
+
+Ignoring the strange unclosed parenthesis at the end, I reversed the sequence of the first two parameters, but this only made matters worse. The program, now unable to identify the range for my insert command, simply inserted it on range A1:A3 (disastrously). Since the original code achieved what I intended it to achieve, I kept it (along with a note to revisit the issue in the next week or two).
+
 <!-- TOC --><a name="app-robustness"></a>
 ## App robustness
 
