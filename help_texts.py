@@ -27,7 +27,7 @@ help_text1 = f"\n                        WITCH-HAZEL HELP\
     \n\n{config.INDENT}On opening, the app will show you a list of the options available to\
     \n{config.INDENT}you and ask which of them you would like to perform.\n\
     \n\
-    \n{msgs.LIST_OF_OPTIONS}"
+    \n{msgs.list_of_options()}"
 
 help_text2 =f"\n{config.INDENT}The first group of five options lists the seasonal tasks that you\
     \n{config.INDENT}will have to perform during the course of the calendar year (which the\
@@ -66,7 +66,7 @@ menu_title = f"                            W I T C H - H A Z E L"
 
 menu_text = f"\n{config.INDENT}What would you like to do?\
     \n{config.INDENT}Choose from among the following operations:\
-    \n\n{msgs.LIST_OF_OPTIONS}"
+    \n\n{msgs.list_of_options()}"
 
 
 help_text_option1 = f"\n\n                Option 1 -- PLAN NUMBER OF GRAFTS\

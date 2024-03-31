@@ -18,8 +18,8 @@ def valid_option_number(lower_bound, upper_bound):
 
 def detailed_help_not_int(input, mini, maxi):
     return f"{config.INDENT}'{input}' is not an integer within the correct range! For detailed help,\
-    \n{config.INDENT}type a string of the form 'help [n], where '[n]' represents a valid integer\
-    \n{config.INDENT}between {mini} and {maxi}!\
+    \n{config.INDENT}type a string of the form 'help [n], where '[n]' represents a valid\
+    \n{config.INDENT}integer between {mini} and {maxi}!\
     \n\n{config.PROMPT_STRING}"
 
 def too_many_rootstocks_lost(total):

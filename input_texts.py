@@ -113,12 +113,12 @@ def cuttings_in_addition(taken):
         \n{config.INDENT}you've already recorded ({taken})"
 
 def replace_graft_value(old_value):
-    return f"{config.INDENT}So far, you have planned to make {old_value} grafts\
-        \n{config.INDENT}of this cultivar. Would you like to replace this value? \
+    return f"{config.INDENT}So far, you have planned to make {old_value} grafts of this\
+        \n{config.INDENT}cultivar. Would you like to replace this value? \
         \n\n{config.PROMPT_STRING}"
 
 def task_closed_reopen(task):
-    return f"\n{config.INDENT}The task '{task}' has been\
+    return f"{config.INDENT}The task '{task}' has been\
         \n{config.INDENT}closed for the year. Would you like to reopen it?\
         \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 

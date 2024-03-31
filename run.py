@@ -168,10 +168,10 @@ def startup_instructions():
     print(help_texts.intro_text)
     input(f"{config.BACK_TO_MENU}")
     print(config.CURSOR_UP_ONE + config.ERASE_LINE)
-    main_menu()
+    main_menu(lower_bound, upper_bound)
 
 
-def main_menu():
+def main_menu(lower, upper):
     """
     The program's main menu on startup and after every option or help message.
     """
@@ -179,7 +179,7 @@ def main_menu():
     print(help_texts.menu_title)
     print(help_texts.menu_text)
 
-    user_input = parse_num_input(input(msgs.main_menu_prompt(lower_bound, upper_bound)), lower_bound, upper_bound)
+    user_input = parse_num_input(input(msgs.main_menu_prompt(lower, upper)), lower, upper)
     execute_option(user_input)
 
 
@@ -193,7 +193,7 @@ def general_help():
     input(f"{config.MORE_GEN_HELP}")
     print(help_texts.help_text3)
     input(f"{config.BACK_TO_MENU}")
-    main_menu()
+    main_menu(lower_bound, upper_bound)
 
 
 def option_help(option_no):
@@ -283,7 +283,7 @@ def execute_option(user_input):
     else:
         print(f"user_input: {user_input}")
         option_help(int(user_input.split()[1]))
-    main_menu()
+    main_menu(lower_bound, upper_bound)
 
 
 def complete_cuttings_taken_record(taken, planned, task):
@@ -316,7 +316,7 @@ def complete_cuttings_taken_record(taken, planned, task):
     
     print(msgs.BACK_TO_MENU)
     input()
-    main_menu()
+    main_menu(lower_bound, upper_bound)
 
 def check_is_complete(cell, task):
     complete = completed.acell(cell).value.lower()
@@ -836,20 +836,23 @@ def create_year():
     """
     Option 0:
     This function adds the rows necessary to create a new year and copies the
-    row for stocks of this year's grafts from the
-    grafts-year-zero to the plants worksheet. It puts the current year out of
-    reach of the relevant seasonal planning and work tasks.
+    row for stocks of this year's grafts from the grafts-year-zero to the
+    plants worksheet. It puts the figures for the current year out of reach 
+    of the relevant seasonal planning and work tasks. They can no longer be
+    modified by the seasonal tasks. Year-one plants become Year-two plants
+    and so on down the line.
+    It resets all seasonal tasks to "not done" ('n').
     """
     rootstock_year = rootstock.acell('a2').value
     new_rootstock_year = int(rootstock_year) + 1
 
-    print(last_year(rootstock_year))
+    print(msgs.last_year(rootstock_year))
     cuttings_last_year = rootstock.acell('c3').value
     if parse_yn_input(input(input_texts.create_new_year(new_rootstock_year))) == commands.YES:
         print(msgs.rootstocks_in_stock(cuttings_taken, mature_rootstocks))
         num_cuttings = parse_num_input(input(input_texts.how_many_cuttings(new_rootstock_year)))
-        values = [new_rootstock_year, num_cuttings, 0, 0, 0]
-        rootstock.insert_row(values, 2)
+        init_roots_values = [new_rootstock_year, num_cuttings, 0, 0, 0, 0, '=D2-E2']
+        rootstock.insert_row(init_roots_values, 2, value_input_option='USER_ENTERED')
         rootstock.update_acell('e3', 0)
         print(msgs.year_created(new_rootstock_year, num_cuttings))
         if num_cuttings == 0:
