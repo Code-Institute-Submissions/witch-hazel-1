@@ -11,6 +11,10 @@ DEFAULT_NOT_A_YN_ANS_BLURB = f" is not a 'y' or a 'n'. Please enter either a 'y'
     \n\n{config.PROMPT_STRING}"
 NO_START_NUMBER = "The starting number is not recorded."
 MORE_THAN_INITIAL = "You ended up with more units than you started with."
+YEAR_NOT_FINISHED = f"{config.INDENT}All seasonal operations for the current year have not been completed.\
+    \n{config.INDENT}Check the seasonal jobs and complete them before starting a new year!\
+    \n\n{config.PROMPT_STRING}"
+
 
 def valid_option_number(lower_bound, upper_bound):
     return f"{config.INDENT}Please enter a valid integer between {lower_bound} and {upper_bound}.\

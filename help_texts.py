@@ -20,14 +20,20 @@ intro_text = f"\n{config.LINE_OF_POUNDS}\
     \n_____________________________________________________________________________"
 
 
-help_text1 = f"\n                        WITCH-HAZEL HELP\
-    \n\n{config.INDENT}To run witch-hazel, run the script file that contains its code.\
-    \n{config.INDENT}From within the Heroku App environment, simply on the red 'RUN PROGRAM'\
-    \n{config.INDENT}button.\
-    \n\n{config.INDENT}On opening, the app will show you a list of the options available to\
-    \n{config.INDENT}you and ask which of them you would like to perform.\n\
+def help_text1(allow_option0):
+    if allow_option0 == True:
+        color_for_option0 = config.COLOR_STRONG_WHITE
+    else:
+        color_for_option0 = config.COLOR_NORMAL
+
+    return f"\n                        WITCH-HAZEL HELP\
+        \n\n{config.INDENT}To run witch-hazel, run the script file that contains its code.\
+        \n{config.INDENT}From within the Heroku App environment, simply on the red 'RUN PROGRAM'\
+        \n{config.INDENT}button.\
+        \n\n{config.INDENT}On opening, the app will show you a list of the options available to\
+        \n{config.INDENT}you and ask which of them you would like to perform.\n\
     \n\
-    \n{msgs.list_of_options()}"
+    \n{msgs.list_of_options(color_for_option)}"
 
 help_text2 =f"\n{config.INDENT}The first group of five options lists the seasonal tasks that you\
     \n{config.INDENT}will have to perform during the course of the calendar year (which the\
@@ -64,9 +70,10 @@ help_text3 = f"{config.INDENT}Type in the number of the operation you wish to pe
 
 menu_title = f"                            W I T C H - H A Z E L"
 
-menu_text = f"\n{config.INDENT}What would you like to do?\
-    \n{config.INDENT}Choose from among the following operations:\
-    \n\n{msgs.list_of_options()}"
+def menu_text(color):
+    return f"\n{config.INDENT}What would you like to do?\
+        \n{config.INDENT}Choose from among the following operations:\
+        \n\n{msgs.list_of_options(color)}"
 
 
 help_text_option1 = f"\n\n                Option 1 -- PLAN NUMBER OF GRAFTS\

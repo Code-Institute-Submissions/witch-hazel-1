@@ -5,6 +5,7 @@ import msgs
 import config
 import error_msgs
 import commands
+import new_year_controller
 from google.oauth2.service_account import Credentials
 import sys
 
@@ -170,15 +171,18 @@ def startup_instructions():
     print(config.CURSOR_UP_ONE + config.ERASE_LINE)
     main_menu(lower_bound, upper_bound)
 
+"""
+Only allow new year to be created if tasks for current year are completed.
+"""
+
 
 def main_menu(lower, upper):
     """
     The program's main menu on startup and after every option or help message.
     """
-
+    controller = new_year_controller.NewYearController(completed.acell('j4').value)
     print(help_texts.menu_title)
-    print(help_texts.menu_text)
-
+    print(help_texts.menu_text(controller.color))
     user_input = parse_num_input(input(msgs.main_menu_prompt(lower, upper)), lower, upper)
     execute_option(user_input)
 
@@ -187,7 +191,8 @@ def general_help():
     """
     General help messages on how to use the app print to screen one after another.
     """
-    print(help_texts.help_text1)
+    controller = new_year_controller.NewYearController(completed.acell('j4').value)
+    print(help_texts.help_text1(controller.color))
     input(f"{config.MORE_GEN_HELP}")
     print(help_texts.help_text2)
     input(f"{config.MORE_GEN_HELP}")
@@ -833,6 +838,7 @@ def bring_forward():
 
 
 def create_year():
+    
     """
     Option 0:
     This function adds the rows necessary to create a new year and copies the
@@ -843,47 +849,53 @@ def create_year():
     and so on down the line.
     It resets all seasonal tasks to "not done" ('n').
     """
-    rootstock_year = rootstock.acell('a2').value
-    new_rootstock_year = int(rootstock_year) + 1
 
-    print(msgs.last_year(rootstock_year))
-    cuttings_last_year = rootstock.acell('c3').value
-    if parse_yn_input(input(input_texts.create_new_year(new_rootstock_year))) == commands.YES:
-        print(msgs.rootstocks_in_stock(cuttings_taken, mature_rootstocks))
-        num_cuttings = parse_num_input(input(input_texts.how_many_cuttings(new_rootstock_year)))
-        init_roots_values = [new_rootstock_year, num_cuttings, 0, 0, 0, 0, '=D2-E2']
-        rootstock.insert_row(init_roots_values, 2, value_input_option='USER_ENTERED')
-        rootstock.update_acell('e3', 0)
-        print(msgs.year_created(new_rootstock_year, num_cuttings))
-        if num_cuttings == 0:
-            print(f"{config.INDENT}{msgs.CUTTINGS_LATER}")
+    controller = new_year_controller.NewYearController(completed.acell('j4').value)
+    if controller.year_finished == True:
+        rootstock_year = rootstock.acell('a2').value
+        new_rootstock_year = int(rootstock_year) + 1
 
-        year_zero_stocks = grafts_year_zero.get('c4:h4')[0]
+        print(msgs.last_year(rootstock_year))
+        cuttings_last_year = rootstock.acell('c3').value
+        if parse_yn_input(input(input_texts.create_new_year(new_rootstock_year))) == commands.YES:
+            print(msgs.rootstocks_in_stock(cuttings_taken, mature_rootstocks))
+            num_cuttings = parse_num_input(input(input_texts.how_many_cuttings(new_rootstock_year)))
+            init_roots_values = [new_rootstock_year, num_cuttings, 0, 0, 0, 0, '=D2-E2']
+            rootstock.insert_row(init_roots_values, 2, value_input_option='USER_ENTERED')
+            rootstock.update_acell('e3', 0)
+            print(msgs.year_created(new_rootstock_year, num_cuttings))
+            if num_cuttings == 0:
+                print(f"{config.INDENT}{msgs.CUTTINGS_LATER}")
 
-        year_zero_stocks_int = [int(value) for value in year_zero_stocks]
-        plants.insert_rows([year_zero_stocks_int], 2)
+            year_zero_stocks = grafts_year_zero.get('c4:h4')[0]
 
-        graft_starting_values = [
-            [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0, '=SUM(C2:H2)'],
-            [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0, '=SUM(C3:H3)'],
-            [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0, '=SUM(C4:H4)'],
-            [new_rootstock_year, 'lost', 0, 0, 0, 0, 0, 0, '=SUM(C5:H5)'],
+            year_zero_stocks_int = [int(value) for value in year_zero_stocks]
+            plants.insert_rows([year_zero_stocks_int], 2)
+
+            graft_starting_values = [
+                [new_rootstock_year, 'planned', 0, 0, 0, 0, 0, 0, '=SUM(C2:H2)'],
+                [new_rootstock_year, 'grafted', 0, 0, 0, 0, 0, 0, '=SUM(C3:H3)'],
+                [new_rootstock_year, 'stock', 0, 0, 0, 0, 0, 0, '=SUM(C4:H4)'],
+                [new_rootstock_year, 'lost', 0, 0, 0, 0, 0, 0, '=SUM(C5:H5)'],
+                ]
+
+            grafts_year_zero.insert_rows(graft_starting_values, 2)
+
+            done_starting_values = [
+                ['planning', 'n', '-','n','n','n','n','n', 'n', '=IF(COUNTIF(A2:I2, "y") = 7, "y","n")'],
+                ['production', 'n', 'n','n','n','n','n','n', 'n', '=IF(COUNTIF(A3:I3, "y") = 8, "y","n")'],
             ]
 
-        grafts_year_zero.insert_rows(graft_starting_values, 2)
 
-        done_starting_values = [
-            ['planning', 'n', '-','n','n','n','n','n', 'n', '=IF(COUNTIF(A2:I2, "y") = 7, "y","n")'],
-            ['production', 'n', 'n','n','n','n','n','n', 'n', '=IF(COUNTIF(A3:I3, "y") = 8, "y","n")'],
-        ]
-
+        else:
+            print(msgs.new_year_cancelled(new_rootstock_year, rootstock_year))
 
     else:
-        print(msgs.new_year_cancelled(new_rootstock_year, rootstock_year))
-
+        print(error_msgs.YEAR_NOT_FINISHED)
+    
     print(config.BACK_TO_MENU)
     input()
-
+    
 
 """
 Program runs from here

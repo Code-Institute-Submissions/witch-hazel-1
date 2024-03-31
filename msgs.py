@@ -79,7 +79,7 @@ ENTER_BRING_YEAR = f"{config.INDENT}Please enter an integer between 1 and the ag
 
 BRING_RECORDED = f"{config.INDENT}Plants brought forward successfully."
 
-def list_of_options(color=config.COLOR_END):
+def list_of_options(color=config.COLOR_NORMAL):
     return  f"{config.INDENT}{config.INDENT}{config.COLOR_STRONG_WHITE}1. Plan grafts for this year\
         \n{config.INDENT}{config.INDENT}2. Record grafts taken\
         \n{config.INDENT}{config.INDENT}3. Record rooted cuttings potted up\
@@ -88,13 +88,14 @@ def list_of_options(color=config.COLOR_END):
         \n\n{config.INDENT}{config.INDENT}6. Record plant losses\
         \n{config.INDENT}{config.INDENT}7. Record plant gains\
         \n{config.INDENT}{config.INDENT}8. Hold grafted plants over for one year\
-        \n{config.INDENT}{config.INDENT}9. Bring grafted plants forward one year{config.COLOR_END}\
-        \n\n{config.INDENT}{config.INDENT}{color}0. Close out current year{config.COLOR_END}\
+        \n{config.INDENT}{config.INDENT}9. Bring grafted plants forward one year{config.COLOR_NORMAL}\
+        \n\n{config.INDENT}{config.INDENT}{color}0. Close out current year{config.COLOR_NORMAL}\
         \n"
 
 
 def main_menu_prompt(lower_bound, upper_bound):
     return f"{config.INDENT}Please choose an option by entering its number (between {lower_bound} and {upper_bound}).\
+        \n{config.INDENT}Disabled options will be displayed in a weaker colour than the {config.COLOR_STRONG_WHITE}enabled{config.COLOR_NORMAL} options.\
         \n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number\
         \n{config.INDENT}on which you want detailed help), or 'EXIT' to quit.\
         \n{config.PROMPT_STRING}"
