@@ -1,4 +1,10 @@
-import config, msgs
+"""
+All on-screen, in-app help messages (both general and specific
+to particular functions) are stored here.
+"""
+
+import config
+import msgs
 
 intro_text = f"\n{config.LINE_OF_POUNDS}\
     \n\n                            W I T C H - H A Z E L\
@@ -20,8 +26,13 @@ intro_text = f"\n{config.LINE_OF_POUNDS}\
     \n_____________________________________________________________________________"
 
 
+
 def help_text1(allow_option0):
-    if allow_option0 == True:
+    """
+    governs the colour of option 0 on screen,
+    depending on whether it's enabled or not.
+    """
+    if allow_option0 is True:
         color_for_option0 = config.COLOR_STRONG_WHITE
     else:
         color_for_option0 = config.COLOR_NORMAL
@@ -33,7 +44,7 @@ def help_text1(allow_option0):
         \n\n{config.INDENT}On opening, the app will show you a list of the options available to\
         \n{config.INDENT}you and ask which of them you would like to perform.\n\
     \n\
-    \n{msgs.list_of_options(color_for_option)}"
+    \n{msgs.list_of_options(color_for_option0)}"
 
 help_text2 =f"\n{config.INDENT}The first group of five options lists the seasonal tasks that you\
     \n{config.INDENT}will have to perform during the course of the calendar year (which the\
@@ -68,9 +79,13 @@ help_text3 = f"{config.INDENT}Type in the number of the operation you wish to pe
     \n"
 
 
-menu_title = f"                            W I T C H - H A Z E L"
+MENU_TITLE = "                            W I T C H - H A Z E L"
+
 
 def menu_text(color):
+    """
+    Shows the list of options.
+    """
     return f"\n{config.INDENT}What would you like to do?\
         \n{config.INDENT}Choose from among the following operations:\
         \n\n{msgs.list_of_options(color)}"
@@ -250,4 +265,3 @@ help_text_option0 = f"\n\n          Option 0 -- CLOSE CURRENT YEAR/OPEN NEW YEAR
         \n{config.INDENT}either on 31 December of the old current year or as early as possible\
         \n{config.INDENT}in January of the new current year.\
         \n"
-        

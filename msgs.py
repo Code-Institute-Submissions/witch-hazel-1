@@ -1,5 +1,9 @@
+"""
+This where the main texts (other than help texts) shown to
+provide information to the user are stored.
+"""
+
 import config
-import input_texts
 
 #Main menu messages
 
@@ -14,7 +18,8 @@ HOLD_BACK = "You've chosen to hold a number of grafted plants back a year."
 BRING_FORWARD = "You've chosen to bring a number of grafted plants forward a year."
 NEW_YEAR = "You've chosen to close out the year and open a new year."  # OPTION 0
 
-SPECIFIC_HELP_PROMPT = f"{config.INDENT}For help on a particular option in the app, please type 'help'\
+SPECIFIC_HELP_PROMPT = f"{config.INDENT}For help on a particular option in the app,\
+please type 'help'\
         \n{config.INDENT}followed by a space, followed by the number of the option for which you\
         \n{config.INDENT}want help (e.g. 'help 6' for help on Option 6)."
 
@@ -27,10 +32,8 @@ REOPENING = f"{config.INDENT}Reopening ..."
 
 CUTTINGS_SUCCESSFUL = f"{config.INDENT}Cuttings campaign record added successfully."
 
-TAKE_CUTTINGS_NOW = f"{config.INDENT}Would you like enter some cuttings taken now?\
-            \n{input_texts.Y_OR_N_TEXT} \n"
-
-WHICH_CULTIVAR_P = f"{config.INDENT}For which cultivar would you like to plan your grafting campaign?\
+WHICH_CULTIVAR_P = f"{config.INDENT}For which cultivar would you like to plan your\
+grafting campaign?\
     \n"
 WHICH_CULTIVAR_M = f"{config.INDENT}For which cultivar would you like record new grafts made?\
     \n"
@@ -39,7 +42,8 @@ PLAN_CUTTINGS = "planning cuttings"
 
 POT_ROOTED = "potting rooted cuttings"
 
-PLANNED_CUTTINGS_CHANGED = f"{config.INDENT}Number of cuttings planned for this year successfully changed."
+PLANNED_CUTTINGS_CHANGED = f"{config.INDENT}Number of cuttings planned for this year \
+successfully changed."
 
 POTTING_CANCELLED = f"{config.INDENT}Record new cuttings potted action cancelled.\
             \n{config.INDENT}No changes have been made to the data."
@@ -54,7 +58,8 @@ PLAN_CUTTINGS_CANCELLED = f"{config.INDENT}Plan cuttings action cancelled.\
 
 TAKING_CUTTINGS = 'record cuttings taken'
 
-ADDED_CUTTINGS = f"{config.INDENT}Successfully added to the number of cuttings taken so far in this campaign."
+ADDED_CUTTINGS = f"{config.INDENT}Successfully added to the number of cuttings taken so \
+far in this campaign."
 
 LOST_WHICH_CULTIVAR = f"{config.INDENT}For which cultivar would you like record a loss?"
 
@@ -66,8 +71,8 @@ GAIN_RECORDED = f"{config.INDENT}Acquisition recorded successfully."
 
 HOLD_WHICH_CULTIVAR = f"{config.INDENT}For which cultivar would you like hold back plants?"
 
-NO_HOLD_YEAR_ONE = f"{config.INDENT}Year-one plants cannot be held back. Enter 2 or higher. But remember there's\
-                \n{config.INDENT}no point in entering an age greater than the age of the nursery."
+NO_HOLD_YEAR_ONE = f"{config.INDENT}Year-one plants cannot be held back. Enter 2 or higher. But\
+        \n{config.INDENT}there's no point in entering an age greater than the age of the nursery."
 
 ENTER_HOLD_YEAR = f"{config.INDENT}Please enter an integer between 2 and the age of the nursery."
 
@@ -88,20 +93,23 @@ def list_of_options(color=config.COLOR_NORMAL):
         \n\n{config.INDENT}{config.INDENT}6. Record plant losses\
         \n{config.INDENT}{config.INDENT}7. Record plant gains\
         \n{config.INDENT}{config.INDENT}8. Hold grafted plants over for one year\
-        \n{config.INDENT}{config.INDENT}9. Bring grafted plants forward one year{config.COLOR_NORMAL}\
+        \n{config.INDENT}{config.INDENT}9. Bring grafted plants forward one year\
+{config.COLOR_NORMAL}\
         \n\n{config.INDENT}{config.INDENT}{color}0. Close out current year{config.COLOR_NORMAL}\
         \n"
 
 
 def main_menu_prompt(lower_bound, upper_bound):
-    return f"{config.INDENT}Please choose an option by entering its number (between {lower_bound} and {upper_bound}).\
-        \n{config.INDENT}Disabled options will be displayed in a weaker colour than the {config.COLOR_STRONG_WHITE}enabled{config.COLOR_NORMAL} options.\
+    return f"{config.INDENT}Please choose an option by entering its number (between {lower_bound} \
+and {upper_bound}).\
+        \n{config.INDENT}Disabled options will be displayed in a weaker colour than the \
+{config.COLOR_STRONG_WHITE}enabled{config.COLOR_NORMAL} options.\
         \n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number\
         \n{config.INDENT}on which you want detailed help), or 'EXIT' to quit.\
         \n{config.PROMPT_STRING}"
 
 def a_out_of_b(a, b):
-    return f"{a} out of {b}"
+    return f"{config.INDENT}{a} out of {b}"
 
 def task_completed(string):
     return f"{config.INDENT}You have completed the task\
@@ -119,7 +127,8 @@ def detailed_help_choice(string):
 
 
 def planned_cuttings_taken(taken, planned):
-    return f"{config.INDENT} You have already reached the number of cuttings you planned to take this year: \
+    return f"{config.INDENT} You have already reached the number of cuttings you planned to take \
+this year:\
         \n{config.INDENT}{taken} cuttings taken out of {planned} planned!"
 
 def cuttings_taken(taken, planned):
@@ -158,8 +167,8 @@ def planned_for(cultivar):
     return f"{config.INDENT}You have chosen to plan graft numbers for {cultivar}."
 
 def rootstocks_unplanned(stock, unreserved):
-    return f"{config.INDENT}You have a total of {stock} rootstocks in stock, of which {unreserved} have not\
-        \n{config.INDENT}yet been reserved in planning for other cultivars.\
+    return f"{config.INDENT}You have a total of {stock} rootstocks in stock, of which {unreserved}\
+        \n{config.INDENT}have not yet been reserved in planning for other cultivars.\
         \n"
 
 def planned_grafts_changed(cultivar, new_value):
@@ -199,9 +208,9 @@ def more_potted_than_taken(newly_potted, rootstocks, taken):
 
 def potted_up(potted, taken):
     return f"{config.INDENT}You have now potted up {potted} cuttings out of a total of {taken}\
-                \n{config.INDENT}(minus any that have failed to root)!\
-                \n{config.INDENT}You will use them as rootstocks during the grafting campaign next season\
-                \n{config.INDENT}(once they have established themselves in their pots)."
+        \n{config.INDENT}(minus any that have failed to root)!\
+        \n{config.INDENT}You will use them as rootstocks during the grafting campaign\
+        \n{config.INDENT}next season (once they have established themselves in their pots)."
 
 def total_rootstocks(total):
     return f"{config.INDENT}At the last count there were {total} new rootstocks in the nursery."
@@ -213,7 +222,8 @@ def rootstock_loss_recorded(number, total):
 def loss_chosen(cultivar, year, remaining):
     return f"{config.INDENT}You have chosen to record a loss of {cultivar}\
         \n{config.INDENT}of age Year-{year}.\
-        \n{config.INDENT}There are currently {remaining} plants of that category recorded in the system."
+        \n{config.INDENT}There are currently {remaining} plants of that category recorded in\
+        \n{config.INDENT}the system."
 
 def plants_lost_recorded(lost, cultivar, year, remaining):
     return f"{config.INDENT}Loss of {lost} {cultivar} of Year-{year} recorded.\
@@ -227,7 +237,8 @@ def rootstock_gain_recorded(number, total):
 def gain_chosen(cultivar, year, total):
     return f"{config.INDENT}You have chosen to register an acquisition of {cultivar}\
         \n{config.INDENT}of age year-{year}.\
-        \n{config.INDENT}There are currently {total} plants of that category recorded in the system."
+        \n{config.INDENT}There are currently {total} plants of that category recorded\
+        \n{config.INDENT}in the system."
 
 def plants_gain_recorded(number, cultivar, year, total):
     return f"{config.INDENT}Acquisition of {number} {cultivar}\
@@ -237,8 +248,10 @@ def plants_gain_recorded(number, cultivar, year, total):
 def hold_chosen(cultivar, year, number_from, number_to):
     return f"{config.INDENT}You have chosen to hold back {cultivar}\
     \n{config.INDENT}plants of age Year-{year}.\
-    \n{config.INDENT}There are currently {number_from} plants of that category recorded in the system.\
-    \n{config.INDENT}There are now {number_to} plants of that cultivar listed as being a year younger.\
+    \n{config.INDENT}There are currently {number_from} plants of that category recorded\
+    \n{config.INDENT}in the system.\
+    \n{config.INDENT}There are now {number_to} plants of that cultivar listed as being a\
+    \n{config.INDENT}year younger.\
     \n{config.INDENT}The specified number of plants will be held back for a year."
 
 def successfully_held(number, cultivar, year, remaining, total):
@@ -247,11 +260,13 @@ def successfully_held(number, cultivar, year, remaining, total):
     \n{config.INDENT}You now have a remaining stock of {remaining} plants of that category\
     \n{config.INDENT}and a total stock of {total} of Year-{year - 1} plants of that cultivar."
 
-def bring_chosen(cultivar, year, number_from, number_to):  
+def bring_chosen(cultivar, year, number_from, number_to):
     return f"{config.INDENT}You have chosen to bring forward {cultivar}\
     \n{config.INDENT}plants of age Year-{year}.\
-    \n{config.INDENT}There are currently {number_from} plants of that category recorded in the system.\
-    \n{config.INDENT}There are now {number_to} plants of that cultivar listed as being a year older.\
+    \n{config.INDENT}There are currently {number_from} plants of that category recorded\
+    \n{config.INDENT}in the system.\
+    \n{config.INDENT}There are now {number_to} plants of that cultivar listed as being\
+     \n{config.INDENT}a year older.\
     \n{config.INDENT}The specified number of plants will be brought forward by a year."
 
 def successfully_brought(number, cultivar, year, number_from, number_to):
@@ -263,8 +278,8 @@ def successfully_brought(number, cultivar, year, number_from, number_to):
 def last_year(year):
     return f"{config.INDENT}The last year created was {year}."
 
-def rootstocks_in_stock(cuttings_taken, rootstocks):
-    return f"\n{config.INDENT}Info: You took {cuttings_taken} cuttings last year.\
+def rootstocks_in_stock(cuttings, rootstocks):
+    return f"\n{config.INDENT}Info: You took {cuttings} cuttings last year.\
         \n{config.INDENT}You now have {rootstocks} maturing rootstocks in stock."
 
 def year_created(year, cuttings):
@@ -274,4 +289,3 @@ def year_created(year, cuttings):
 def new_year_cancelled(new_year, old_year):
     return f"{config.INDENT}The year {new_year} has not been created.\
         \n{config.INDENT}The current year is still {old_year}"
-

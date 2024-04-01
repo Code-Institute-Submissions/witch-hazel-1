@@ -1,9 +1,9 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 # witch-hazel
-A bespoke command-line app developed in Python to manage the *Witch Hazel* nursery.
+A bespoke command-line app developed in Python to manage plant production at the *Witch Hazel* nursery.
 
-Code Institute - Third Milestone Project: Create a user-responsive command-line app to manage a particular domain task, solving a real-world, using a variety of programming constructs.The domain task in this case was the production of high-value garden plants by grafting as practiced by the *Witch Hazel* nursery.
+Code Institute - Third Milestone Project: Create a user-responsive command-line app to manage a particular domain task, solving a real-world problem, using a variety of programming constructs. The domain task in this case was the production of high-value garden plants by grafting as practiced by the *Witch Hazel* nursery.
 
 More specifically, the *witch-hazel* app is designed to provide support for planning and keeping track of work done in the production of grafted Hamamelis plants by the owners of the nursery.
 
@@ -56,7 +56,9 @@ Their company, *Witch Hazel*, is named after the beautiful group of plant specie
 <!-- TOC --><a name="the-plant-production-workflow"></a>
 ### The plant production workflow
 
-The two owners have jointly developed a highly efficient way of producing such grafted plants. They have a plentiful standing stock of _H. virginiana_, which they propagate by taking soft-wood cuttings in the autumn, which they leave to root over the course of the Roscommon winter (year zero). The following spring (around about April), they pot up all the cuttings that have rooted successfully into oblong three-litre pots and grow them on until they become small, one-year-old pot plants. In late winter of Year One (usually early to mid March), they graft onto those young plants (referred to as 'rootstocks') carefully selected buds (called 'scions') taken from their lovingly tended stock of mature cultivar specimens. The resulting grafted plants are then cared for for four to five years before being offered on the market as small bushes (about 50 to 60 cm tall) still in their original pots. Once the graft has sealed successfully (there may be considerable losses during the period before the graft seals), caring for the small plants becomes a good deal less labour-intensive; the work mostly involving keeping them watered and fed (and free of waterlogging), controlling weeds, and removing and disposing of any losses. The vast majority of the work is expended on at the early stages of production: making and potting up the rootstocks from cuttings and then grafting the scions onto those rootstocks when they are ready. The early aftercare of the new grafts also takes up quite a deal of work time. For this reason, the profitability of each year's production depends largely on guessing correctly how many plants to graft to satisfy demand a few years down the road, and making sure at the outset that they have enough healthy, potted-up root stocks available on which they can graft all the plants they want every year just as winter is turning to spring.
+The two owners have jointly developed a highly efficient way of producing such grafted plants. They have a plentiful standing stock of _H. virginiana_, which they propagate by taking soft-wood cuttings in the autumn, which they leave to root over the course of the Roscommon winter (in Year Minus Two). The following spring (around about April of Year Minus One), they pot up all the cuttings that have rooted successfully into oblong three-litre pots and grow them on until they become small, one-year-old pot plants (in Year Zero). In late winter of Year Zero (usually early to mid March), they graft onto those young plants (referred to as 'rootstocks') carefully selected buds (called 'scions') taken from their lovingly tended stock of mature cultivar specimens. The resulting grafted plants are then cared for for four to five years before being offered on the market as small bushes (about 40cm to 1 m tall) still in their original pots. Once the graft has sealed successfully (there may be considerable losses during the period before the graft seals), caring for the small plants becomes a good deal less labour-intensive; the work mostly involving keeping them watered and fed (and free of waterlogging), controlling weeds, and removing and disposing of any losses. The vast majority of the work is expended on at the early stages of production: making and potting up the rootstocks from cuttings and then grafting the scions onto those rootstocks when they are ready. The early aftercare of the new grafts also takes up quite a deal of work time. For this reason, the profitability of each year's production depends largely on guessing correctly how many plants to graft to satisfy demand a few years down the road, and making sure at the outset that they have enough healthy, potted-up root stocks available on which they can graft all the plants they want every year just as winter is turning to spring.
+
+A new distribution network they had been developing led them to increase the number of cuttings of rootstocks taken 
 
 Donal explained the workflow in _Hamamelis_ production as follows:
 - Green woody H. virginiana cuttings are taken in October/November and inserted with regular spacing in open ground (in a sheltered spot and well-drained, gritty and nutrient-poor soil). Those of cuttings that successfully produce roots are potted up in April/May of the following year. Donal tells me that most losses at this stage are incurred in the form of cuttings that fail to root. That's why they take many more cuttings than will eventually be needed. Rooted cuttings not needed for grafting almost a year later (in Year Zero &ndash; see below) are disposed of without ever being potted up. The couple always try to avoid such wastage, although after years over which few rooted cuttings die, there will often be a surplus of rootstocks ready for grafting. Such surplus rootstocks are rarely still suitable for grafting a year later, so they are usually disposed of.
@@ -282,7 +284,7 @@ When running Option 0 (creating a new year), the following warning appears, appa
 "/workspace/.pyenv_mirror/user/current/lib/python3.12/site-packages/gspread/worksheet.py:1069: UserWarning: [Deprecated][in version 6.0.0]: method signature will change to: 'Worksheet.update(value = [[]], range_name=)' arguments 'range_name' and 'values' will swap, values will be mandatory of type: 'list(list(...))'
   warnings.warn("
 
-Ignoring the strange unclosed parenthesis at the end, I reversed the sequence of the first two parameters, but this only made matters worse. The program, now unable to identify the range for my insert command, simply inserted it on range A1:A3 (disastrously). Since the original code achieved what I intended it to achieve, I kept it (along with a note to revisit the issue in the next week or two).
+Ignoring the strange unclosed parenthesis at the end, I reversed the sequence of the first two parameters, but this only made matters worse. The program, now unable to identify the range to which to apply my insert command, simply inserted it on range A1:A3 (disastrously). Since the original code achieved what I intended it to achieve, I kept it (along with a note to revisit the issue in the next week or two).
 
 <!-- TOC --><a name="app-robustness"></a>
 ## App robustness
@@ -297,15 +299,22 @@ The app has been designed so that integers entered outside the valid range of va
 
 <!-- TOC --><a name="yes-or-no-responses"></a>
 ### Yes or no responses
-The app is designed so that the user can respond to yes or know answers by entering 'y' or 'Y' for yes; entering any other value than 'y' or 'Y' is interpreted as a no.
+The app is designed so that the user can respond to yes or know answers by entering 'y' or 'Y' for yes and 'n' or 'N' for a 'No'.
 
+### Help functions 
+The App provides both an extensive general Help text and a specific specialised Help text for each option provided by the app. The user must simply type in "HelP" (in any combination of upper and lower case letters) at the witch-hazel command prompt to access the general help text and the same string followed by a space and a number between 0 and 9 to access detailed help on the corresponding option.
+
+### Exiting the program
+Typing exIT (in any combination of upper and lower case letters) from the witch-hazel command prompt will close the App.
 ---
 <!-- TOC --><a name="programming-philosophy"></a>
 ## Programming philosophy
 
-Being an app generally modelling a procedural series of steps, I made only limited active use of the concepts of OOP in my code: though I used a number of pre-coded classes through importing a number of packages, I created few custom classes specifically for the app. This was deliberate and should not be taken for any absence of understanding of the basic concepts of OOP.
+In the course of building this app (closely modelled on a more or less complex series of real-world processes), I found that I made only limited active use of the concepts of OOP in my code: though I used a very wide range of pre-coded third-party classes through importing a variety of packages, I created only one bespoke class specifically for the app (namely the NewYearController class in the new_year_controller.py file). While I didn't feel the need to create classes for any other purposes in this iteration, no doubt some reorganisation of the code making use of OOP principles will begin to make sense in later iterations.
 
 ## Manual testing
+
+### Robustness testing
 
 ### Features testing
 
@@ -317,26 +326,18 @@ Being an app generally modelling a procedural series of steps, I made only limit
 
 ### Bugs and bug squashing
 
-### Lighthouse testing
-
 ### Accessibility (webaim coolors)
 
-## Automated testing
-
-
-
-
-
 ## Setting up the environment
-The first task I completed was to create the spreadsheet with which Laura and Donal's app are going to interact. As I already have a Google account, there was no need to set up a new account. I simply navigated to https://docs.google.com/spreadsheets and created a Google spreadsheet (called "Hamamelis") that contained the three pages illustrated and explained above, inserting the data given to me by Laura and Donal.
+The first task I completed was to create the spreadsheet with which Laura and Donal's app are going to interact. As I already have a Google account, there was no need to set up a new account. I simply navigated to https://docs.google.com/spreadsheets and created a Google spreadsheet (called "Hamamelis") that contained the four pages illustrated and explained in this document, inserting the historical data for the period up until 2022 given to me by Laura and Donal.
 
-I then set up the google API to give Laura and Donal's new App read and write access the spreadsheet (they will no be allowed to modify the data on the spreadsheet directly by hand).
+I then set up the google API to give Laura and Donal's new App read and write access the spreadsheet (while they are authorised to view teh spreadsheet, they will not be allowed to modify the data on it directly by hand).  If the need should arise to do so, they will have to talk to me.
 
-I did this by clicking on the Share button at top left from within my "Hamamelis" Google spreadsheet and choosing my personal Google account. I then navigated to https://console.cloud.google.com/, selected the "Select a project" button and selected "New project".  I named my project "Hamamelis".
+I provided this authorisation by clicking on the Share button at top left from within my "Hamamelis" Google spreadsheet and choosing my personal Google account. I then navigated to https://console.cloud.google.com/, selected the "Select a project" button and selected "New project".  I named my project "Hamamelis".
 
 I then clicked "Select Project", which brought me onto the new "Hamamelis" project dashboard page.  
 
-From there I selected the Navigation menu and selected "APIs & Services / Library.
+From there I selected the Navigation menu and selected "APIs & Services / Library".
 
 There I enabled two APIs: one for Google Drive (to generate the necessary credentials) and one for Google Sheets.
 
@@ -362,7 +363,7 @@ Once all that was done, I navigated back to the APIs and Services/Library page a
 
 I set up the Github repository for my project (under the name "witch-hazel" &ndash; https://github.com/JaimeHyland/witch-hazel) using the template made available by Code Institute at https://github.com/Code-Institute-Org/p3-template by clicking on the "Create a new repository" option on the "Use this template" dropdown list (setting the name as "JaimeHyland/witch-hazel"). I made the repository public (leaving the radio button selected by default as it is).
 
-I then opened my personal CI Students Gitpod dashboard and created a new Workspace including all the files created for the witch-hazel repository by the CI p3-template. I did so by clicking on the Create new workspace button, selecting the witch-hazel repository from the list of all my existing repositories in my personal Github account and then clicking on "Continue". Ihe workspace that then opened, I checked to make sure that all the files listed in the instructional video were present.
+I then opened my personal CI Students Gitpod dashboard and created a new Workspace including all the files created for the witch-hazel repository by the CI p3-template. I did so by clicking on the *Create new workspace* button, selecting the witch-hazel repository from the list of all my existing repositories in my personal Github account and then clicking on *Continue*. In the workspace that then opened, I checked to make sure that all the files listed in the Code Institute instructional video were present.
 
 
 ### Sharing the hamamelis Google Spreadsheet
@@ -375,6 +376,8 @@ To prevent the sensitive information contained in the creds.json file from being
 
 I then installed gspread and google-auth by typing the commands ``pip3 install gspread google-auth``.
 
+### Getting started with the coding
+
 Doing this put me in a position to begin my coding, my first step being to write ``import gspread`` and ``from google-oauth2.service_account import Credentials`` at the top of my run.py file, followed by five constants to be used by the App to maintain communication with my Google spreadsheet:
 - SCOPE (which lists the URLs of the three APIs that the App will need in order to run)
 - CREDS (which tells the App the file where the relevan credential values are to be found)
@@ -382,7 +385,7 @@ Doing this put me in a position to begin my coding, my first step being to write
 - GSPREAD_CLIENT (which represents the client of the App as defined by the SCOPED_CREDS)
 - SHEET (the actual spreadsheet the App will be working with)
 
-From here on in, I suggest using the Git commit logs combined with my inline comments to explain the content of my Python code. 
+From here on in, I suggest perusing the Git commit logs combined with my inline comments to get more details on the progress and content of my Python code. 
 
 
 <!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
@@ -390,9 +393,9 @@ From here on in, I suggest using the Git commit logs combined with my inline com
 
 ### Initial registration
 
-My first step to facilitate deploying my App on the Heroku Python environment  was to add my app's dependencies into my requirements.txt file (which the Heroku environment refers to when installing the necessary features on creation). I do this by running `` pip3 freeze > requirements.txt``, which collects all necessary installations on the Gitpod workspace and writes them into the requirements.txt file.
+My first step to facilitate deploying my App on the Heroku Python environment was to add my app's dependencies into my requirements.txt file (which the Heroku environment refers to when installing the necessary features on creation). I do this by running `` pip3 freeze > requirements.txt``, which collects all necessary installations on the Gitpod workspace and writes them into the requirements.txt file.
 
-The next step was to create an account with Heroku at heroku.com. I clicked on "Sign up for free" and filled out the sign-up form (using a genuine email address and with Role as Student and country as Germany), and then clicked "Create free account". I then confirmed via the validation email that Heroku sent me and set a password. And I then logged and accepted the Heroku terms of service.  Heroku now requires a real 16-digit credit or debit card for all its accounts and requires users to implement a minimum two-step validation process to use its hosting services. The form of validation I chose was using a code number sent to my smartphone on each log-in via Salesforce's Authenticator app. After a variety of issues relating to mutually incompatible localizations, limited payment options and complex processes to access the credit organised for me by Code Institute, I was eventually able to set up my account.
+The next step was to create an account with Heroku at heroku.com. I clicked on "Sign up for free" and filled out the sign-up form (using a genuine email address and with Role as Student and country as Germany, where I currently live), and then clicked "Create free account". I then confirmed via the validation email that Heroku sent me and set a password. And I then logged and accepted the Heroku terms of service.  Heroku now requires a real 16-digit credit or debit card for all its accounts and requires users to implement a minimum two-step validation process to use its hosting services. The form of validation I chose was using a code number sent to my smartphone on each log-in via Salesforce's Authenticator app. After a variety of minor teething issues I was eventually able to set up my account.
 
 
 ### Activating Code Institute's Heroku Student Pack
@@ -404,7 +407,7 @@ When I checked my account on the following day (at dashboard.heroku.com/account/
 
 ### Setting up our App in the Heroku environment
 
-From my personal dashboard in the Heroku site, I selected "Create new app" from the "New" dropdown list, gave it the app name "witch-hazel", chose "Europe" as its region and then pressed "Create App". I then clicked on the "Settings" tab and clicked on "Reveal Config Vars". From there I created config var (environment variable) and gave it the entire contents of the creds.json file as its value.
+From my personal dashboard in the Heroku site, I selected "Create new app" from the "New" dropdown list, gave it the app name "witch-hazel", chose "Europe" as its region and then pressed "Create App". I then clicked on the "Settings" tab and clicked on "Reveal Config Vars". From there I created a CREDS config var (environment variable) and gave it the entire contents of the creds.json file as its value.
 
 I then scrolled down the page a little, clicked "Add Buildpack" and added two buildpacks (python and nodejs, in that order), saving my work.
 
@@ -422,19 +425,25 @@ Rather nicely, these Eco Dynos go to sleep after a period, so that I don't have 
 <!-- TOC --><a name="lessons-learned"></a>
 ## Lessons learned
 
-This section is work in progress.
+In hindsight, I feel I may have bitten off more than I could chew. The complexity of this project caused it to run badly overtime. The effort however, taught me a lot about Python development and about translating complex procedures into formal code that may actually provide help to users.
+
+In the light of this experience, 
 
 <!-- TOC --><a name="other-unresolved-issues-and-future-development"></a>
 ## Other unresolved issues and future development
+As this App claims to be no more than a MVP, there is a long list of issues to be dealt with and objects for future development. Amongst them are:
+- A reporting tool to show the overall state of the data on the terminal.
+- A tool to tell users which task they still have left to do before closing out the year.
+- An option to add new cultivars to the current list of six cultivars currently being cultivated.
+- A series of routines to extract statistics from the raw data in google sheets (including such useful details as survival rates by age, stage and cultivar, etc.).
 
-This section is work in progress.
-
+There are also some bugs still to be dealt with, chief among them being a warning that appears when the gspread .update() function is used. The warning tells me that the order of the parameters I'm using is outdated ()
 <!-- TOC --><a name="credits"></a>
 ## Credits
-https://discuss.python.org/
-https://www.w3schools.com/
-https://www.digitalocean.com/
-https://stackoverflow.com/
-https://www.programiz.com/python-programming
+https://discuss.python.org/ 
+https://www.w3schools.com/ 
+https://www.digitalocean.com/ 
+https://stackoverflow.com/ 
+https://www.programiz.com/python-programming 
 
 This section is work in progress.

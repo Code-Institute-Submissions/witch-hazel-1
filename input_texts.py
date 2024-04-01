@@ -1,35 +1,41 @@
+"""
+This module stores texts displayed the users
+inviting them to enter commands or data.
+"""
+
 import config
 
 Y_OR_N_TEXT = f"{config.INDENT}Type 'y' for yes or 'n' for no."
 
-CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want to plan\
-    \n{config.INDENT}grafting (see the cultivars listed above). \
+CHOOSE_CULTIVAR_P = f"{config.INDENT}Please enter the number of the cultivar for which you want\
+    \n{config.INDENT}to plan grafting (see the cultivars listed above). \
     \n\n{config.PROMPT_STRING}"
 
-CHOOSE_CULTIVAR_M = f"{config.INDENT}Please enter the cultivar number of the new grafts you want to record\
-    \n{config.INDENT}(see the cultivars listed above). \
+CHOOSE_CULTIVAR_M = f"{config.INDENT}Please enter the cultivar number of the new grafts you want\
+    \n{config.INDENT}to record (see the cultivars listed above). \
     \n\n{config.PROMPT_STRING}"
 
-PLAN_CUTTINGS = f"{config.INDENT}Would you like to plan the number of cuttings you intend to take this season?\
+PLAN_CUTTINGS = f"{config.INDENT}Would you like to plan the number of cuttings you intend to take\
+    \n this season?\
     \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
-RECORD_POTTED = f"{config.INDENT}You have not yet potted up any cuttings! Would you like to record some\
-    \n{config.INDENT}newly potted cuttings now?\
+RECORD_POTTED = f"{config.INDENT}You have not yet potted up any cuttings! Would you like to\
+    \n{config.INDENT}record some newly potted cuttings now?\
     \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 LOSS_OF_ROOTSTOCKS = f"{config.INDENT}Would you like to record a loss of new rootstocks?\
     \n{config.INDENT}If you want to record a loss of grafted plants, choose 'n'!\
     \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
-CHOOSE_CULTIVAR_LOST = f"{config.INDENT}Please enter the cultivar number for which you want to record a loss\
-    \n{config.INDENT}(see the cultivars listed above). \
+CHOOSE_CULTIVAR_LOST = f"{config.INDENT}Please enter the cultivar number for which you want to\
+    \n{config.INDENT}record a loss (see the cultivars listed above). \
     \n\n{config.PROMPT_STRING}"
 
-CHOOSE_YEAR_LOST = f"{config.INDENT}Please enter the age of the plants for which you want to record a loss\
-    \n{config.INDENT}(typing '1' for year-one plants, '2' for year-two plants, and so on). \
+CHOOSE_YEAR_LOST = f"{config.INDENT}Please enter the age of the plants for which you want to record\
+    \n{config.INDENT}a loss (typing '1' for year-one plants, '2' for year-two plants, and so on). \
     \n\n{config.PROMPT_STRING}"
 
-HOW_MANY_PLANTS_LOST = f"{config.INDENT}How many plants of that category have been lost since then? \
+HOW_MANY_PLANTS_LOST = f"{config.INDENT}How many plants of that category have been lost since then?\
     \n\n{config.PROMPT_STRING}"
 
 GAIN_OF_ROOTSTOCKS = f"{config.INDENT}Would you like to record an acquisition of new rootstocks?\
@@ -84,8 +90,11 @@ NO_GRAFTS_YET_PLANNED = f"{config.INDENT}You have not yet planned to make any gr
     \n{config.INDENT}of this cultivar. Would you like to do so now?\
     \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
+TAKE_CUTTINGS_NOW = f"{config.INDENT}Would you like to enter some cuttings taken now?\
+    \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
+
 TAKE_MORE_CUTTINGS = f"{config.INDENT}Would you like to add additional cuttings taken now?\
-        \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
+    \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 HOW_MANY_ROOTSTOCKS_LOST = f"{config.INDENT}How many rootstocks have been lost since then? \
     \n\n{config.PROMPT_STRING}"
@@ -96,8 +105,7 @@ def grafts_made(grafts):
             \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 def completed_for_year(task):
-    return f"{config.INDENT}Have you completed the '{task}'\
-        \n{config.INDENT}task for the year?\
+    return f"{config.INDENT}Have you completed the '{task}' task for the year?\
         \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 def new_planned_value(cultivar):
@@ -162,9 +170,3 @@ def how_many_cuttings(new_year):
     return f"{config.INDENT}How many cuttings would you like to plan for {new_year}? \
         \n{config.INDENT}(Enter 0 if you want to plan cutting numbers later). \
         \n\n{config.PROMPT_STRING}"
-
-    
-
-
-
-
