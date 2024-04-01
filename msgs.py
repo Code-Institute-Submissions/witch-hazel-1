@@ -103,7 +103,8 @@ def main_menu_prompt(lower_bound, upper_bound):
     return f"{config.INDENT}Please choose an option by entering its number (between {lower_bound} \
 and {upper_bound}).\
         \n{config.INDENT}Disabled options will be displayed in a weaker colour than the \
-{config.COLOR_STRONG_WHITE}enabled{config.COLOR_NORMAL} options.\
+{config.COLOR_STRONG_WHITE}enabled{config.COLOR_NORMAL}\
+        \n{config.INDENT}options.\
         \n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number\
         \n{config.INDENT}on which you want detailed help), or 'EXIT' to quit.\
         \n{config.PROMPT_STRING}"

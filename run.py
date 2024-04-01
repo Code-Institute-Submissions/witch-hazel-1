@@ -133,7 +133,7 @@ f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)),  mini, maxi)
             return_value = 'help'
         elif user_input.split()[0]==commands.HELP:
             # Does it start with "help "?
-            return_value = detailed_help_routine(user_input.split()[1], mini, maxi)
+            return_value = detailed_help_routine(user_input, mini, maxi)
         else:
             return_value = parse_num_input(input(error_msgs.a_and_b(\
 f"{config.INDENT}'{user_input}'{not_a_number_blurb}{mini}", maxi)), mini, maxi)
@@ -150,7 +150,7 @@ def detailed_help_routine(input_string, mini, maxi):
     This routine parses inputs beginning with "help "
     """
     try:
-        help_option = int(input_string)
+        help_option = int(input_string.split()[1])
         # Is the second bit an integer in range?
         if mini <= help_option <= maxi:
             return_value = input_string
@@ -272,6 +272,7 @@ def option_help(option_no):
 
 
 def execute_option(user_input):
+    print(user_input)
     """
     Executes the option typed in by the user
     It assumes error handling has been done in the input parser.
@@ -319,8 +320,8 @@ def execute_option(user_input):
     # then the only remaining option is an
     # an input of the form "help [n]"!
     else:
-        print(f"user_input: {user_input}")
         option_help(int(user_input.split()[1]))
+
     main_menu(LOWER_BOUND, UPPER_BOUND)
 
 
