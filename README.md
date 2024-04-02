@@ -144,11 +144,11 @@ Any rootstocks notionally left over after the year's grafting campaign is finish
 
 ![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_before.png)
 
-*The rootstock worksheet as it might look at the start of a growing year (2024)*
+*The rootstock worksheet as it might look at the end of a growing year (2024)*
 
 ![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_after.png)
 
-*The rootstock worksheet as it might look at the end of a growing year (2024)*
+*The rootstock worksheet as it might look at the start of a growing year (2024), straight after the user has executed the* ``Create new year/Close out current year`` *function (for 2024). Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*
 
 <!-- TOC --><a name="the-grafts-year-zero-worksheet"></a>
 
@@ -156,9 +156,9 @@ Any rootstocks notionally left over after the year's grafting campaign is finish
 ### The 'plants' worksheet
 The plants worksheet is a little simpler. It shows the current stocks of each cultivar of each age group &ndash; i.e.: the total number of grafts of that age currently in stock (ignoring any plants sold), adjusted according to the losses and gains subsequently recorded by the couple in the witch-hazel program using the record_loss, record_gain, hold_back and bring_forward functions (see below).
 
-![The plants worksheet at the start of a year](assets/readme_assets/rootstock_before.png)
+![The plants worksheet at the start of a year](assets/readme_assets/plants_before.png)
 
-*The rootstock worksheet straight after the user executes the* ``Create new year/Close out current year`` *function (for 2024). Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*.*
+**.*
 
 ![The plants worksheet at the end of a year](assets/readme_assets/plants_after.png)
 
