@@ -18,25 +18,44 @@ More specifically, the *witch-hazel* app is designed to provide support for plan
    * [The plant production workflow](#the-plant-production-workflow)
 - [What the customer wants](#what-the-customer-wants)
 - [System design](#system-design)
-   * [The 'rootstock' worksheet ](#the-rootstock-worksheet)
    * [The 'grafts-year-zero' worksheet](#the-grafts-year-zero-worksheet)
+   * [The 'rootstock' worksheet ](#the-rootstock-worksheet)
    * [The 'plants' worksheet](#the-plants-worksheet)
-- [The program's original workflow and the technical issues with the technology used](#the-programs-original-workflow-and-the-technical-issues-with-the-technology-used)
-- [The program's workflow:](#the-programs-workflow)
+   * [The 'completed' worksheet](#the-completed-worksheet)
+- [Development, implementation and deployment environment](#development-implementation-and-deployment-environment)
+   * [Technologies used](#technologies-used)
+   * [The program's original workflow and the technical issues with the technology used](#the-programs-original-workflow-and-the-technical-issues-with-the-technology-used)
+   * [The program's final workflow:](#the-programs-final-workflow)
    * [Seasonal tasks in order](#seasonal-tasks-in-order)
-   * [ad-hoc tasks](#ad-hoc-tasks)
-- [Bug fixes and warning resolution](#bug-fixes-and-warning-resolution)
-   * [Bugs](#bugs)
-   * [Warnings](#warnings)
+   * [Non-seasonal tasks in order](#non-seasonal-tasks-in-order)
+   * [Closing the current year and preparing the data structure for the next year.](#closing-the-current-year-and-preparing-the-data-structure-for-the-next-year)
+- [Bug fixes and linting](#bug-fixes-and-linting)
+   * [Bugs and debugging](#bugs-and-debugging)
+   * [Linting](#linting)
+- [Unresolved technical issues](#unresolved-technical-issues)
 - [App robustness](#app-robustness)
    * [Numerical vs character/string entries](#numerical-vs-characterstring-entries)
-   * [Out of range numbers](#out-of-range-numbers)
-   * [Yes or no responses](#yes-or-no-responses)
+   * [Help functions ](#help-functions)
+   * [Exiting the program](#exiting-the-program)
 - [Programming philosophy](#programming-philosophy)
-- [Sharing the hamamelis google spreadsheet](#sharing-the-hamamelis-google-spreadsheet)
+   * [Segregating text resources for i10n and l10n](#segregating-text-resources-for-i10n-and-l10n)
+- [Manual testing](#manual-testing)
+   * [Robustness testing](#robustness-testing)
+   * [Features testing](#features-testing)
+   * [Browser compatibility](#browser-compatibility)
+   * [Device compatibility and responsiveness](#device-compatibility-and-responsiveness)
+- [Setting up the environment](#setting-up-the-environment)
+   * [The Google Drive API](#the-google-drive-api)
+   * [The Google sheets API](#the-google-sheets-api)
+   * [The Github repository and the Gitpod workspace](#the-github-repository-and-the-gitpod-workspace)
+   * [Sharing the hamamelis Google Spreadsheet](#sharing-the-hamamelis-google-spreadsheet)
+   * [Getting started with the coding](#getting-started-with-the-coding)
 - [Registering for Heroku and using it](#registering-for-heroku-and-using-it)
+   * [Initial registration](#initial-registration)
+   * [Activating Code Institute's Heroku Student Pack](#activating-code-institutes-heroku-student-pack)
+   * [Setting up our App in the Heroku environment](#setting-up-our-app-in-the-heroku-environment)
 - [Lessons learned](#lessons-learned)
-- [Other unresolved issues and future development](#other-unresolved-issues-and-future-development)
+- [Other unresolved issues, missing features and future development](#other-unresolved-issues-missing-features-and-future-development)
 - [Credits](#credits)
 
 <!-- TOC end -->
@@ -111,6 +130,7 @@ For simplicity's sake, and because I thought the data was not enormously complex
 
 The data should be read as follows.
 
+<!-- TOC --><a name="the-grafts-year-zero-worksheet"></a>
 ### The 'grafts-year-zero' worksheet
 The grafts-year-zero worksheet contains two more columns than the number of cultivars of _Hamamelis_ currently cultivated by the *Witch Hazel* nursery. 
 - The first column identifies the year to which the data in the corresponding row refers.
@@ -150,7 +170,6 @@ Any rootstocks notionally left over after the year's grafting campaign is finish
 
 *The rootstock worksheet as it might look at the start of a growing year (2024), straight after the user has executed the* ``Create new year/Close out current year`` *function (for 2024). Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*
 
-<!-- TOC --><a name="the-grafts-year-zero-worksheet"></a>
 
 <!-- TOC --><a name="the-plants-worksheet"></a>
 ### The 'plants' worksheet
@@ -158,26 +177,28 @@ The plants worksheet is a little simpler. It shows the current stocks of each cu
 
 ![The plants worksheet at the start of a year](assets/readme_assets/plants_before.png)
 
-**.*
+*The plants worksheet as it might look at the start of a growing year (2024)*
 
 ![The plants worksheet at the end of a year](assets/readme_assets/plants_after.png)
 
-*The plants worksheet as it might look at the end of a growing year (2024)*
+*The plants worksheet as it might look after Option 0 has been run at the end of 2024 or start of 2025*
 
+<!-- TOC --><a name="the-completed-worksheet"></a>
 ### The 'completed' worksheet
 The _completed_ worksheet is simpler again. It simply shows whether all the various seasonal tasks in relation to cuttings and the grafts of each variety are done. The decisive entry here is the unassuming J4, which is always 'n' until all relevant fields are 'y'. It then becomes 'y' as well and the user can then close out the old year and open a new one. When the user does that, all entries in _completed_ are reset to 'n'.
 
 ![The completed worksheet at the start of a year](assets/readme_assets/completed_before.png)
 
-*The plants worksheet as it might look at the start of a growing year (2024). No plants from this year yet*
+*The completed worksheet as it might look at the start of a growing year (2024). No seasonal tasks done yet*
 
-![The plants worksheet at the end of a year](assets/readme_assets/completed_after.png)
+![The completed worksheet at the end of a year](assets/readme_assets/completed_after.png)
 
-*The plants worksheet as it might look at the end of a growing year (2024), after Option 0 has been run. Note the new figures added to the top row by the algorithm that starts the new year*
+*The completed worksheet as it might look at the end of a growing year (2024), before Option 0 has been run. All seasonal tasks are complete, so Option 0 can be run (though it would be wise to check all maintenance tasks have been completed!)*
 
 
 - - - 
 
+<!-- TOC --><a name="development-implementation-and-deployment-environment"></a>
 ## Development, implementation and deployment environment
 All the code created during this project was written using gitpod.io, with version control using git.
 
@@ -189,6 +210,7 @@ The resulting App was deployed to a Heroku pseudo-terminal utility according to 
 Almost exclusively Python.
 
 
+<!-- TOC --><a name="the-programs-original-workflow-and-the-technical-issues-with-the-technology-used"></a>
 ### The program's original workflow and the technical issues with the technology used
 
 At the outset of programming, I wanted the app to call a run.py file in the usual way but to attach an argument after a blank space on the command line, depending on the task that the user wished to do at that time. Unfortunately, the Heroku pseudo terminal on which the app is destined to run does not allow the use of command-line arguments (or at least I have been unable to find a way of implementing such a command-line-argument-based design).
@@ -202,7 +224,7 @@ The time used dealing with this problem at the last minute may have affected som
 Having said all that, in hindsight, I now realise that my original design choice to type out each option as a command-line argument was unnecessary and that running the run.py file and inviting the user to type in the various options turned out to be a far more elegant solution.
 
 
-<!-- TOC --><a name="the-programs-workflow"></a>
+<!-- TOC --><a name="the-programs-final-workflow"></a>
 ### The program's final workflow:
 After considerable debate, it was decided to order the various tasks to be done in the program to match the tasks as they arose during the calendar year. One of the rejected candidate sequencing patterns was to follow the logical flow of what was actually done to individual plants, from planning the campaign to cuttings of _H. Virginiana_, through carrying out that plan in the autumn, through potting up rooted cuttings the following spring, then the planning of the grafting campaign and then doing the actual grafting of scions onto the rootstocks the following late winter, followed by all the ongoing maintenance tasks required to keep the grafted plants healthy and in order until ready for sale. Another candidate ordering was to begin each twelve-month period in the autumn, when the owners first begin to plan their cutting campaign.
 
@@ -273,6 +295,7 @@ Task closure as above.
 
 When all tasks for cuttings, rootstocks and all cultivars have been completed, Option 0 is enabled.
 
+<!-- TOC --><a name="non-seasonal-tasks-in-order"></a>
 ### Non-seasonal tasks in order
 
 They are followed by the non-seasonal tasks:
@@ -306,6 +329,7 @@ The logical number limits apply: you can't hold back a Year-One plant, and you c
 This function does the same as Option 8, but in the opposite direction.
 
 
+<!-- TOC --><a name="closing-the-current-year-and-preparing-the-data-structure-for-the-next-year"></a>
 ### Closing the current year and preparing the data structure for the next year.
 And finally, when at least all the seasonal tasks have been marked as completed, it's time for
 
@@ -329,10 +353,10 @@ Finally, the 'used or reserved' row for the previous year is overwritten by a ro
 
 All data now outside the first four columns (now populated either by zeroes or formulas) can no longer be edited.
 
-<!-- TOC --><a name="bug-fixes-and-warning-resolution"></a>
+<!-- TOC --><a name="bug-fixes-and-linting"></a>
 ## Bug fixes and linting
 
-<!-- TOC --><a name="bugs"></a>
+<!-- TOC --><a name="bugs-and-debugging"></a>
 ### Bugs and debugging
 Bugs were fixed as they arose function-by-function during smoke testing.
 
@@ -341,7 +365,7 @@ As far as practicable, all bugs are resolved separately and the Bug resolution i
 During final testing (which was completed after the linting was done), however, a number of bugs came up due to the interdependency of the various functions (and human frailty, of course). Their resolution is documented in git.
 
 
-<!-- TOC --><a name="warnings"></a>
+<!-- TOC --><a name="linting"></a>
 ### Linting
 
 I did my linting exclusively using the pylint tool towards the end of the development process, which uncovered a number of issues in my code that required extensive last-minute 
@@ -362,6 +386,7 @@ This was particularly true of messages telling of variables being redefined with
 I will leave discussion the few pylint messages left in my run.py file (my main module) to the _Unresolved issues_ section.
 
 - - -
+<!-- TOC --><a name="unresolved-technical-issues"></a>
 ## Unresolved technical issues
 
 Very occasionally during during development and testing the app failed to open, giving users the following 503 error:
@@ -415,6 +440,7 @@ As a result, the user can access the App's help options (see the section on Help
 This almost completely reduces the risk of the App crashing due to incorrect user entries, though I can do very little about keyboard interrupts due to the accidental use of Control C, for example.
 
 
+<!-- TOC --><a name="help-functions"></a>
 ### Help functions 
 The App provides both an extensive general Help text and a specific specialised Help text for each option provided by the app. The user must simply type in "HelP" (in any combination of upper and lower case letters) at the witch-hazel command prompt to access the general help text and the same string followed by a space and a number between 0 and 9 (``Help [n]`` where ``[n]`` is a number between 0 and 9) to access detailed help on the corresponding option.
 
@@ -424,6 +450,7 @@ The ``help`` provides three screen's worth of general help information, which th
 
 *What you see after typing * ``Create new year/Close out current year`` *from the command prompt anywhere in the App*.
 
+<!-- TOC --><a name="exiting-the-program"></a>
 ### Exiting the program
 Typing ``exIT`` (in any combination of upper and lower case letters) from the witch-hazel command prompt will close the App.
 ---
@@ -436,6 +463,7 @@ While I didn't feel the need to create classes for any other purposes in this it
 
 I am quite sure that employing some of OOP's encapsulation and inheritance design features may make my code much less opaque and much more reusable.
 
+<!-- TOC --><a name="segregating-text-resources-for-i10n-and-l10n"></a>
 ### Segregating text resources for i10n and l10n
 
 In an attempt to leverage my background in internationalization, localization and technical translation, I was careful to segregate into minimally technical resource files so that if it became necessary in the future that the app be localized into another at least Western, left-to-right language, that the work will be easier.
@@ -445,8 +473,10 @@ While the flow of the text (and the level of technical difficulty for any locali
 While a lot more could be done to the technical structure of the app to make the life of the localizer and ultimately its translator(s) easier (perhaps creating an algorithm to automate text formatting, for example), the app could be said to be, at least in principle, _internationalizable_.
 
 
+<!-- TOC --><a name="manual-testing"></a>
 ## Manual testing
 
+<!-- TOC --><a name="robustness-testing"></a>
 ### Robustness testing
 The approach I used to robustness testing was considerably eased by my use of the two user entry control functions described above.
 
@@ -460,6 +490,7 @@ My final testing, however, did involve entering the following inputs among other
 ``'  y'`` Should render as 'y'
 
 
+<!-- TOC --><a name="features-testing"></a>
 ### Features testing
 
 During development, I unit tested each of the functions of the App as I developed in an ongoing process.
@@ -472,16 +503,19 @@ I ran it for 2024 figures several times, keeping an end-of-2023 copy of the shee
 
 I tested them for the behaviour described above, but I did not formally create any test cases.
 
+<!-- TOC --><a name="browser-compatibility"></a>
 ### Browser compatibility
 I have successfully tested this App using the latest versions of Edge and Chrome.
 
 I did no checks on older versions or any other browser.
 
 
+<!-- TOC --><a name="device-compatibility-and-responsiveness"></a>
 ### Device compatibility and responsiveness
 This App is responsive enough for use on smaller standard Android mobile devices.
 
 
+<!-- TOC --><a name="setting-up-the-environment"></a>
 ## Setting up the environment
 The first task I completed was to create the spreadsheet with which Laura and Donal's app are going to interact. As I already have a Google account, there was no need to set up a new account. I simply navigated to https://docs.google.com/spreadsheets and created a Google spreadsheet (called "Hamamelis") that contained the four pages illustrated and explained in this document, inserting the historical data for the period up until 2022 given to me by Laura and Donal.
 
@@ -495,6 +529,7 @@ From there I selected the Navigation menu and selected "APIs & Services / Librar
 
 There I enabled two APIs: one for Google Drive (to generate the necessary credentials) and one for Google Sheets.
 
+<!-- TOC --><a name="the-google-drive-api"></a>
 ### The Google Drive API
 
 To initiate the Google Drive API ran a search for "Google Drive", which gave me "Google Drive API" at the top of my search results list. I clicked on it and then on the "Enable"  button on the page that then appeared. This brought me to the Google Drive Overview page.
@@ -508,11 +543,13 @@ This brought me back to the Credentials page for the Google Drive API, where I c
 This created a json file containing the necessary API credentials for download to my machine.  Once the download was complete I noted the directory to which it was downloaded.
 
 
+<!-- TOC --><a name="the-google-sheets-api"></a>
 ### The Google sheets API
 
 Once all that was done, I navigated back to the APIs and Services/Library page and searched for the Google Sheets API, which yielded a single result. I clicked on it and then on the Enable button in the Google Sheets API page.
 
 
+<!-- TOC --><a name="the-github-repository-and-the-gitpod-workspace"></a>
 ### The Github repository and the Gitpod workspace
 
 I set up the Github repository for my project (under the name "witch-hazel" &ndash; https://github.com/JaimeHyland/witch-hazel) using the template made available by Code Institute at https://github.com/Code-Institute-Org/p3-template by clicking on the "Create a new repository" option on the "Use this template" dropdown list (setting the name as "JaimeHyland/witch-hazel"). I made the repository public (leaving the radio button selected by default as it is).
@@ -520,6 +557,7 @@ I set up the Github repository for my project (under the name "witch-hazel" &nda
 I then opened my personal CI Students Gitpod dashboard and created a new Workspace including all the files created for the witch-hazel repository by the CI p3-template. I did so by clicking on the *Create new workspace* button, selecting the witch-hazel repository from the list of all my existing repositories in my personal Github account and then clicking on *Continue*. In the workspace that then opened, I checked to make sure that all the files listed in the Code Institute instructional video were present.
 
 
+<!-- TOC --><a name="sharing-the-hamamelis-google-spreadsheet"></a>
 ### Sharing the hamamelis Google Spreadsheet
 
 I located the credentials file which I had already downloaded and dragged & dropped it into the root directory of my gitpod witch-hazel workspace and then renamed it "creds.json".
@@ -530,6 +568,7 @@ To prevent the sensitive information contained in the creds.json file from being
 
 I then installed gspread and google-auth by typing the commands ``pip3 install gspread google-auth``.
 
+<!-- TOC --><a name="getting-started-with-the-coding"></a>
 ### Getting started with the coding
 
 Doing this put me in a position to begin my coding, my first step being to write ``import gspread`` and ``from google-oauth2.service_account import Credentials`` at the top of my run.py file, followed by five constants to be used by the App to maintain communication with my Google spreadsheet:
@@ -542,10 +581,11 @@ Doing this put me in a position to begin my coding, my first step being to write
 From here on in, I suggest perusing the Git commit logs combined with my inline comments to get more details on the progress and content of my Python code. 
 
 
-<!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
 
+<!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
 ## Registering for Heroku and using it
 
+<!-- TOC --><a name="initial-registration"></a>
 ### Initial registration
 
 My first step to facilitate deploying my App on the Heroku Python environment was to add my app's dependencies into my requirements.txt file (which the Heroku environment refers to when installing the necessary features on creation). I do this by running `` pip3 freeze > requirements.txt``, which collects all necessary installations on the Gitpod workspace and writes them into the requirements.txt file.
@@ -553,6 +593,7 @@ My first step to facilitate deploying my App on the Heroku Python environment wa
 The next step was to create an account with Heroku at heroku.com. I clicked on "Sign up for free" and filled out the sign-up form (using a genuine email address and with Role as Student and country as Germany, where I currently live), and then clicked "Create free account". I then confirmed via the validation email that Heroku sent me and set a password. And I then logged and accepted the Heroku terms of service.  Heroku now requires a real 16-digit credit or debit card for all its accounts and requires users to implement a minimum two-step validation process to use its hosting services. The form of validation I chose was using a code number sent to my smartphone on each log-in via Salesforce's Authenticator app. After a variety of minor teething issues I was eventually able to set up my account.
 
 
+<!-- TOC --><a name="activating-code-institutes-heroku-student-pack"></a>
 ### Activating Code Institute's Heroku Student Pack
 
 Once I had successfully set up my Heroku account, I navigated to www.heroku.com/github-students, clicked on the "Get the student offer" option, verified my status as a Github student and then clicked "Authorize heroku". I then verified my billing information and confirmed the credit card that I had already entered.  I then entered my first and last names, with "Code Institute" as my school name, and pressed "Send". On the dialog that then opened, I indicated my agreement with the Heroku Terms and Conditions by pressing "Agree" and left the site.
@@ -560,6 +601,7 @@ Once I had successfully set up my Heroku account, I navigated to www.heroku.com/
 When I checked my account on the following day (at dashboard.heroku.com/account/billing), the appropriate sum was added to my Platform Credits.
 
 
+<!-- TOC --><a name="setting-up-our-app-in-the-heroku-environment"></a>
 ### Setting up our App in the Heroku environment
 
 From my personal dashboard in the Heroku site, I selected "Create new app" from the "New" dropdown list, gave it the app name "witch-hazel", chose "Europe" as its region and then pressed "Create App". I then clicked on the "Settings" tab and clicked on "Reveal Config Vars". From there I created a CREDS config var (environment variable) and gave it the entire contents of the creds.json file as its value.
@@ -588,7 +630,7 @@ I would also have segregated my code at an earlier stage, and more systematicall
 
 
 
-<!-- TOC --><a name="other-unresolved-issues-and-future-development"></a>
+<!-- TOC --><a name="other-unresolved-issues-missing-features-and-future-development"></a>
 ## Other unresolved issues, missing features and future development
 As this App makes no claim to be anything other than a MVP, and aside from the unresolved technical issues discussed above, there is a long list of issues to be dealt with and objects for future development in the project. Amongst them are:
 
