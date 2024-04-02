@@ -118,7 +118,7 @@ The grafts-year-zero worksheet contains two more columns than the number of cult
 
 ![The grafts-year-zero worksheet the start of a year](assets/readme_assets/grafts-year-zero_before.png)
 
-*The grafts-year-zero worksheet as it might look at the end of a growing year (2024)*
+*The grafts-year-zero worksheet as it might look at the start of a growing year (2024). Notice that the formulae are already in place, ready to process user entries through the App*
 
 ![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_after.png)
 
@@ -158,22 +158,22 @@ The plants worksheet is a little simpler. It shows the current stocks of each cu
 
 ![The plants worksheet at the start of a year](assets/readme_assets/rootstock_before.png)
 
-*The plants worksheet as it might look at the end of a growing year (2024)*
+*The rootstock worksheet straight after the user executes the* ``Create new year/Close out current year`` *function (for 2024). Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*.*
 
-![The plants worksheet at the end of a year](assets/readme_assets/rootstock_after.png)
+![The plants worksheet at the end of a year](assets/readme_assets/plants_after.png)
 
 *The plants worksheet as it might look at the end of a growing year (2024)*
 
 ### The 'completed' worksheet
 The _completed_ worksheet is simpler again. It simply shows whether all the various seasonal tasks in relation to cuttings and the grafts of each variety are done. The decisive entry here is the unassuming J4, which is always 'n' until all relevant fields are 'y'. It then becomes 'y' as well and the user can then close out the old year and open a new one. When the user does that, all entries in _completed_ are reset to 'n'.
 
-![The plants worksheet at the start of a year](assets/readme_assets/plants_before.png)
+![The completed worksheet at the start of a year](assets/readme_assets/completed_before.png)
 
-*The plants worksheet as it might look at the end of a growing year (2024)*
+*The plants worksheet as it might look at the start of a growing year (2024). No plants from this year yet*
 
-![The plants worksheet at the end of a year](assets/readme_assets/plants_after.png)
+![The plants worksheet at the end of a year](assets/readme_assets/completed_after.png)
 
-*The plants worksheet as it might look at the end of a growing year (2024)*
+*The plants worksheet as it might look at the end of a growing year (2024), after Option 0 has been run. Note the new figures added to the top row by the algorithm that starts the new year*
 
 
 - - - 
@@ -310,22 +310,6 @@ This function does the same as Option 8, but in the opposite direction.
 And finally, when at least all the seasonal tasks have been marked as completed, it's time for
 
 0. **Close out current year** (enabled only if all seasonal tasks have been completed)
-
-![The rootstock worksheet straight after the user executes the ``Create new year/Close out current year`` function](assets/readme_assets/rootstock_new_year.png)
-
-*The rootstock worksheet straight after the user executes the* ``Create new year/Close out current year`` *function. Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*.*
-
-- - -
-
-![The grafts-year-zero worksheet straight after the user executes the ``Create new year/Close out current year`` function](assets/readme_assets/grafts-year-zero_new_year.png)
-
-*The grafts-year-zero worksheet straight after the user executes the* ``Create new year/Close out current year`` *function.*
-
-- - -
-
-![The plants worksheet straight after the user executes the ``Create new year/Close out current year`` function](assets/readme_assets/plants_new_year.png)
-
-*The plants worksheet straight after the user executes the* ``Create new year/Close out current year`` *function*.
 
 If the user chooses this option while it's marked as disabled, they are told to go back and finish work on the current year before beginning work on the new one.
 
