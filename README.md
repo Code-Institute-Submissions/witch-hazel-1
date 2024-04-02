@@ -168,7 +168,7 @@ Any rootstocks notionally left over after the year's grafting campaign is finish
 
 ![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_after.png)
 
-*The rootstock worksheet as it might look at the end of a growing year (2024). Note that no changes have been made to the row marked 2024 beyond column C, as all that has happened to cuttings for this year is that they're having been planned during this year. They now need to grow roots (for potting next year) and then grow into rootstocks ready for grafting (for the year after next).
+*The rootstock worksheet as it might look at the end of a growing year (2024). Note that no changes have been made to the row marked 2024 beyond column C, as all that has happened to cuttings for this year is that they're having been planned during this year. They now need to grow roots (for potting next year) and then grow into rootstocks ready for grafting (for the year after next).*
 
 
 <!-- TOC --><a name="the-plants-worksheet"></a>
@@ -187,11 +187,11 @@ The plants worksheet is a little simpler. It shows the current stocks of each cu
 ### The 'completed' worksheet
 The _completed_ worksheet is simpler again. It simply shows whether all the various seasonal tasks in relation to cuttings and the grafts of each variety are done. The decisive entry here is the unassuming J4, which is always 'n' until all relevant fields are 'y'. It then becomes 'y' as well and the user can then close out the old year and open a new one. When the user does that, all entries in _completed_ are reset to 'n'.
 
-![The completed worksheet at the start of a year](assets/readme_assets/completed_before.png)
+![The completed worksheet at the start of a year](assets/readme_assets/completed_after.png), straight after Option 0 has been run
 
 *The completed worksheet as it might look at the start of a growing year (2024). No seasonal tasks done yet*
 
-![The completed worksheet at the end of a year](assets/readme_assets/completed_after.png)
+![The completed worksheet at the end of a year](assets/readme_assets/completed_before.png)
 
 *The completed worksheet as it might look at the end of a growing year (2024), before Option 0 has been run. All seasonal tasks are complete, so Option 0 can be run (though it would be wise to check all maintenance tasks have been completed!)*
 
