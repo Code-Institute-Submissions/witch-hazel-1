@@ -296,7 +296,7 @@ def execute_option(user_input):
     If it's called from an input not run through an error-handling
     parser, then an error handler will need to be added.
     """
-    rootstocks = int(rootstock.acell('D2').value)
+    rootstocks = int(rootstock.acell('D4').value)
     rootstocks_plannable = int(rootstock.acell('H4').value)
 
     print(config.LINE_OF_UNDERSCORES)

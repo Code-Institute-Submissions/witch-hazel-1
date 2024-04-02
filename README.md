@@ -58,21 +58,21 @@ Their company, *Witch Hazel*, is named after the beautiful group of plant specie
 
 The two owners have jointly developed a highly efficient way of producing such grafted plants. They have a plentiful standing stock of _H. virginiana_, which they propagate by taking soft-wood cuttings in the autumn, which they leave to root over the course of the Roscommon winter (in Year Minus Two). The following spring (around about April of Year Minus One), they pot up all the cuttings that have rooted successfully into oblong three-litre pots and grow them on until they become small, one-year-old pot plants (in Year Zero). In late winter of Year Zero (usually early to mid March), they graft onto those young plants (referred to as 'rootstocks') carefully selected buds (called 'scions') taken from their lovingly tended stock of mature cultivar specimens. The resulting grafted plants are then cared for for four to five years before being offered on the market as small bushes (about 40cm to 1 m tall) still in their original pots. Once the graft has sealed successfully (there may be considerable losses during the period before the graft seals), caring for the small plants becomes a good deal less labour-intensive; the work mostly involving keeping them watered and fed (and free of waterlogging), controlling weeds, and removing and disposing of any losses. The vast majority of the work is expended on at the early stages of production: making and potting up the rootstocks from cuttings and then grafting the scions onto those rootstocks when they are ready. The early aftercare of the new grafts also takes up quite a deal of work time. For this reason, the profitability of each year's production depends largely on guessing correctly how many plants to graft to satisfy demand a few years down the road, and making sure at the outset that they have enough healthy, potted-up root stocks available on which they can graft all the plants they want every year just as winter is turning to spring.
 
-A new distribution network they had been developing led them to increase the number of cuttings of rootstocks taken 
+A new distribution network they had been developing led them to increase the number of cuttings of rootstocks taken from 2021 on, and these extra rootstocks were ready for grafting in 2023, significantly increasing the nursery's workload and planning/documentation overhead. This is why they expressed a need for a new bespoke production support app.
 
 Donal explained the workflow in _Hamamelis_ production as follows:
-- Green woody H. virginiana cuttings are taken in October/November and inserted with regular spacing in open ground (in a sheltered spot and well-drained, gritty and nutrient-poor soil). Those of cuttings that successfully produce roots are potted up in April/May of the following year. Donal tells me that most losses at this stage are incurred in the form of cuttings that fail to root. That's why they take many more cuttings than will eventually be needed. Rooted cuttings not needed for grafting almost a year later (in Year Zero &ndash; see below) are disposed of without ever being potted up. The couple always try to avoid such wastage, although after years over which few rooted cuttings die, there will often be a surplus of rootstocks ready for grafting. Such surplus rootstocks are rarely still suitable for grafting a year later, so they are usually disposed of.
-- As compost and pots (the only other critical inputs) can be ordered at short notice, neither input represents a bottleneck risk for the couple. They don't need these variables to be modelled in the program for the moment.
+- Green woody H. virginiana cuttings are taken in October/November and inserted with regular spacing in open ground (in a sheltered spot and well-drained, gritty and nutrient-poor soil). Those of the cuttings that successfully produce roots are potted up in April/May of the following year. Donal tells me that most losses at this stage are incurred in the form of cuttings that fail to root. That's why they take many more cuttings than will eventually be needed. Rooted cuttings not needed for grafting almost a year later (in Year Zero &ndash; see below) are disposed of without ever being potted up. The couple always try to avoid such wastage, although after years over which few rooted cuttings die, they will often have a surplus of rootstocks ready for grafting. Such surplus rootstocks are rarely still suitable for grafting a year later, so &mdash;with a few exceptions&mdash; they are usually disposed of.
+- As compost and pots (the only other critical inputs) can be ordered at short notice, neither input represents a bottleneck risk for the couple. They therefore don't need these variables to be modelled in the program for the moment.
 - The production process currently does not involve any repotting; each successfully rooted cutting is potted at the very outset into its final three-litre pot.
-- The rooted, potted-up cuttings of H. virginiana are grown on for a full season and are readied for grafting in February to March of Year One (the precise time of year depends on the weather and the seasonal maturity of the scion buds to be grafted onto them &mdash;they should be swelling visibly but not yet open).
+- The rooted, potted-up cuttings of H. virginiana (from the cuttings taken in Year Minus Two and potted up in Year Minus One) are grown on for a full season and are readied for grafting in February to March of Year Zero (the precise time of year depends on the weather and the seasonal maturity of the scion buds to be grafted onto them &mdash;they should be swelling visibly but not yet open).
 - The couple can't recall any year in which there was any shortage of scion buds, though actually selecting, cutting and preparing them correctly is a painstaking and time-intensive job.
 - Actually joining the scions onto the rootstocks is also a highly skilled and time-consuming task. But here again, the tools and materials required (a grafting knife per worker, grafting tape and horticultural wax) are easy to obtain at short notice.
-- After the hard graft of grafting has been completed, the new baby plants are carefully placed in intensive care in the couple's polyethylene tunnel for about two months, during which time there may be substantial losses (up to 40%) through failure of the graft to fuse.
-- Once that period is over, the plants are taken outside to a sheltered spot on open ground. Their three-litre pots are buried to the neck in well-drained, humus-rich soil to reduce the risk of drying out. They will remain there for several years until they're large enough for sale. The youngest cohort offered for sale are in their fifth year from Year Zero. All the plants are watered, weeded, cared for and re-spaced where required, and any losses (which are generally much less frequent once the plants have survived year one) are removed intermittently and disposed of.
+- After the hard graft of grafting has been completed, the new baby plants are carefully placed in intensive care in the couple's polyethylene tunnel for about two months, during which time there may be substantial losses (in bad years up to 40%) through failure of the graft to fuse.
+- Once that period is over, the plants are taken outside to a sheltered spot on open ground. Their three-litre pots are buried to the neck in well-drained, humus-rich soil to reduce the risk of drying out. They will remain there for several years until they're large enough for sale. The youngest cohort generally offered for sale are in their fifth year from Year Zero. All the plants are watered, weeded, cared for and re-spaced where required, and any losses (which are generally much less frequent once the plants have survived Year One) are removed intermittently and disposed of.
 - Each year's production is kept together and grouped by cultivar, but particular plants that are growing particularly well or particularly slowly may be promoted or demoted to another year cohort where appropriate.
 - Unsold Year-Five plants may be repotted and grown on for sale as more mature specimens in subsequent years. However, this part of the production process has not yet been modelled in the *witch-hazel* app.
 
-Both Laura and Donal often refer to "Year Zero", by which they mean the calendar year in which they actually do the biggest job in the whole production process: actually making the grafts. You could say that they make rootstock cuttings in autumn of Year Zero Minus One, pot up the successfully rooted cuttings in the spring of Year Zero and do the grafting work in February to early March of Year One. The plants thus produced are thereafter classified by age, with newly grafted plants being labelled "Year-One plants", which become "Year-Two plants" at grafting time every year, with Year-Two plants becoming Year-Three plants and so on. With a few exceptions, the plants are not ready for sale until they reach Year Five. 
+Both Laura and Donal often refer to "Year Zero", by which they mean the calendar year in which they actually do the biggest job in the whole production process: actually making the grafts. You could say that they make rootstock cuttings in autumn of Year Zero Minus Two, pot up the successfully rooted cuttings in the spring of Year Minus One and do the grafting work in February to early March of Year Zero. The plants thus produced are thereafter classified by age, with newly grafted plants being labelled "Year-Zero plants", which become "Year-One plants" at the end of the calendar year (when the year is closed out and a new production year begins), with Year-One plants becoming Year-Two plants and so on. With a few exceptions irrelevant for our purposes, the plants are not ready for sale until they reach Year Five. 
 
 - - -
 
@@ -84,12 +84,12 @@ Laura and Donal have asked me to provide them with a simple command line program
 - plan and keep track of the process of producing the cuttings for rootstocks, potting them up and growing them on
 - update and show the number of potted rootstocks available every year for grafting
 - plan the numbers of each cultivar to be used as scions on the root stocks, warning the couple when there are not enough rootstocks to execute the plan in full
-- record throughout the year any losses incurred (for whatever reasons) by cultivar and age and any acquisitions (whether by purchase from a third party or via any of a number of horticultural tricks that the couple have up their sleeves)
+- record throughout the year any losses incurred (for whatever reasons) by cultivar and age, as well as any acquisitions (whether by purchase from a third party or via any of a number of horticultural tricks that the couple have up their sleeves)
 - show the flexibility to allow the couple to hold back particularly slow-growing specimens for another year and to reclassify plants that have grown particularly well in a particular year so that they effectively skip a year. Since they tend to do this sort of work whenever they get time throughout the year, they should be able to do this intermittently at any time of year.
 
 N.B.: They currently grow six different cultivars for sale (but might expand their range in the future if they can find attractive cultivars free of plant breeders' rights fees). The couple have told me that they have no immediate plans to increase the number of cultivars they are using and that the functionality to add a new cultivar to the list (and remove existing cultivars) can wait until a later iteration of the program.  They also feel the need to see an overview of the data on-screen is something that can happen later.
 
-"That's enough for the moment," said Laura, "once we have a system that can do those things, we'll be able to plan better. And once we've seen the benefits, we'll have a look at what might still need doing. The main thing we need right now is something that keeps our records straight, so we canncompare like against like when looking for areas where we can improve our efficiency and/or rebalance the numbers of the various cultivars we produce. We can start looking at what we still need to do to improve the process control and overview once we've got the thing going. And then later still we can take a look processes both upstream and downstream of the actual production procedures ... maybe even in the sales area ... after we've bedded in our basic  system. We can even have a look at applying the system to our rose production business if it looks like it might save us a bit of time and money there too. But let's not get ahead of ourselves."
+"That's enough for the moment," said Laura, "once we have a system that can do those things, we'll be able to plan better. And once we've seen the benefits, we'll have a look at what might still need doing. The main thing we need right now is something that keeps our records straight, so we can compare like against like when looking for areas where we can improve our efficiency and/or rebalance the numbers of the various cultivars we produce. We can start looking at what we still need to do to improve the process control and overview once we've got the thing going. And then later still we can take a look processes both upstream and downstream of the actual production procedures ... maybe even in the sales area ... after we've bedded in our basic  system. We can even have a look at applying the system to our rose production business if it looks like it might save us a bit of time and money there too. But let's not get ahead of ourselves."
 
 - - -
 
@@ -99,7 +99,6 @@ N.B.: They currently grow six different cultivars for sale (but might expand the
 ![Some flow charts portraying a selection of important witch-hazel worklflows](assets/readme_assets/hamamelis.gif)
 
 *Some flow charts portraying a selection of important witch-hazel worklflows*
-
 
 
 Accordingly, I prepared a series of outline flow charts in consultation with Laura and Donal on the basis of the needs they described to me. Once they'd approved the charts, I began thinking about actually programming the various functionalities.
@@ -112,34 +111,50 @@ For simplicity's sake, and because I thought the data was not enormously complex
 
 The data should be read as follows.
 
+### The 'grafts-year-zero' worksheet
+The grafts-year-zero worksheet contains two more columns than the number of cultivars of _Hamamelis_ currently cultivated by the *Witch Hazel* nursery. 
+- The first column identifies the year to which the data in the corresponding row refers.
+- The second column tells any human or machine reader whether the figures in the corresponding row refer to numbers of grafted plants that the couple originally planned ('planned'), that they actually made ('grafted'), that they currently have either already used up or committed to in planning ('used or reserved') and, finally, that they have since lost. The 'grafted' figure is the total number of mature rootstocks (potted up in Year Minus One) upon which a graft of the corresponding variety has been made. For changes made to it programmatically on closing out the year, see below.
+
+![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_old_year.png)
+
+*The grafts-year-zero worksheet as it might look at the end of a growing year*
+
 <!-- TOC --><a name="the-rootstock-worksheet"></a>
 ### The 'rootstock' worksheet 
-- The first column (A) is a label to tell the witch-hazel program what year the figures in the corresponding row refer to. The current year is at the top.
+- The first column (A) is a label to tell the witch-hazel program what year the figures in the corresponding row refer to. The labelling refers to the calendar year in which the relevant cuttings were taken.
+
 - The top figure in the second column (B) shows the number of cuttings that the couple plan to take in the autumn of the current year minus one. The figures below that represent the number of cuttings that the couple planned to take in each relevant year minus one in the past.
-- The third column (C) shows the number of cuttings that they actually took in the relevant year.
+
+- The third column (C) shows the number of cuttings that they actually took in the relevant year. Cuttings that failed to root are not recorded in the system: the lost cuttings simply end up not being potted up.
+
 - The fourth column (D) shows the number of cuttings that rooted successfully and were potted up during the spring. It is a representation of work done, and does not increase when immature rootstocks are acquired from an outside source, nor does it reduce when such rootstocks are lost through disease or damage, nor when they are used up in the grafting process. Notice the change in nomenclature: successfully rooted _cuttings_ begin to be referred to as _rootstocks_ as soon as they've been planted in pots (potted up).
-- The fifth column (E) contains at most two non-zero values: one in E1, which represents the figure for rootstocks in stock this year intended for use as next year as rootstocks. It is equivalent to the value in D1 minus any losse, plus any acquisitions. The value in E2 represents the total number of rootstocks now available for use in this year's grafting effort. Every time a grafting session is recorded, this value goes down by the number of grafts made. 
-Any rootstocks left over after the year's grafting campaign is finished remain in the system until they are set to zero upon creation of a new year. The reason for this is that two-year-old rootstocks will rarely be suitable for grafting when the time comes around again in the new year. They are generally physically disposed of (recycling the pots and compost) when the opportunity arises during the course of the new year.
+
+- The fifth and sixth columns (E and F) contains figures for losses suffered and acquisitions made during the relevant year.
+
+- The seventh column (G) is simply the totals of columns D and F minus the figures from E.
+
+- The final column (H) is special: cell 'H3' shows the number of rootstocks potted up this year (i.e. from cuttings made in Year Minus One) plus any gains and minus any losses since then. Cell H4 shows the numbers of mature rootstocks available minus the figures either for grafts planned for each cultivar or grafts made for each cultivar, whichever is higher. When the user decides that grafting has been completed for the year for a variety, then the planning figure for that variety is ignored.
+
+Any rootstocks notionally left over after the year's grafting campaign is finished remain in the system until they are set to zero in Column H (From cell H4 down) upon creation of a new year. The reason for this is that two-year-old rootstocks will rarely be suitable for grafting when the time comes around again in the new year. They are generally physically disposed of (recycling the pots and compost) when the opportunity arises during the course of the new year.
 ![The rootstock worksheet the end of a year](assets/readme_assets/rootstock_old_year.png)
 
 *The rootstock worksheet as it might look towards the end of a growing year*
 
 <!-- TOC --><a name="the-grafts-year-zero-worksheet"></a>
-### The 'grafts-year-zero' worksheet
-The grafts-year-zero worksheet contains two more columns than the number of cultivars of _Hamamelis_ currently cultivated by the *Witch Hazel* nursery. 
-- The first column identifies the year to which the data in the corresponding row refers.
-- The second column tells any human or machine reader whether the figures in the corresponding row refer to numbers of grafted plants that the couple originally planned ('planned'), that they actually made ('grafted') and that they currently have in stock ('stock'). The 'stock' figure for the current year refers to the number of plants of the given category currently in stock (i.e., the number of grafts originally made of the relevant cultivar in the current year minus any losses recorded since then, plus any gains since then). When a new year is created, the relevant numbers are passed into the 'plants' worksheet, three new rows are created for the current year and the figures for 'planned' and 'grafted' for previous years can no longer be edited. 
-- Each subsequent column gives the same figures as described above for the cultivar labelled in the topmost cell.
-![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_old_year.png)
-
-*The grafts-year-zero worksheet as it might look towards the end of a growing year*
 
 <!-- TOC --><a name="the-plants-worksheet"></a>
 ### The 'plants' worksheet
-The plants worksheet is a little simpler. It shows the current stocks of each cultivar of each age group &ndash; i.e.: the total number of grafts of that age currently in stock, adjusted according to the losses and gains subsequently recorded by the couple in the witch-hazel program using the record_loss, record_gain, hold_back and bring_forward functions (see below).
+The plants worksheet is a little simpler. It shows the current stocks of each cultivar of each age group &ndash; i.e.: the total number of grafts of that age currently in stock (ignoring any plants sold), adjusted according to the losses and gains subsequently recorded by the couple in the witch-hazel program using the record_loss, record_gain, hold_back and bring_forward functions (see below).
 ![The plants worksheet towards the end of a year](assets/readme_assets/plants_old_year.png)
 
-*The plants worksheet as it might look towards the end of a growing year*
+*The plants worksheet as it might look at the end of a growing year*
+
+### The 'completed' worksheet
+The _completed_ worksheet is simpler again. It simply shows whether all the various seasonal tasks in relation to cuttings and the grafts of each variety are done. The decisive entry here is the unassuming J4, which is always 'n' until all relevant fields are 'y'. It then becomes 'y' as well and the user can then close out the old year and open a new one. When the user does that, all entries in _completed_ are reset to 'n'.
+![The plants worksheet towards the end of a year](assets/readme_assets/plants_old_year.png)
+
+*The plants worksheet as it might look at the end of a growing year*
 
 
 - - - 
@@ -147,53 +162,121 @@ The plants worksheet is a little simpler. It shows the current stocks of each cu
 <!-- TOC --><a name="the-programs-original-workflow-and-the-technical-issues-with-the-technology-used"></a>
 ## The program's original workflow and the technical issues with the technology used
 
-At the outset of programming, I wanted the app to call a run.py file in the usual way but to attach an argument after a blank space on the command line, depending on the task that the user wished to do at that time. Unfortunately, the Heroku pseudo terminal on which the app is destined to run does not allow the use of command-line arguments (or at least I have been unable to find a way of implementing such a command-line-argument-based design). Due to some issues with my implementation of the Heroku architecture, I discovered this limitation rather late in the day. As a result I was forced redesign the app at the last-minuteto follow a different (and in my opinion much less elegant) logic. Originally, the user would have typed the run.py file name on the terminal, followed by a space and then a short string indicating what they wanted the app to do.
+At the outset of programming, I wanted the app to call a run.py file in the usual way but to attach an argument after a blank space on the command line, depending on the task that the user wished to do at that time. Unfortunately, the Heroku pseudo terminal on which the app is destined to run does not allow the use of command-line arguments (or at least I have been unable to find a way of implementing such a command-line-argument-based design).
+
+Due to some issues with my implementation of the Heroku architecture, I discovered this limitation rather late in the day. As a result I was forced redesign the app at the last-minuteto follow a different (and in my opinion much less elegant) logic. Originally, the user would have typed the run.py file name on the terminal, followed by a space and then a short string indicating what they wanted the app to do.
 
 For example, they would have typed ``run.py plan_cuttings`` to plan their campaign of taking and preparing cuttings. But the Heroku pseudo-terminal automatically runs the ``run.py`` file without any arguments immediately upon opening, so everything must be based on an argument-free initial call. The description of the workflow below is based on my last-minute changes due to this difficulty. It should be understood, however, that workflow described below was not my first choice.
 
-The time used dealing with this problem at the last minute may have affected some of the finishing work on the program. For example, it was my original intention to connect each task to the next in their logical order, asking the user if they wished to go on to the next task. Sadly, the user now needs to restart the program every time they wish to complete a new task. 
+The time used dealing with this problem at the last minute may have affected some of the finishing work on the program in its first iteration. I have since dealt with most of those (mainly presentation) issues.
+
+Having said all that, in hindsight, I now realise that my original design choice to type out each option as a command-line argument was unnecessary and that running the run.py file and inviting the user to type in the various options turned out to be a far more elegant solution.
 
 - - - 
 
 <!-- TOC --><a name="the-programs-workflow"></a>
-## The program's workflow:
-After considerable debate, it was decided to order the various tasks to be done in the program to match the tasks as they arose during the calendar year. One of the other candidate orderings was to follow the logical flow of what was actually done to individual plants, from planning the campaign to cuttings of _H. Virginiana_, through carrying out that plan in the autumn, through potting up rooted cuttings the following spring, then the planning of the grafting campaign and then doing the actual grafting of scions onto the rootstocks the following late winter, followed by all the ongoing maintenance tasks required to keep the grafted plants healthy and in order until ready for sale. Another option was to begin each twelve-month period in the autumn, when the owners first begin to plan their cutting campaign.
+## The program's final workflow:
+After considerable debate, it was decided to order the various tasks to be done in the program to match the tasks as they arose during the calendar year. One of the rejected candidate sequencing patterns was to follow the logical flow of what was actually done to individual plants, from planning the campaign to cuttings of _H. Virginiana_, through carrying out that plan in the autumn, through potting up rooted cuttings the following spring, then the planning of the grafting campaign and then doing the actual grafting of scions onto the rootstocks the following late winter, followed by all the ongoing maintenance tasks required to keep the grafted plants healthy and in order until ready for sale. Another candidate ordering was to begin each twelve-month period in the autumn, when the owners first begin to plan their cutting campaign.
 
 Though beginning the workflow at the start of every calendar year and ordering app tasks like real-world seasonal nursery tasks added a little complexity to the design of the program, the reason for doing so was two-fold:
 - Early winter (around the Christmas holiday time), being the quiet time for the couple, was the best time for them to check on the work they had done over the year and to ensure that it was properly recorded in the App.
 - The couple could more easily tick off tasks done in the order in which they were done, thus making sure the data for each year was complete before closing out the year and beginning a new year.
 
-Thus the program opens with the task of planning the grafting campaign (for each cultivar), going through each subsequent seasonal task in calendar order, following these with the non-seasonal maintenance tasks of the nursery and finishing with the final step of closing out the calendar year and preparing the spreadsheet for the data to be input in the following year.
+Thus the program opens with the task of planning the grafting campaign (for each cultivar) (which happens in late winter &ndash; in February or March), going through each subsequent seasonal task in calendar order, following these with the non-seasonal maintenance tasks of the nursery and finishing with the final step of closing out the calendar year and preparing the spreadsheet for the data to be input in the following year.
+
+In the App's main menu, the five seasonal tasks are grouped together as Options 1 to 5 at the top of the menu, with the non-seasonal tasks grouped below them. The final task of the year is shown at the bottom of the menu, in orange if the option is disabled (because all seasonal tasks are not yet complete) and in green if it's enabled.
 
 <!-- TOC --><a name="seasonal-tasks-in-order"></a>
 ### Seasonal tasks in order
 
 Here, then are the seasonal tasks as they appear in the main (and only) menu of the program, along with their data dependencies.
-1. plan grafting tasks (dependent on the mature rootstocks available and on the cultivars listed in the system) (January or February)
-2. record grafts made (cross-checked against rootstocks and broken down by cultivar) (February to April)
-3. pot up rooted cuttings (no planning needed: numbers depend on the number of cuttings taken in the previous season that have successfully rooted) (April to June)
-4. plan cutting campaign (depends on projected needs; there is rarely an issue with the amount of material or space available suitable for taking cuttings) (August to September)
-5. take cuttings (October and November)
+1. **Plan grafts for this year** (dependent on the mature rootstocks available and on the cultivars listed in the system) (Febuary or March)
+
+If the user chooses 1, they are shown the list of cultivars and asked to choose the cultivar for which they want to plan grafting.
+
+On condition the planning task has not already been completed, they are given a variety of relevant information (rootstocks available, etc.) and invited to enter a planned figure (or to replace any existing planned figure). If the planning task has already been recorded as completed, they are asked if they wish to reopen it.
+
+They are prevented from entering more planned grafts than there are grafts available for planning.
+
+Finally, they are asked if they have completed the planning task for that cultivar.
+
+
+2. **Record grafts taken** (cross-checked against rootstocks and broken down by cultivar) (late March to April)
+
+This option puts the planning into action. The user is again shown the list of cultivars and asked to choose one. They are then invited to enter the number of grafts the have actually made for the relevant cultivar (since their last entry, where relevant). If they have previously made an entry, the new entry is ADDED to the old one.
+
+Again, they are not allowed to enter numbers greater than the number of rootstocks currently available.
+
+Task completion questions are dealt with as with Option 1.
+
+
+3. **Record rooted rooted cuttings potted up** (no App-supported planning needed: numbers depend almost exclusively on the number of cuttings taken in the previous season that have successfully rooted) (April to June)
+
+This function works like Option 2, except that the user is not restricted in the number of cuttings they can pot up (except by the general system limit of 10,000). They are, however, shown the number of cuttings made in the previous year.
+
+Task closure is handled as above.
+
+4. **Plan this year's cutting campaign** (depends on projected needs; there is rarely an issue with the amount of material or space available suitable for taking cuttings) (August to September)
+
+This option simply asks the user to enter a planned figure for cuttings to be taken this year. Any previous figure is overwritten.
+
+The only numerical limit is the system limit of 10,000.
+
+Task closure as above.
+
+
+5. **Record cuttings taken** (October and November)
+
+This option gives the user the planned figure and asks them to enter a figure actually taken. The figure given is limited only by the system limit and the figure entered is added to any number previously recorded. 
+
+Task closure as above.
+
+
+When all tasks for cuttings, rootstocks and all cultivars have been completed, Option 0 is enabled.
+
+
+
+### Non-seasonal tasks in order
 
 They are followed by the non-seasonal tasks:
-6. recording rootstock losses (losses before gains simply because losses are more likely)
-7. recording rootstock gains
-8. recording grafted plant losses (by cultivar and year)
-9. recording grafted plant gains (by cultivar and year)
-10. moving grafted plants forward a year (by cultivar and source year)
-11. moving grafted plants back a year (by cultivar and source year)
+6. **Record plant losses** (for both rootstocks and each variety of grafted plants)
 
-And finally, it's time for
-0. closing out the year and preparing the data format for the next year (checks that all processes are closed)
+This is really two functions, one for rootstocks and one for the various varieties of grafted plants.
+
+The user is first asked whether they want to enter a loss for rootstocks. If so, the user enters that loss. They can only enter losses for rootstocks potted up this year.
+
+Final review with the customer showed that this in hindsight was an error, as it should really also be possible to enter losses for rootstocks maturing this year, but since losses of potted up cuttings in Year Zero are far lower than in Year Zero minus One (straight after potting up), it was not considered a showstopper. It must nevertheless be repaired in the next iteration.
+
+If the user wants to record a loss of cultivars for a particular notional age, then they answer 'n' to the first question. Are then shown the cultivars from which to choose. Then they choose the affected age and enter the number of plants of that cultivar and age that have been lost.
+
+In any case, the user can't record greater losses of any category of plant than are in the nursery.
+
+7. **Record plant gains** (ditto)
+
+This works essentially like Option 6, though the limit is simply the system limit of 10,000.
+
+8. **Hold grafted plants over for one year** (by cultivar and year)
+
+This works similarly to the two previous two, though it: 
+
+- contains no rootstock choice and
+- adds the number lost from the chosen year to the previous year
+
+The logical number limits apply: you can't hold back a Year-One plant, and you can't hold back more plants of any category than are in the system.
+
+9. **Bring grafted plants forward one year** (by cultivar and year)
+
+This function does the same as Option 8, but in the opposite direction.
 
 
-Typically towards the autumn of every year, the owners will want to close out the figures they have entered over the previous year, begin a new year and start work on planning their campaign of taking _H. Virginiana_ cuttings. They begin this task by running the app and choosing option ``1`` (``Create new year/Close out current year``). This function adds the required new lines for the new current year on each worksheet, and copies the data on graft stocks for the old current year to date from the ``grafts-year-zero`` worksheet to the ``plants`` worksheet. This has the effect of putting the data for the previous year out of reach of the seasonal tasks.
+### Closing the current year and preparing the data structure for the next year.
+And finally, when at least all the seasonal tasks have been marked as completed, it's time for
 
-Also within the ``Create new year/Close out current year`` function, users can choose either to enter the figure for cuttings that they anticipate taking this year or opt to leave that job for later.
+0. **Close out current year** (enabled only if all seasonal tasks have been completed)
 
 ![The rootstock worksheet straight after the user executes the ``Create new year/Close out current year`` function](assets/readme_assets/rootstock_new_year.png)
 
-*The rootstock worksheet straight after the user executes the* ``Create new year/Close out current year`` *function. Note that the user has chosen to enter a value for planned cuttings of 2,800. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*.*
+*The rootstock worksheet straight after the user executes the* ``Create new year/Close out current year`` *function. Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*.*
 
 - - -
 
@@ -205,70 +288,62 @@ Also within the ``Create new year/Close out current year`` function, users can c
 
 ![The plants worksheet straight after the user executes the ``Create new year/Close out current year`` function](assets/readme_assets/plants_new_year.png)
 
-*The plants worksheet straight after the user executes the* ``Create new year/Close out current year`` *function.*
+*The plants worksheet straight after the user executes the* ``Create new year/Close out current year`` *function*.
 
-Then, whether or not they have entered a figure for planned cuttings, they can run app option ``2`` ``Plan this year's cutting campaign`` to revise that figure. If they have already recorded a figure for cuttings actually made, they are given a warning to tell them that the cutting campaign has already started and asked to confirm whether they want to replace the planned figure with a new total. The new figure is not added to the old one; it simply replaced it. This is the case with all planning functions.
+If the user chooses this option while it's marked as disabled, they are told to go back and finish work on the current year before beginning work on the new one.
 
-When they run app option ``3`` (``Record cuttings taken``), they are asked to enter a number of cuttings actually taken. They are given the already existing figure for cuttings taken and warned not to enter a number for cuttings unless that number has already been physically taken, prepared and inserted in the cuttings bed. It tells the user when the number of cuttings taken exceeds the number of cuttings planned.
+If it's enabled, however the App does the following:
 
-The new figure entered by the user is added to the already existing number. In the nursery, the cuttings campaign takes several days, the owners typically entering the day's figure for cutting production in the evening of the relevant day. The user receives a message on the command line when the figure exceeds the planned figure. The logic behind the difference between planned figures (each of which simply replaces the previous one) and the actually taken figures is that the latter are usually totted up for each day in the cutting/grafting campaigns, and the user should expect the app to remember the numbers recorded from previous days.
+**On the _grafts-year-zero_ worksheet:**
 
-Option ``4`` (``Record rooted cuttings potted up``) instructs the user to enter a figure for the number of successfully rooted cuttings actually potted up. As another figure indicating for work actually done (usually daily), it functions in a similar cumulative way to option ``3`` (``Record cuttings taken``, as do all functions designed to record work actually done). It informs the user when the total number of potted cuttings recorded has reached or exceeded the total number of cuttings taken.
+When a new year is created, the 'used or reserved' figure becomes irrelevant (though it was important to keep track it in some of the Year-Zero tasks). so it is replaced as described below.
 
-Option ``5`` (``Plan grafts for this year``) displays the number of rootstocks (i.e. the figure for cuttings successfully potted up in the previous year, minus losses, plus gains) asks the user what cultivar they want to graft and how many grafts they want to make of that cultivar. The function keeps a running total of the rootstocks required and issues a notification/warning if and when the total number of planned cuttings exceeds the number of rootstocks available. As the function is about planning numbers, new numbers simply overwrite old ones the second and subsequent time the user runs the option for a particular cultivar.
+Logically enough, the numbers for plants grafted this year (minus any losses since the grafting was done) are passed into the 'plants' worksheet.
 
-Option ``6`` (``Record grafts taken``) argument asks the user which cultivar they want to record grafts for. The owners typically enter the day's figure for graft production separately for each cultivar in the evening of the relevant day. The user receives a message on the command line if and when any figure exceeds the associated planned figure. As for other options recording work actually done, new figures are added to old figures creating a new total. Each time a grafting session is recorded in this way, the current stock of rootstocks is reduced by the corresponding amount.
+Then four new rows are inserted for the current year at the top of the worksheet and the figures for the old year and all previous years are moved down correspondingly.
 
-_N.B.: In order to record total work done separately from current stocks (i.e., total work done minus losses plus gains) all the following numbers are recorded separately:_
-- _cuttings taken vs total rootstocks_
-- _grafts taken vs total plants in stock (recorded for each cultivar separately)_
+Figures for rootstocks of years previous to Year Zero Minus One are zeroed out, as most of them are no longer suitable for grafting in Year One (as opposed to Year Zero &ndash; the current year). Any exceptions to this rule (i.e. rootstocks judged to be still suitable for grafting in the following year) are accounted for by treating them as if they were acquisitions. 
 
-<!-- TOC --><a name="ad-hoc-tasks"></a>
-### ad-hoc tasks
-Option ``7`` (``Record plant losses``) asks the user the cultivar and age of the plants they want to record as lost (including year-zero rooted cuttings), showing them the current figure for that cultivar and age. The user is prevented from entering a number greater than that figure. It gives a confirmation message before writing the data entered by the user to the spreadsheet.
+Finally, the 'used or reserved' row for the previous year is overwritten by a row 'total for year' showing the values passed to the plants worksheet (i.e. the value for 'grafted' for the year just finished minus any losses recorded in that year).
 
-Option ``8`` (``Record plant gains``) works similarly, adding instead of subtracting. It does not impose any restriction on the number added.
-
-Option ``9`` (``Hold over plants for one year``) asks the user to identify the cultivar and age of the plants they want to hold back, shows the user the current number of those plants and subtracts the number given by the user from the current age category, adding the same number to the category one year younger. As with ``record_loss``, the user can't move more plants than the recorded number for the relevant category in any direction. The system also prevents the user from entering a value less than two, as it is impossible to hold year-one plants over to year-zero. The year zero values are not recorded in the ``plants`` worksheet at all. They have ther own worksheet (``grafts-year-zero``)
-
-Option ``10`` (``Bring plants forward one year``) does the same in the opposite direction. Again, the appropriate restriction on numbers moved applies. In contrast to the previous option, the user can choose the value ``1`` for year cohort, as the same problem doesn't apply here.
-
-In exceptional cases where the user wishes to hold back or bring forward a number of plants by more than a year, they must run the relevant process twice.
-
-Unfortunately, due to the time restraints, I was unable to implement option ``11`` (``Add new cultivar``). I have, however prepared much of the groundwork to introducing it in the future. For example, I have implemented a system by which the functions that involve cultivars identify those cultivars dynamically.
-
-Reductions in plant stocks through _sales_ are not recorded in this app. The couple tell me that this may well be the next step once they have this work planning system bedded in.
-
-The same can be said of a number of other parts of the nursery workflow.
+All data now outside the first four columns (now populated either by zeroes or formulas) can no longer be edited.
 
 <!-- TOC --><a name="bug-fixes-and-warning-resolution"></a>
-## Bug fixes and warning resolution
-<!-- TOC --><a name="bugs"></a>
-### Bugs
-Bugs were fixed as they arose during smoke testing.
+## Bug fixes and linting
 
-As far as practicable, all Bugs are resolved separately and the Bug resolution is recorded in Git commits separately, prefixing the commit text with "Bug: ".
+<!-- TOC --><a name="bugs"></a>
+### Bugs and debugging
+Bugs were fixed as they arose function-by-function during smoke testing.
+
+As far as practicable, all bugs are resolved separately and the Bug resolution is recorded in Git commits separately, prefixing the commit text with "Debug: ".
+
+During final testing (which was completed after the linting was done), however, a number of bugs came up due to the interdependency of the various functions (and human frailty, of course). Their resolution is documented in git.
 
 
 <!-- TOC --><a name="warnings"></a>
-### Warnings
-pycodestyle issues (all warnings) were closed shortly before submitting the app project.
+### Linting
 
-Two warnings could not be resolved, but appear not affect the functioning, reading or comprehension of the program in any way! They were:
-```
-$ pip install pycodestyle
-$ pycodestyle ...
+I did my linting exclusively using the pylint tool towards the end of the development process, which uncovered a number of issues in my code that required extensive last-minute 
+changes to the project.
 
-  warnings.warn(
-run.py:318:22: E231 missing whitespace after ':'
-run.py:318:22: E701 multiple statements on one line (colon)
-run.py:428:80: E501 line too long (82 > 79 characters)
-```
+I ran the pylint on each of my *.py files in turn. While the vast bulk of the messages produced by tool were useful to me and therefore resolved, I did leave a number of messages unresolved as I did not consider them critical to my project. 
 
-In reality there are at least a dozen warnings relating to lines that are too long, but they do not affect the Heroku pseudo-terminal and do not appear to affect the readability of the code. I corrected them, saw that the caused bugs in the presentation, and even in the running of the code itself, and reversed them (one by one).
+In my text modules, for example, I left almost all messages of the form 
 
-### Unresolved issues
-Occasionally during testing the app fails to open, giving users the following 503 error:
+``Missing function or method docstring (missing-function-docstring)``
+
+unaddressed, as they appear to be making an unnecessary demand for a explicatory blurb on each of the simple functions contained in such files, most of which are pretty much self-explanatory.
+
+In the run.py file, however I endeavoured to correct every single one of the issues raised by pylint, even if they seemed trivial, as I found that they often uncovered deeper problems in my code structure.
+
+This was particularly true of messages telling of variables being redefined within a narrower scope, which required an extensive revision of &ndash;and improvement to&ndash; my code.
+
+I will leave discussion the few pylint messages left in my run.py file (my main module) to the _Unresolved issues_ section.
+
+- - -
+## Unresolved technical issues
+
+Very occasionally during during development and testing the app failed to open, giving users the following 503 error:
 ```
 Traceback (most recent call last):
   File "/workspace/witch-hazel/run.py", line 14, in <module>
@@ -278,43 +353,74 @@ Traceback (most recent call last):
 gspread.exceptions.APIError: {'code': 503, 'message': 'The service is currently unavailable.', 'status': 'UNAVAILABLE'}
 ```
 
-It's clear that this is due to a transient third-party issue. I put together a try/except clause to deal with this issue elegantly. The custom error messages simply asks the user to try again, since in my experience such issues are almost always extremely transient, lasting no more than a second or two.
+It's clear that this is due to a transient (though not entirely unrepeated) third-party issue. The custom error messages simply asks the user to try again, since in my experience such issues are almost always extremely transient, lasting no more than a second or two.
 
-When running Option 0 (creating a new year), the following warning appears, apparently in response to line 875 of run.py ("rootstock.update(cell_range, column_formulae, value_input_option='USER_ENTERED')"):
+However, I would like to put together a try/except clause to deal with this issue elegantly in a later iteration.
+
+When running _Option 0_ (creating a new year), a warning appeared, apparently in response to line 907 of my ``run.py`` module (``"rootstock.update(cell_range, column_formulae, value_input_option='USER_ENTERED')``).
+
+The warning went as follows:
+```
 "/workspace/.pyenv_mirror/user/current/lib/python3.12/site-packages/gspread/worksheet.py:1069: UserWarning: [Deprecated][in version 6.0.0]: method signature will change to: 'Worksheet.update(value = [[]], range_name=)' arguments 'range_name' and 'values' will swap, values will be mandatory of type: 'list(list(...))'
   warnings.warn("
+```
 
-Ignoring the strange unclosed parenthesis at the end, I reversed the sequence of the first two parameters, but this only made matters worse. The program, now unable to identify the range to which to apply my insert command, simply inserted it on range A1:A3 (disastrously). Since the original code achieved what I intended it to achieve, I kept it (along with a note to revisit the issue in the next week or two).
+Ignoring the (to me!) strange unclosed parenthesis at the end, and following the suggestion of the body of the warning, I reversed the sequence of the first two parameters, but this only made matters worse. The program, now unable to identify the range to which to apply my insert command, simply inserted it on range A1:A3 (disastrously). Since the original code achieved what I intended it to achieve, I kept it (along with a note to revisit the issue in the next week or two).
+
+I silenced the warning using the standard warning module.
+
+However, I will need to address this deprecation issue as a priority task in the next iteration.
 
 <!-- TOC --><a name="app-robustness"></a>
 ## App robustness
 
 <!-- TOC --><a name="numerical-vs-characterstring-entries"></a>
 ### Numerical vs character/string entries
-Aside from the restrictions on user entries mentioned above, the user must not enter either a negative number or an entry that cannot be rendered as an integer. Sadly, in most cases, I have not had the time to resolve all issues relating to the user entering characters and strings that cannot be converted into integers yet, but I have put the necessary software in place in some functions (notably the opening menu function and functions 6, 7, 8 and 9). I have told the users to be careful not to make non-numerical entries where numerical entries are expected.
 
-<!-- TOC --><a name="out-of-range-numbers"></a>
-### Out of range numbers
-The app has been designed so that integers entered outside the valid range of values are handled elegantly without the program havin to shut down. Users are shown an appropriate message repeatedly until they make a valid entry.
+I used two functions to ensure that the user was not burdened unnecessarily with crashes due to invalid user entries.
 
-<!-- TOC --><a name="yes-or-no-responses"></a>
-### Yes or no responses
-The app is designed so that the user can respond to yes or know answers by entering 'y' or 'Y' for yes and 'n' or 'N' for a 'No'.
+One of the functions (``parse_yn_input()``) wrapped all ``input()`` functions requiring Yes or No answers, while the other (``parse_num_input()``) wrapped all ``input()`` functions requiring a zero or positive integer as their imput.
+
+There should (and I've checked) be no ``input()`` instances not wrapped in one or other of my functions.
+
+They are both recursive functions that call themselves however many times they need to until the user inputs the right values (in one case an upper or lower case 'y' or 'n' and in the other an integer between 0 &ndash; or occasionally 1 &ndash; and the corresponding maximum number).
+
+The above is not strictly true, as they both also allow the user to input ``exit``, ``help`` or ``help [n]`` (where [n] represents a number between 0 and 9, corresponding to each of the options the App contains). For more details on the help functions, see below.
+
+As a result, the user can access the App's help options (see the section on Help) or leave the App altogether whenever it asks them to enter a value.
+
+This almost completely reduces the risk of the App crashing due to incorrect user entries, though I can do very little about keyboard interrupts due to the accidental use of Control C, for example.
+
 
 ### Help functions 
-The App provides both an extensive general Help text and a specific specialised Help text for each option provided by the app. The user must simply type in "HelP" (in any combination of upper and lower case letters) at the witch-hazel command prompt to access the general help text and the same string followed by a space and a number between 0 and 9 to access detailed help on the corresponding option.
+The App provides both an extensive general Help text and a specific specialised Help text for each option provided by the app. The user must simply type in "HelP" (in any combination of upper and lower case letters) at the witch-hazel command prompt to access the general help text and the same string followed by a space and a number between 0 and 9 (``Help [n]`` where ``[n]`` is a number between 0 and 9) to access detailed help on the corresponding option.
+
+The ``help`` provides three screen's worth of general help information, which the ``Help [n]`` variant provides a screen's worth of information on each of the Options available in the App.
+
 
 ### Exiting the program
-Typing exIT (in any combination of upper and lower case letters) from the witch-hazel command prompt will close the App.
+Typing ``exIT`` (in any combination of upper and lower case letters) from the witch-hazel command prompt will close the App.
 ---
 <!-- TOC --><a name="programming-philosophy"></a>
 ## Programming philosophy
 
-In the course of building this app (closely modelled on a more or less complex series of real-world processes), I found that I made only limited active use of the concepts of OOP in my code: though I used a very wide range of pre-coded third-party classes through importing a variety of packages, I created only one bespoke class specifically for the app (namely the NewYearController class in the new_year_controller.py file). While I didn't feel the need to create classes for any other purposes in this iteration, no doubt some reorganisation of the code making use of OOP principles will begin to make sense in later iterations.
+In the course of building this app (closely modelled on a more or less complex series of real-world processes), I found that I made only limited active use of the concepts of OOP in my code: though I used a very wide range of pre-coded third-party classes through importing a variety of packages, I created only one bespoke class specifically for the app (namely the NewYearController class in the new_year_controller.py file). While I didn't feel the need to create classes for any other purposes in this iteration, no doubt some reorganisation of the code making use of OOP principles will make sense in later iterations.
 
 ## Manual testing
 
+
 ### Robustness testing
+The approach I used to robustness testing was considerably eased by my use of the two user entry control functions described above.
+
+Instead of having to test practically any likely keyboard combination the user might be likely to enter, I could concentrate on testing that the numerical upper and lower bounds were being set correctly by the App.
+
+My final testing, however, did involve entering the following inputs at the command prompt (twice: once for a prompt expecting a numerical input and one expecting a ), to ensure they were all handled correctly:
+``'  '``
+``''``
+
+
+
+
 
 ### Features testing
 

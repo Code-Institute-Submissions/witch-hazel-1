@@ -39,7 +39,8 @@ available."
 def too_many_grafts_made(made, available):
     return f"{config.INDENT}You can't have made more grafts than you had rootstocks \
 available!\
-    \n{config.INDENT}You're recording {made} grafts, but you only had {available} rootstocks available.\
+    \n{config.INDENT}You're recording {made} grafts, but you only had {available} rootstocks \
+available.\
     \n{config.INDENT}ou first need to record the extra rootstocks you required to create them!"
 
 def too_many_rootstocks_lost(total):
