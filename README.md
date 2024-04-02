@@ -136,13 +136,13 @@ The grafts-year-zero worksheet contains two more columns than the number of cult
 - The first column identifies the year to which the data in the corresponding row refers.
 - The second column tells any human or machine reader whether the figures in the corresponding row refer to numbers of grafted plants that the couple originally planned ('planned'), that they actually made ('grafted'), that they currently have either already used up or committed to in planning ('used or reserved') and, finally, that they have since lost. The 'grafted' figure is the total number of mature rootstocks (potted up in Year Minus One) upon which a graft of the corresponding variety has been made. For changes made to it programmatically on closing out the year, see below.
 
-![The grafts-year-zero worksheet the start of a year](assets/readme_assets/grafts-year-zero_before.png)
+![The grafts-year-zero worksheet the start of a year](assets/readme_assets/grafts-year-zero_after.png)
 
-*The grafts-year-zero worksheet as it might look at the start of a growing year (2024). Notice that the formulae are already in place, ready to process user entries through the App*
+*The grafts-year-zero worksheet as it might look at the start of a growing year (2024) after Option 0 has been run. Notice that the formulae are already in place, ready to process user entries through the App*
 
-![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_after.png)
+![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_before.png)
 
-*The grafts-year-zero worksheet as it might look at the end of a growing year (2024)*
+*The grafts-year-zero worksheet as it might look at the end of a growing year (2023), before Option 0 has been run.*
 
 <!-- TOC --><a name="the-rootstock-worksheet"></a>
 ### The 'rootstock' worksheet 
@@ -164,11 +164,11 @@ Any rootstocks notionally left over after the year's grafting campaign is finish
 
 ![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_before.png)
 
-*The rootstock worksheet as it might look at the end of a growing year (2024)*
+*The rootstock worksheet as it might look at the start of a growing year (2024)* straight after the user has executed the* ``Create new year/Close out current year`` *function (for 2024). Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*
 
 ![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_after.png)
 
-*The rootstock worksheet as it might look at the start of a growing year (2024), straight after the user has executed the* ``Create new year/Close out current year`` *function (for 2024). Note that the user has chosen to enter a value for planned cuttings of 5200. That value can be changed at any time during the year by running Option 2* ``Plan this year's cutting campaign``*
+*The rootstock worksheet as it might look at the end of a growing year (2024). Note that no changes have been made to the row marked 2024 beyond column C, as all that has happened to cuttings for this year is that they're having been planned during this year. They now need to grow roots (for potting next year) and then grow into rootstocks ready for grafting (for the year after next).
 
 
 <!-- TOC --><a name="the-plants-worksheet"></a>
