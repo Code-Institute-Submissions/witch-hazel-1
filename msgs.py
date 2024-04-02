@@ -32,7 +32,7 @@ REOPENING = f"{config.INDENT}Reopening ..."
 
 CUTTINGS_SUCCESSFUL = f"{config.INDENT}Cuttings campaign record added successfully."
 
-WHICH_CULTIVAR_P = f"{config.INDENT}For which cultivar would you like to plan your\
+WHICH_CULTIVAR_P = f"{config.INDENT}For which cultivar would you like to plan your \
 grafting campaign?\
     \n"
 WHICH_CULTIVAR_M = f"{config.INDENT}For which cultivar would you like record new grafts made?\
@@ -46,20 +46,20 @@ PLANNED_CUTTINGS_CHANGED = f"{config.INDENT}Number of cuttings planned for this 
 successfully changed."
 
 POTTING_CANCELLED = f"{config.INDENT}Record new cuttings potted action cancelled.\
-            \n{config.INDENT}No changes have been made to the data."
+    \n{config.INDENT}No changes have been made to the data."
 
 NEW = "new "
 
 IN_ADDITION = f" in addition to the ones\
-            \n{config.INDENT}you have already recorded"
+    \n{config.INDENT}you have already recorded"
 
 PLAN_CUTTINGS_CANCELLED = f"{config.INDENT}Plan cuttings action cancelled.\
-        \nNo changes have been made to the data."
+    \n{config.INDENT}No changes have been made to the data."
 
 TAKING_CUTTINGS = 'record cuttings taken'
 
-ADDED_CUTTINGS = f"{config.INDENT}Successfully added to the number of cuttings taken so \
-far in this campaign."
+ADDED_CUTTINGS = f"{config.INDENT}You have successfully added to the number\
+    \n{config.INDENT}of cuttings taken so far in this campaign."
 
 LOST_WHICH_CULTIVAR = f"{config.INDENT}For which cultivar would you like record a loss?"
 
@@ -84,7 +84,7 @@ ENTER_BRING_YEAR = f"{config.INDENT}Please enter an integer between 1 and the ag
 
 BRING_RECORDED = f"{config.INDENT}Plants brought forward successfully."
 
-def list_of_options(color=config.COLOR_NORMAL):
+def list_of_options(color):
     return  f"{config.INDENT}{config.INDENT}{config.COLOR_STRONG_WHITE}1. Plan grafts for this year\
         \n{config.INDENT}{config.INDENT}2. Record grafts taken\
         \n{config.INDENT}{config.INDENT}3. Record rooted cuttings potted up\
@@ -102,12 +102,14 @@ def list_of_options(color=config.COLOR_NORMAL):
 def main_menu_prompt(lower_bound, upper_bound):
     return f"{config.INDENT}Please choose an option by entering its number (between {lower_bound} \
 and {upper_bound}).\
-        \n{config.INDENT}Disabled options will be displayed in a weaker colour than the \
-{config.COLOR_STRONG_WHITE}enabled{config.COLOR_NORMAL}\
-        \n{config.INDENT}options.\
-        \n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number\
-        \n{config.INDENT}on which you want detailed help), or 'EXIT' to quit.\
-        \n{config.PROMPT_STRING}"
+    \n{config.INDENT}Option 0 will be displayed in {config.COLOR_DISABLED}\
+{config.NAME_DISABLED_COLOR}{config.COLOR_NORMAL} \
+if it is disabled and in {config.COLOR_ENABLED}{config.NAME_ENABLED_COLOR}{config.COLOR_NORMAL}\
+    \n{config.INDENT}if it is enabled.\
+    \n\n{config.INDENT}Complete all five seasonal tasks (1 to 5) for all cultivars to enable it.\
+    \n\n{config.INDENT}Type 'HELP' or 'HELP [n]' for help (where [n] indicates the number\
+    \n{config.INDENT}on which you want detailed help), or 'EXIT' to quit.\
+    \n{config.PROMPT_STRING}"
 
 def a_out_of_b(a, b):
     return f"{config.INDENT}{a} out of {b}"
@@ -128,7 +130,7 @@ def detailed_help_choice(string):
 
 
 def planned_cuttings_taken(taken, planned):
-    return f"{config.INDENT} You have already reached the number of cuttings you planned to take \
+    return f"{config.INDENT}You have already reached the number of cuttings you planned to take \
 this year:\
         \n{config.INDENT}{taken} cuttings taken out of {planned} planned!"
 
@@ -185,7 +187,7 @@ def cultivar_chosen(cultivar):
     return f"{config.INDENT}You have chosen to record grafts of {cultivar}"
 
 def cultivar_grafts_planned(number):
-    return f"{config.INDENT}You have planned to make {number} of this cultivar."
+    return f"{config.INDENT}You have planned to make {number} grafts of this cultivar."
 
 def grafts_successfully_made(cultivar, grafts, planned):
     return f"{config.INDENT}Number of grafts made for {cultivar}\
@@ -210,7 +212,7 @@ def more_potted_than_taken(newly_potted, rootstocks, taken):
 def potted_up(potted, taken):
     return f"{config.INDENT}You have now potted up {potted} cuttings out of a total of {taken}\
         \n{config.INDENT}(minus any that have failed to root)!\
-        \n{config.INDENT}You will use them as rootstocks during the grafting campaign\
+        \n\n{config.INDENT}You will use them as rootstocks during the grafting campaign\
         \n{config.INDENT}next season (once they have established themselves in their pots)."
 
 def total_rootstocks(total):

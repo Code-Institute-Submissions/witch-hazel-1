@@ -10,10 +10,12 @@ class NewYearController:
     """
     def __init__(self, year_finished):
         self.year_finished = True if year_finished == 'y' else False
-        self.color = config.COLOR_STRONG_WHITE if year_finished == 'y' else config.COLOR_NORMAL
+        self.color = config.COLOR_ENABLED if year_finished == 'y' else config.COLOR_DISABLED
 
-    def year_finished(self):
+
+    def get_year_finished(self):
         return self.year_finished
 
-    def color(self):
+
+    def get_color(self):
         return self.color

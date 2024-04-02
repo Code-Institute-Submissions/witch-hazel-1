@@ -11,7 +11,7 @@ POSITIVE_INT = f"{config.INDENT}Your number must be a positive integer or 0.\
 
 DEFAULT_NOT_A_NUMBER_BLURB = " is not an integer. Please enter an integer between "
 DEFAULT_NOT_IN_RANGE_BLURB = f"{config.INDENT}That number is out of range. \
-    Please enter a number between "
+Please enter a number between "
 DEFAULT_NOT_A_YN_ANS_BLURB = f" is not a 'y' or a 'n'. Please enter either a 'y' or a 'n'.\
     \n\n{config.PROMPT_STRING}"
 NO_START_NUMBER = "The starting number is not recorded."
@@ -30,6 +30,16 @@ def detailed_help_not_int(user_input, mini, maxi):
     \n{config.INDENT}help, type a string of the form 'help [n], where '[n]' represents a valid\
     \n{config.INDENT}integer between {mini} and {maxi}!\
     \n\n{config.PROMPT_STRING}"
+
+def too_many_grafts_planned(planned, available):
+    return f"{config.INDENT}You can't plan more grafts than you have rootstocks available!\
+    \n{config.INDENT}You have planned {planned} grafts, but you only have {available} rootstocks available."
+
+def too_many_grafts_made(made, available):
+    return f"{config.INDENT}You can't have made more grafts than you had rootstocks available!\
+    \n{config.INDENT}You're trying to record {made} grafts, but you only had {available} rootstocks available.\
+    \n{config.INDENT}ou first need to record the extra rootstocks you needed!"
+
 
 def too_many_rootstocks_lost(total):
     return f"{config.INDENT}You can't have lost more rootstocks than you actually had in the \

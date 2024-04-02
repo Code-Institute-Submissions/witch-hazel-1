@@ -35,12 +35,12 @@ def help_text1(allow_option0):
     if allow_option0 is True:
         color_for_option0 = config.COLOR_STRONG_WHITE
     else:
-        color_for_option0 = config.COLOR_NORMAL
+        color_for_option0 = config.COLOR_DISABLED
 
     return f"\n                        WITCH-HAZEL HELP\
         \n\n{config.INDENT}To run witch-hazel, run the script file that contains its code.\
-        \n{config.INDENT}From within the Heroku App environment, simply on the red 'RUN PROGRAM'\
-        \n{config.INDENT}button.\
+        \n{config.INDENT}From within the Heroku App environment, simply press on the red\
+        \n{config.INDENT}'RUN PROGRAM'button.\
         \n\n{config.INDENT}On opening, the app will show you a list of the options available to\
         \n{config.INDENT}you and ask which of them you would like to perform.\n\
     \n\
@@ -106,7 +106,7 @@ help_text_option1 = f"\n\n                Option 1 -- PLAN NUMBER OF GRAFTS\
         \n{config.INDENT}tell you how many grafts you planned in the previous session and asks\
         \n{config.INDENT}you to confirm whether you want to change this number. If you confirm\
         \n{config.INDENT}and enter a new number, this new entry will REPLACE the previous\
-        \n{config.INDENT}number. It will not be summed together with the old number!\
+        \n{config.INDENT}number. It will NOT BE SUMMED together with the old number!\
         \n"
 
 
@@ -261,6 +261,10 @@ help_text_option0 = f"\n\n          Option 0 -- CLOSE CURRENT YEAR/OPEN NEW YEAR
         \n\n{config.INDENT}Be very careful all your planning is done and all your work for the\
         \n{config.INDENT}current year has been completed and recorded before confirming that\
         \n{config.INDENT}you want to create a new year.\
+        \n{config.INDENT}Option 0 is disabled if you have not recorded all your seasonal tasks\
+        \n{config.INDENT}(Options 1 to 5 as completed). The option will be shown in \
+{config.COLOR_DISABLED}{config.NAME_DISABLED_COLOR}{config.COLOR_NORMAL} on the\
+        \n{config.INDENT}menu until you have done so.\
         \n\n{config.INDENT}You should run this option only once a year. We recommend doing so\
         \n{config.INDENT}either on 31 December of the old current year or as early as possible\
         \n{config.INDENT}in January of the new current year.\

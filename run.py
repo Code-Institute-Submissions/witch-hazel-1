@@ -6,6 +6,7 @@ import sys
 import re
 import warnings
 import gspread
+import string
 from google.oauth2.service_account import Credentials
 import help_texts
 import input_texts
@@ -34,19 +35,33 @@ grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
 completed = SHEET.worksheet('completed')
 
+# These variables need to be available for most seasonal options
+rootstocks = int(rootstock.acell('D4').value)
+rootstocks_plannable = int(rootstock.acell('H4').value)
 
-def find_first_empty(row_values, column):
-    """
-    Finds the first empty index in a series of cells in a column
-    """
-    first_empty_index = next((i for i,
-                        val in enumerate(row_values) if not val),
-                        len(row_values))
-    return chr(ord(column) + first_empty_index)
 
-plants_row_values = plants.row_values(1)
+def first_empty_cell_in_row(sheet, start_row, start_col):
+    start_col = string.ascii_uppercase.index(start_col.upper()) + 1
+    row_values = sheet.row_values(start_row, value_render_option='UNFORMATTED_VALUE')
+
+    return len(row_values)
+
+# Function to find the first empty cell in a column starting from a specific row
+def first_empty_cell_in_column(sheet, start_row, start_col): # enter column as a letter
+    start_col_index = string.ascii_uppercase.index(start_col.upper()) + 1
+    col_values = sheet.col_values(start_col_index, value_render_option='UNFORMATTED_VALUE')
+    return len(col_values)
+
+
 # Find the column to stop at (first column on the plants page that contains no data).
-last_column = find_first_empty(plants_row_values, 'A')
+first_empty_column = first_empty_cell_in_column(plants, 1, 'B')
+if first_empty_column:
+     last_column = first_empty_column - 1
+
+# Find the row to stop at (first row on the plants page that contains no data).
+first_empty_row = first_empty_cell_in_row(plants, 2, 'A')
+if first_empty_row:
+    last_row =  first_empty_row - 1
 
 name_range = f"b1:{last_column}1"  # Names of cultivars
 cultivars = plants.get(name_range)[0]
@@ -90,6 +105,7 @@ def completed_for_year(affected_cell, affected_task):
         completed.update_acell(affected_cell, 'y')
         print(msgs.task_completed(affected_task))
     else:
+        completed.update_acell(affected_cell, 'n')
         print(msgs.task_not_completed(affected_task))
 
 
@@ -211,7 +227,7 @@ def main_menu(lower, upper):
     """
     controller = new_year_controller.NewYearController(completed.acell('j4').value)
     print(help_texts.MENU_TITLE)
-    print(help_texts.menu_text(controller.color))
+    print(help_texts.menu_text(controller.get_color()))
     user_input = parse_num_input(input(msgs.main_menu_prompt(lower, upper)), lower, upper)
     execute_option(user_input)
 
@@ -221,7 +237,7 @@ def general_help():
     General help messages on how to use the app print to screen one after another.
     """
     controller = new_year_controller.NewYearController(completed.acell('j4').value)
-    print(help_texts.help_text1(controller.color))
+    print(help_texts.help_text1(controller.get_color()))
     input(f"{config.MORE_GEN_HELP}")
     print(help_texts.help_text2)
     input(f"{config.MORE_GEN_HELP}")
@@ -272,13 +288,15 @@ def option_help(option_no):
 
 
 def execute_option(user_input):
-    print(user_input)
     """
     Executes the option typed in by the user
     It assumes error handling has been done in the input parser.
     If it's called from an input not run through an error-handling
     parser, then an error handler will need to be added.
     """
+    rootstocks = int(rootstock.acell('D2').value)
+    rootstocks_plannable = int(rootstock.acell('H4').value)
+
     print(config.LINE_OF_UNDERSCORES)
     if user_input == 1:
         print(f"{config.INDENT}{msgs.PLAN_GRAFTS}")
@@ -331,16 +349,17 @@ def complete_cuttings_taken_record(taken, planned, task):
     """
     if taken >= planned:
         print(msgs.planned_cuttings_taken(taken, planned))
+    
+    if taken > 0:
+        info_msg = msgs.cuttings_taken(taken, planned)
+        input_string = input_texts.TAKE_MORE_CUTTINGS
+        in_addition = input_texts.cuttings_in_addition(taken)
     else:
-        if taken > 0:
-            info_msg = msgs.cuttings_taken(taken, planned)
-            input_string = input_texts.TAKE_MORE_CUTTINGS
-            in_addition = input_texts.cuttings_in_addition(taken)
-        else:
-            info_msg = msgs.no_cuttings_yet_taken(planned)
-            input_string = input_texts.TAKE_CUTTINGS_NOW
-            in_addition = ""
-        print(info_msg)
+        info_msg = msgs.no_cuttings_yet_taken(planned)
+        input_string = input_texts.TAKE_CUTTINGS_NOW
+        in_addition = ""
+
+    print(info_msg)
 
     if parse_yn_input(input(input_string)) == commands.YES:
         taken += parse_num_input(input(input_texts.record_how_many_cuttings(in_addition)))
@@ -383,12 +402,9 @@ def plan_grafting_campaign():
     Lets user add a planned number of grafts for each cultivar.
     Should be used in late winter (February or March).
     Shows the number of rootstocks ready for grafting and the number left.
-    Warns the user when they're planning to use more rootstocks than they have.
+    Stops the user when they're planning to use more rootstocks than they have.
     """
-    rootstocks_available = int(rootstock.acell('h4').value)
-    rootstocks_in_stock = int(rootstock.acell('g4').value)
 
-    # cultivars = grafts_year_zero.get(f"c1:{last_column}1")[0]
     planned_numbers = grafts_year_zero.get(f"c2:{last_column}2")[0]
     planned_numbers = [int(x) for x in planned_numbers]
 
@@ -399,13 +415,15 @@ def plan_grafting_campaign():
 
     cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_P), 1, count)
     current_cultivar = cultivars[cultivar_value-1]
-    address_current_cultivar  = f"{chr(ord('c') + cultivar_value - 1)}2"
-    task_check_complete_address = f"{chr(ord('d') + cultivar_value - 1)}2"
+    address_current_cultivar  = f"{chr(ord('C') + cultivar_value - 1)}2"
+    task_check_complete_address = f"{chr(ord('D') + cultivar_value - 1)}2"
     task = msgs.plan_for(current_cultivar)
+    rootstocks_available = rootstocks_plannable + planned_numbers[cultivar_value - 1]
 
     if check_is_complete(task_check_complete_address, task) is False:
+        
         print(msgs.planned_for(current_cultivar))
-        print(msgs.rootstocks_unplanned(rootstocks_in_stock, rootstocks_available \
+        print(msgs.rootstocks_unplanned(rootstocks, rootstocks_plannable \
         + planned_numbers[cultivar_value - 1]))
 
         if planned_numbers[cultivar_value - 1] > 0:
@@ -417,13 +435,17 @@ def plan_grafting_campaign():
         if user_input == commands.YES:
             new_planned_value = parse_num_input(input(input_texts.new_planned_value\
             (current_cultivar)))
+            if new_planned_value > rootstocks_available:
+                print(error_msgs.too_many_grafts_planned(new_planned_value, rootstocks_available))
+                new_planned_value = parse_num_input(input(error_msgs.valid_option_number(0, rootstocks_available)))
+
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
             print(msgs.planned_grafts_changed(current_cultivar, new_planned_value))
             completed_for_year(f"{chr(ord('d') + cultivar_value - 1)}2", task)
         else:
             print(msgs.task_cancelled(task, current_cultivar))
             completed_for_year(task_check_complete_address, task)
-
+    
     print(config.BACK_TO_MENU)
     input()
 
@@ -464,12 +486,18 @@ def record_grafts():
         print(msgs.cultivar_chosen(current_cultivar))
         print(msgs.cultivar_grafts_planned(planned_this_cultivar))
         if grafts_this_cultivar > 0:
-            confirm_string = input_texts.grafts_made(grafts_this_cultivar)
+            confirm_string = input_texts.grafts_made(grafts_this_cultivar, rootstocks_plannable)
         else:
             confirm_string = input_texts.NO_GRAFTS_YET_MADE
         if parse_yn_input(input(confirm_string)) == commands.YES:
             newly_made_grafts = parse_num_input(input\
                 (input_texts.grafts_now_made(current_cultivar)))
+            if newly_made_grafts > rootstocks_plannable:
+                print(f"Debug: {newly_made_grafts} vs. {rootstocks_plannable}")
+                print(error_msgs.too_many_grafts_made(newly_made_grafts, rootstocks_plannable))
+                newly_made_grafts = parse_num_input(input\
+                    (input_texts.grafts_now_made(current_cultivar)))
+
             grafts_this_cultivar += newly_made_grafts
             grafts_year_zero.update_acell(address_current_cultivar,\
                 int(grafts_this_cultivar))
@@ -519,6 +547,17 @@ def record_potted_cuttings():
 
     print(config.BACK_TO_MENU)
     input()
+
+
+def plant_years_recorded(col_values):
+    """
+    Counts the number of years of recorded plant numbers
+    """
+    first_empty_row = next((i for i,
+                              val in enumerate(col_values) if not val),
+                              len(col_values))
+    return first_empty_row - 1
+
 
 def run_cuttings_plan(cuttings, task):
     """
@@ -619,7 +658,7 @@ def record_loss():
     """
     # Did we lose new_rootstocks?
     if parse_yn_input(input(input_texts.LOSS_OF_ROOTSTOCKS)) == commands.YES:
-        total_rootstocks = int(rootstock.acell('D3').value)
+        total_rootstocks = int(rootstock.acell('G3').value)
         remaining_rootstocks = int(rootstock.acell('G3').value)
 
         total_losses = int(rootstock.acell('E3').value)
@@ -634,7 +673,7 @@ def record_loss():
         count = list_cultivars(cultivars)
 
         cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_LOST), 1, count)
-        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_LOST), 1)
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_LOST), 1, last_column)
         current_cultivar = cultivars[cultivar_value - 1]
         address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
 
@@ -675,14 +714,14 @@ def record_gain():
         print(msgs.total_rootstocks(remaining_rootstocks))
         number_gained = parse_num_input(input(input_texts.HOW_MANY_GAINED), 0)
         rootstock.update_acell('F3', total_gains + number_gained)
-        print(msgs.rootstock_loss_recorded(number_gained, rootstock.acell('G3').value))
+        print(msgs.rootstock_gain_recorded(number_gained, rootstock.acell('G3').value))
     else:
         # List the cultivars in the data in an ordered list.
         print(msgs.GAINED_WHICH_CULTIVAR)
         count = list_cultivars(cultivars)
 
         cultivar_value = parse_num_input(input(input_texts.CHOOSE_CULTIVAR_GAINED), 1, count)
-        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_GAINED), 1, 5)
+        affected_year = parse_num_input(input(input_texts.CHOOSE_YEAR_GAINED), 1, last_column)
         address_affected = f"{chr(ord('b') + cultivar_value - 1)}{affected_year + 1}"
         current_cultivar = cultivars[cultivar_value - 1]
         current_number = int(plants.acell(address_affected).value)
@@ -768,15 +807,6 @@ def bring_forward():
     Results in the given number of cultivars from year n being removed
     and then added to year n+1.
     """
-
-    # First define the cultivar affected
-    col_values = plants.col_values(1)
-    # Find the column to stop at (first column that contains no data).
-
-    first_empty_row = next((i for i,
-                              val in enumerate(col_values) if not val),
-                              len(col_values))
-    last_row = first_empty_row - 1
 
     # List out the cultivars in the data in an ordered list.
     print(msgs.BRING_WHICH_CULTIVAR)

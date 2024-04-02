@@ -99,8 +99,10 @@ TAKE_MORE_CUTTINGS = f"{config.INDENT}Would you like to add additional cuttings 
 HOW_MANY_ROOTSTOCKS_LOST = f"{config.INDENT}How many rootstocks have been lost since then? \
     \n\n{config.PROMPT_STRING}"
 
-def grafts_made(grafts):
-    return f"{config.INDENT}You have already made {grafts} grafts of this cultivar.\
+def grafts_made(grafts, rootstocks):
+    return f"{config.INDENT}At the last count, you had {rootstocks} rootstocks left available\
+            \n{config.INDENT}for grafting.\
+            \n{config.INDENT}You have already made {grafts} grafts of this cultivar.\
             \n{config.INDENT}Would you like to add to this value?\
             \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
@@ -121,9 +123,10 @@ def cuttings_in_addition(taken):
         \n{config.INDENT}you've already recorded ({taken})"
 
 def replace_graft_value(old_value):
-    return f"{config.INDENT}So far, you have planned to make {old_value} grafts of this\
-        \n{config.INDENT}cultivar. Would you like to replace this value? \
-        \n\n{config.PROMPT_STRING}"
+    return f"{config.INDENT}You have already planned to make {old_value} grafts of this\
+        \n{config.INDENT}cultivar.\
+        \n\n{config.INDENT}Would you like to replace this value?\
+        \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 def task_closed_reopen(task):
     return f"{config.INDENT}The task '{task}' has been\
