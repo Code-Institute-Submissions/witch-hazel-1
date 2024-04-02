@@ -107,7 +107,9 @@ def grafts_made(grafts, rootstocks):
             \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 def completed_for_year(task):
-    return f"{config.INDENT}Have you completed the '{task}' task for the year?\
+    return f"{config.INDENT}Have you completed the\
+        \n{config.INDENT}'{task}'\
+        \n{config.INDENT}task for the year?\
         \n{Y_OR_N_TEXT}\n{config.PROMPT_STRING}"
 
 def new_planned_value(cultivar):

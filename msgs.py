@@ -122,7 +122,8 @@ def task_completed(string):
         \n"
 
 def task_not_completed(string):
-    return f"{config.INDENT}You have not yet completed the task '{string}' for the year.\
+    return f"{config.INDENT}You have not yet completed the task\
+        \n{config.INDENT}'{string}' for the year.\
         \n{config.INDENT}You can come by later and modify the current figure."
 
 def detailed_help_choice(string):

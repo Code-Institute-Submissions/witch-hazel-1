@@ -5,8 +5,8 @@ This file is the main module for the witch-hazel App.
 import sys
 import re
 import warnings
-import gspread
 import string
+import gspread
 from google.oauth2.service_account import Credentials
 import help_texts
 import input_texts
@@ -35,31 +35,33 @@ grafts_year_zero = SHEET.worksheet('grafts-year-zero')
 plants = SHEET.worksheet('plants')
 completed = SHEET.worksheet('completed')
 
-# These variables need to be available for most seasonal options
-rootstocks = int(rootstock.acell('D4').value)
-rootstocks_plannable = int(rootstock.acell('H4').value)
-
 
 def first_empty_cell_in_row(sheet, start_row, start_col):
+    """
+    Counts a row of cells from start_col and column til it finds the first empty cell
+    """
     start_col = string.ascii_uppercase.index(start_col.upper()) + 1
     row_values = sheet.row_values(start_row, value_render_option='UNFORMATTED_VALUE')
 
     return len(row_values)
 
-# Function to find the first empty cell in a column starting from a specific row
-def first_empty_cell_in_column(sheet, start_row, start_col): # enter column as a letter
+
+def first_empty_cell_in_column(sheet, start_col): # enter column as a letter
+    """
+    Function to find the first empty cell in a column starting from a specific row
+    """
     start_col_index = string.ascii_uppercase.index(start_col.upper()) + 1
     col_values = sheet.col_values(start_col_index, value_render_option='UNFORMATTED_VALUE')
     return len(col_values)
 
 
 # Find the column to stop at (first column on the plants page that contains no data).
-first_empty_column = first_empty_cell_in_column(plants, 1, 'B')
+first_empty_column = first_empty_cell_in_column(plants, 'B')
 if first_empty_column:
-     last_column = first_empty_column - 1
+    last_column = first_empty_column - 1
 
 # Find the row to stop at (first row on the plants page that contains no data).
-first_empty_row = first_empty_cell_in_row(plants, 2, 'A')
+first_empty_row = first_empty_cell_in_row(plants, 1, 'A')
 if first_empty_row:
     last_row =  first_empty_row - 1
 
@@ -300,10 +302,10 @@ def execute_option(user_input):
     print(config.LINE_OF_UNDERSCORES)
     if user_input == 1:
         print(f"{config.INDENT}{msgs.PLAN_GRAFTS}")
-        plan_grafting_campaign()
+        plan_grafting_campaign(rootstocks, rootstocks_plannable)
     elif user_input == 2:
         print(f"{config.INDENT}{msgs.TAKE_GRAFTS}")
-        record_grafts()
+        record_grafts(rootstocks_plannable)
     elif user_input == 3:
         print(f"{config.INDENT}{msgs.POT_UP_CUTTINGS}")
         record_potted_cuttings()
@@ -349,7 +351,7 @@ def complete_cuttings_taken_record(taken, planned, task):
     """
     if taken >= planned:
         print(msgs.planned_cuttings_taken(taken, planned))
-    
+
     if taken > 0:
         info_msg = msgs.cuttings_taken(taken, planned)
         input_string = input_texts.TAKE_MORE_CUTTINGS
@@ -396,7 +398,7 @@ def check_is_complete(cell, task):
     else:
         return False
 
-def plan_grafting_campaign():
+def plan_grafting_campaign(rootstocks, rootstocks_plannable):
     """
     Option 1:
     Lets user add a planned number of grafts for each cultivar.
@@ -421,7 +423,7 @@ def plan_grafting_campaign():
     rootstocks_available = rootstocks_plannable + planned_numbers[cultivar_value - 1]
 
     if check_is_complete(task_check_complete_address, task) is False:
-        
+
         print(msgs.planned_for(current_cultivar))
         print(msgs.rootstocks_unplanned(rootstocks, rootstocks_plannable \
         + planned_numbers[cultivar_value - 1]))
@@ -437,7 +439,8 @@ def plan_grafting_campaign():
             (current_cultivar)))
             if new_planned_value > rootstocks_available:
                 print(error_msgs.too_many_grafts_planned(new_planned_value, rootstocks_available))
-                new_planned_value = parse_num_input(input(error_msgs.valid_option_number(0, rootstocks_available)))
+                new_planned_value = parse_num_input(input(error_msgs.valid_option_number\
+(0, rootstocks_available)))
 
             grafts_year_zero.update_acell(address_current_cultivar, new_planned_value)
             print(msgs.planned_grafts_changed(current_cultivar, new_planned_value))
@@ -445,12 +448,12 @@ def plan_grafting_campaign():
         else:
             print(msgs.task_cancelled(task, current_cultivar))
             completed_for_year(task_check_complete_address, task)
-    
+
     print(config.BACK_TO_MENU)
     input()
 
 
-def record_grafts():
+def record_grafts(rootstocks_plannable):
     """
     Option 2:
     Lets user record the number of grafts taken for a chosen cultivar.
@@ -493,7 +496,6 @@ def record_grafts():
             newly_made_grafts = parse_num_input(input\
                 (input_texts.grafts_now_made(current_cultivar)))
             if newly_made_grafts > rootstocks_plannable:
-                print(f"Debug: {newly_made_grafts} vs. {rootstocks_plannable}")
                 print(error_msgs.too_many_grafts_made(newly_made_grafts, rootstocks_plannable))
                 newly_made_grafts = parse_num_input(input\
                     (input_texts.grafts_now_made(current_cultivar)))
@@ -534,8 +536,7 @@ def record_potted_cuttings():
         if parse_yn_input(input(confirm_string)) == commands.YES:
             newly_potted = parse_num_input(input(input_texts.how_many_potted(qualifier_clause)))
             if cuttings_potted + newly_potted > cuttings_taken:
-                print(msgs.more_potted_than_taken(newly_potted, new_rootstocks,\
-                cuttings_taken, cuttings_potted))
+                print(msgs.more_potted_than_taken(newly_potted, new_rootstocks, cuttings_taken))
             else:
                 cuttings_potted += newly_potted
                 rootstock.update_acell('d3', cuttings_potted)
@@ -547,16 +548,6 @@ def record_potted_cuttings():
 
     print(config.BACK_TO_MENU)
     input()
-
-
-def plant_years_recorded(col_values):
-    """
-    Counts the number of years of recorded plant numbers
-    """
-    first_empty_row = next((i for i,
-                              val in enumerate(col_values) if not val),
-                              len(col_values))
-    return first_empty_row - 1
 
 
 def run_cuttings_plan(cuttings, task):

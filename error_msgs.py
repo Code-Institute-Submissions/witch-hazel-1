@@ -33,13 +33,14 @@ def detailed_help_not_int(user_input, mini, maxi):
 
 def too_many_grafts_planned(planned, available):
     return f"{config.INDENT}You can't plan more grafts than you have rootstocks available!\
-    \n{config.INDENT}You have planned {planned} grafts, but you only have {available} rootstocks available."
+    \n{config.INDENT}You have planned {planned} grafts, but you only have {available} rootstocks \
+available."
 
 def too_many_grafts_made(made, available):
-    return f"{config.INDENT}You can't have made more grafts than you had rootstocks available!\
-    \n{config.INDENT}You're trying to record {made} grafts, but you only had {available} rootstocks available.\
-    \n{config.INDENT}ou first need to record the extra rootstocks you needed!"
-
+    return f"{config.INDENT}You can't have made more grafts than you had rootstocks \
+available!\
+    \n{config.INDENT}You're recording {made} grafts, but you only had {available} rootstocks available.\
+    \n{config.INDENT}ou first need to record the extra rootstocks you required to create them!"
 
 def too_many_rootstocks_lost(total):
     return f"{config.INDENT}You can't have lost more rootstocks than you actually had in the \
