@@ -116,9 +116,13 @@ The grafts-year-zero worksheet contains two more columns than the number of cult
 - The first column identifies the year to which the data in the corresponding row refers.
 - The second column tells any human or machine reader whether the figures in the corresponding row refer to numbers of grafted plants that the couple originally planned ('planned'), that they actually made ('grafted'), that they currently have either already used up or committed to in planning ('used or reserved') and, finally, that they have since lost. The 'grafted' figure is the total number of mature rootstocks (potted up in Year Minus One) upon which a graft of the corresponding variety has been made. For changes made to it programmatically on closing out the year, see below.
 
-![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_old_year.png)
+![The grafts-year-zero worksheet the start of a year](assets/readme_assets/grafts-year-zero_before.png)
 
-*The grafts-year-zero worksheet as it might look at the end of a growing year*
+*The grafts-year-zero worksheet as it might look at the end of a growing year (2024)*
+
+![The grafts-year-zero worksheet the end of a year](assets/readme_assets/grafts-year-zero_after.png)
+
+*The grafts-year-zero worksheet as it might look at the end of a growing year (2024)*
 
 <!-- TOC --><a name="the-rootstock-worksheet"></a>
 ### The 'rootstock' worksheet 
@@ -137,30 +141,55 @@ The grafts-year-zero worksheet contains two more columns than the number of cult
 - The final column (H) is special: cell 'H3' shows the number of rootstocks potted up this year (i.e. from cuttings made in Year Minus One) plus any gains and minus any losses since then. Cell H4 shows the numbers of mature rootstocks available minus the figures either for grafts planned for each cultivar or grafts made for each cultivar, whichever is higher. When the user decides that grafting has been completed for the year for a variety, then the planning figure for that variety is ignored.
 
 Any rootstocks notionally left over after the year's grafting campaign is finished remain in the system until they are set to zero in Column H (From cell H4 down) upon creation of a new year. The reason for this is that two-year-old rootstocks will rarely be suitable for grafting when the time comes around again in the new year. They are generally physically disposed of (recycling the pots and compost) when the opportunity arises during the course of the new year.
-![The rootstock worksheet the end of a year](assets/readme_assets/rootstock_old_year.png)
 
-*The rootstock worksheet as it might look towards the end of a growing year*
+![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_before.png)
+
+*The rootstock worksheet as it might look at the start of a growing year (2024)*
+
+![The rootstock worksheet at the end of a year](assets/readme_assets/rootstock_after.png)
+
+*The rootstock worksheet as it might look at the end of a growing year (2024)*
 
 <!-- TOC --><a name="the-grafts-year-zero-worksheet"></a>
 
 <!-- TOC --><a name="the-plants-worksheet"></a>
 ### The 'plants' worksheet
 The plants worksheet is a little simpler. It shows the current stocks of each cultivar of each age group &ndash; i.e.: the total number of grafts of that age currently in stock (ignoring any plants sold), adjusted according to the losses and gains subsequently recorded by the couple in the witch-hazel program using the record_loss, record_gain, hold_back and bring_forward functions (see below).
-![The plants worksheet towards the end of a year](assets/readme_assets/plants_old_year.png)
 
-*The plants worksheet as it might look at the end of a growing year*
+![The plants worksheet at the start of a year](assets/readme_assets/rootstock_before.png)
+
+*The plants worksheet as it might look at the end of a growing year (2024)*
+
+![The plants worksheet at the end of a year](assets/readme_assets/rootstock_after.png)
+
+*The plants worksheet as it might look at the end of a growing year (2024)*
 
 ### The 'completed' worksheet
 The _completed_ worksheet is simpler again. It simply shows whether all the various seasonal tasks in relation to cuttings and the grafts of each variety are done. The decisive entry here is the unassuming J4, which is always 'n' until all relevant fields are 'y'. It then becomes 'y' as well and the user can then close out the old year and open a new one. When the user does that, all entries in _completed_ are reset to 'n'.
-![The plants worksheet towards the end of a year](assets/readme_assets/plants_old_year.png)
 
-*The plants worksheet as it might look at the end of a growing year*
+![The plants worksheet at the start of a year](assets/readme_assets/plants_before.png)
+
+*The plants worksheet as it might look at the end of a growing year (2024)*
+
+![The plants worksheet at the end of a year](assets/readme_assets/plants_after.png)
+
+*The plants worksheet as it might look at the end of a growing year (2024)*
 
 
 - - - 
 
-<!-- TOC --><a name="the-programs-original-workflow-and-the-technical-issues-with-the-technology-used"></a>
-## The program's original workflow and the technical issues with the technology used
+## Development, implementation and deployment environment
+All the code created during this project was written using gitpod.io, with version control using git.
+
+The resulting App was deployed to a Heroku pseudo-terminal utility according to an early deploy approach (the App was deployed at an early stage of development to avoid see progress earlier and to avoid last-minute deployment surprises).
+
+
+<!-- TOC --><a name="technologies-used"></a>
+### Technologies used
+Almost exclusively Python.
+
+
+### The program's original workflow and the technical issues with the technology used
 
 At the outset of programming, I wanted the app to call a run.py file in the usual way but to attach an argument after a blank space on the command line, depending on the task that the user wished to do at that time. Unfortunately, the Heroku pseudo terminal on which the app is destined to run does not allow the use of command-line arguments (or at least I have been unable to find a way of implementing such a command-line-argument-based design).
 
@@ -172,10 +201,9 @@ The time used dealing with this problem at the last minute may have affected som
 
 Having said all that, in hindsight, I now realise that my original design choice to type out each option as a command-line argument was unnecessary and that running the run.py file and inviting the user to type in the various options turned out to be a far more elegant solution.
 
-- - - 
 
 <!-- TOC --><a name="the-programs-workflow"></a>
-## The program's final workflow:
+### The program's final workflow:
 After considerable debate, it was decided to order the various tasks to be done in the program to match the tasks as they arose during the calendar year. One of the rejected candidate sequencing patterns was to follow the logical flow of what was actually done to individual plants, from planning the campaign to cuttings of _H. Virginiana_, through carrying out that plan in the autumn, through potting up rooted cuttings the following spring, then the planning of the grafting campaign and then doing the actual grafting of scions onto the rootstocks the following late winter, followed by all the ongoing maintenance tasks required to keep the grafted plants healthy and in order until ready for sale. Another candidate ordering was to begin each twelve-month period in the autumn, when the owners first begin to plan their cutting campaign.
 
 Though beginning the workflow at the start of every calendar year and ordering app tasks like real-world seasonal nursery tasks added a little complexity to the design of the program, the reason for doing so was two-fold:
@@ -185,6 +213,14 @@ Though beginning the workflow at the start of every calendar year and ordering a
 Thus the program opens with the task of planning the grafting campaign (for each cultivar) (which happens in late winter &ndash; in February or March), going through each subsequent seasonal task in calendar order, following these with the non-seasonal maintenance tasks of the nursery and finishing with the final step of closing out the calendar year and preparing the spreadsheet for the data to be input in the following year.
 
 In the App's main menu, the five seasonal tasks are grouped together as Options 1 to 5 at the top of the menu, with the non-seasonal tasks grouped below them. The final task of the year is shown at the bottom of the menu, in orange if the option is disabled (because all seasonal tasks are not yet complete) and in green if it's enabled.
+
+![The main menu as it would be seen before completing all the seasonal tasks of the year](assets/readme_assets/main_menu_orange.png)
+
+*The main menu as it would be seen before completing all the tasks of the year*
+
+![Option 0 changes to green when all the seasonal tasks are complete](assets/readme_assets/green.png)
+
+*Option 0 changes to green when all the seasonal tasks are complete.*
 
 <!-- TOC --><a name="seasonal-tasks-in-order"></a>
 ### Seasonal tasks in order
@@ -200,6 +236,9 @@ They are prevented from entering more planned grafts than there are grafts avail
 
 Finally, they are asked if they have completed the planning task for that cultivar.
 
+![The list of cultivars as they appear after the user chooses Option 1](assets/readme_assets/cultivar_list.png)
+
+*The list of cultivars as they appear after the user chooses Option 1*
 
 2. **Record grafts taken** (cross-checked against rootstocks and broken down by cultivar) (late March to April)
 
@@ -233,8 +272,6 @@ Task closure as above.
 
 
 When all tasks for cuttings, rootstocks and all cultivars have been completed, Option 0 is enabled.
-
-
 
 ### Non-seasonal tasks in order
 
@@ -371,6 +408,8 @@ I silenced the warning using the standard warning module.
 
 However, I will need to address this deprecation issue as a priority task in the next iteration.
 
+Finally, the format and presentation of some of the texts shown during user interaction on the heroku pseudo-terminal has seen a great deal of improvement over the course of development, but there is still room for improvement.
+
 <!-- TOC --><a name="app-robustness"></a>
 ## App robustness
 
@@ -385,7 +424,7 @@ There should (and I've checked) be no ``input()`` instances not wrapped in one o
 
 They are both recursive functions that call themselves however many times they need to until the user inputs the right values (in one case an upper or lower case 'y' or 'n' and in the other an integer between 0 &ndash; or occasionally 1 &ndash; and the corresponding maximum number).
 
-The above is not strictly true, as they both also allow the user to input ``exit``, ``help`` or ``help [n]`` (where [n] represents a number between 0 and 9, corresponding to each of the options the App contains). For more details on the help functions, see below.
+Note: The above is not strictly true, as they both also allow the user to input ``exit``, ``help`` or ``help [n]`` (where [n] represents a number between 0 and 9, corresponding to each of the options the App contains). For more details on the help functions, see below.
 
 As a result, the user can access the App's help options (see the section on Help) or leave the App altogether whenever it asks them to enter a value.
 
@@ -397,6 +436,9 @@ The App provides both an extensive general Help text and a specific specialised 
 
 The ``help`` provides three screen's worth of general help information, which the ``Help [n]`` variant provides a screen's worth of information on each of the Options available in the App.
 
+![The ``help 7`` function](assets/readme_assets/help_option_7.png)
+
+*What you see after typing * ``Create new year/Close out current year`` *from the command prompt anywhere in the App*.
 
 ### Exiting the program
 Typing ``exIT`` (in any combination of upper and lower case letters) from the witch-hazel command prompt will close the App.
@@ -404,35 +446,57 @@ Typing ``exIT`` (in any combination of upper and lower case letters) from the wi
 <!-- TOC --><a name="programming-philosophy"></a>
 ## Programming philosophy
 
-In the course of building this app (closely modelled on a more or less complex series of real-world processes), I found that I made only limited active use of the concepts of OOP in my code: though I used a very wide range of pre-coded third-party classes through importing a variety of packages, I created only one bespoke class specifically for the app (namely the NewYearController class in the new_year_controller.py file). While I didn't feel the need to create classes for any other purposes in this iteration, no doubt some reorganisation of the code making use of OOP principles will make sense in later iterations.
+In the course of building this app (closely modelled on a more or less complex series of real-world processes), I found that I made only limited active use of the concepts of OOP in my code: though I used a very wide range of pre-coded third-party classes through importing a variety of packages, I created only one bespoke class specifically for the app (namely the NewYearController class in the new_year_controller.py file).
+
+While I didn't feel the need to create classes for any other purposes in this iteration, no doubt some reorganisation of the code making use of OOP principles will make sense in later iterations.
+
+I am quite sure that employing some of OOP's encapsulation and inheritance design features may make my code much less opaque and much more reusable.
+
+### Segregating text resources for i10n and l10n
+
+In an attempt to leverage my background in internationalization, localization and technical translation, I was careful to segregate into minimally technical resource files so that if it became necessary in the future that the app be localized into another at least Western, left-to-right language, that the work will be easier.
+
+While the flow of the text (and the level of technical difficulty for any localizer) is not ideal (as there are various interruptions to most of the texts), it is at least technically possible for a localizer to translate the texts and to some extent adapt such programming elements as colours, command prompts, etc. to local norms, conventions and user expectations.
+
+While a lot more could be done to the technical structure of the app to make the life of the localizer and ultimately its translator(s) easier (perhaps creating an algorithm to automate text formatting, for example), the app could be said to be, at least in principle, _internationalizable_.
+
 
 ## Manual testing
-
 
 ### Robustness testing
 The approach I used to robustness testing was considerably eased by my use of the two user entry control functions described above.
 
 Instead of having to test practically any likely keyboard combination the user might be likely to enter, I could concentrate on testing that the numerical upper and lower bounds were being set correctly by the App.
 
-My final testing, however, did involve entering the following inputs at the command prompt (twice: once for a prompt expecting a numerical input and one expecting a ), to ensure they were all handled correctly:
-``'  '``
-``''``
-
-
-
+My final testing, however, did involve entering the following inputs among others at the command prompt (twice: once for a prompt expecting a numerical input and one expecting a ), to ensure they were all handled correctly:
+``'  '`` Should force the user to try again
+``''`` Should force the user to try again
+``'4,300'`` Should render as a 4300
+``'HeLP 6 afdadf'`` should render as ``help 6``
+``'  y'`` Should render as 'y'
 
 
 ### Features testing
 
+During development, I unit tested each of the functions of the App as I developed in an ongoing process.
+
+When almost finished programming work, I then tested it systematically as if I was a user.
+
+I needed to run the App several times, correcting as I went, running each functionality in turn, and checking for correct presentation to the user and for correct results on the spreadsheet, at the end of the program.
+
+I ran it for 2024 figures several times, keeping an end-of-2023 copy of the sheet to ensure I was working from the same basis.
+
+I tested them for the behaviour described above, but I did not formally create any test cases.
+
 ### Browser compatibility
+I have successfully tested this App using the latest versions of Edge and Chrome.
+
+I did no checks on older versions or any other browser.
+
 
 ### Device compatibility and responsiveness
+This App is responsive enough for use on smaller standard Android mobile devices.
 
-### Code validation
-
-### Bugs and bug squashing
-
-### Accessibility (webaim coolors)
 
 ## Setting up the environment
 The first task I completed was to create the spreadsheet with which Laura and Donal's app are going to interact. As I already have a Google account, there was no need to set up a new account. I simply navigated to https://docs.google.com/spreadsheets and created a Google spreadsheet (called "Hamamelis") that contained the four pages illustrated and explained in this document, inserting the historical data for the period up until 2022 given to me by Laura and Donal.
@@ -495,6 +559,7 @@ From here on in, I suggest perusing the Git commit logs combined with my inline 
 
 
 <!-- TOC --><a name="registering-for-heroku-and-using-it"></a>
+
 ## Registering for Heroku and using it
 
 ### Initial registration
@@ -533,17 +598,22 @@ Rather nicely, these Eco Dynos go to sleep after a period, so that I don't have 
 
 In hindsight, I feel I may have bitten off more than I could chew. The complexity of this project caused it to run badly overtime. The effort however, taught me a lot about Python development and about translating complex procedures into formal code that may actually provide help to users.
 
-In the light of this experience, 
+In the light of this experience nd given the same chance again, I would have chosen a project that was inherently simpler than this one, though I've learned a lot of coding discipline and improved my programming muscle memory and reflexes through my long working through the project.
+
+I would also have segregated my code at an earlier stage, and more systematically and more according to OOP principles than I managed this time round.
+
+
 
 <!-- TOC --><a name="other-unresolved-issues-and-future-development"></a>
-## Other unresolved issues and future development
-As this App claims to be no more than a MVP, there is a long list of issues to be dealt with and objects for future development. Amongst them are:
-- A reporting tool to show the overall state of the data on the terminal.
+## Other unresolved issues, missing features and future development
+As this App makes no claim to be anything other than a MVP, and aside from the unresolved technical issues discussed above, there is a long list of issues to be dealt with and objects for future development in the project. Amongst them are:
+
+- A reporting tool to show the overall state of the data on the terminal (rather than relying on the users' read-only access to the google spreadsheet).
 - A tool to tell users which task they still have left to do before closing out the year.
 - An option to add new cultivars to the current list of six cultivars currently being cultivated.
 - A series of routines to extract statistics from the raw data in google sheets (including such useful details as survival rates by age, stage and cultivar, etc.).
 
-There are also some bugs still to be dealt with, chief among them being a warning that appears when the gspread .update() function is used. The warning tells me that the order of the parameters I'm using is outdated ()
+
 <!-- TOC --><a name="credits"></a>
 ## Credits
 https://discuss.python.org/ 
@@ -552,4 +622,4 @@ https://www.digitalocean.com/
 https://stackoverflow.com/ 
 https://www.programiz.com/python-programming 
 
-This section is work in progress.
+Thank you very much to my fellow students for their helpful suggestions and support, and in particular to my Student Welfare person, for her inspiration, encouragement and help in combatting impostor syndrome! 
